@@ -2,4 +2,4 @@
 
 # A Branch from Jekyll Multiverse Template
 
-## Thanks Jekyll for the beautiful templates
+Thanks João Neto for the beautiful templates!!!
