@@ -1,17 +1,15 @@
-title: Multiverse by HTML5 UP
-author: João Neto
-email: joao@neto.pt
+title: Jaden Gallery
+author: Jaden
+email: qjddyx@gmail.com
 description: >-
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
-
+  This is my personal gallery exhibiting the latest photos I took with the background.
+  Hope you can share my thoughts and suggestions to help me improve
 social:
   twitter: joaomlneto
   facebook: joaomlneto
-  instagram: joaomlneto
-  github: joaomlneto
-  linkedin:
+  instagram: jadenqee
+  github: JadenQ
+  linkedin: 
 
 # Build settings
 markdown: kramdown
