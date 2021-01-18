@@ -4,6 +4,7 @@
 <section>
   <h2>Follow me on ...</h2>
   <ul class="icons">
+    
     {%- if social.instagram -%}<li><a href="https://www.instagram.com/{{ social.instagram | cgi_escape | escape }}" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>{%- endif -%}
     {%- if social.linkedin -%}<li><a href="https://www.linkedin.com/in/{{ social.linkedin | cgi_escape | escape }}" title="{{ social.linkedin | escape }}"><svg class="svg-icon grey"><use xlink:href="{{ '/assets/minima-social-icons.svg#linkedin' | relative_url }}"></use></svg></a></li>{%- endif -%}
   </ul>
