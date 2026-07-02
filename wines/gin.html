@@ -1827,6 +1827,12 @@
       <!-- Philippines -->
       <circle class="gin-marker" cx="770" cy="200" data-region="philippines"/>
       <text class="marker-label" x="770" y="213">PH</text>
+      <!-- Thailand -->
+      <circle class="gin-marker" cx="720" cy="190" data-region="thailand"/>
+      <text class="marker-label" x="720" y="203">TH</text>
+      <!-- Singapore -->
+      <circle class="gin-marker" cx="740" cy="205" data-region="singapore"/>
+      <text class="marker-label" x="740" y="218">SG</text>
       <!-- France -->
       <circle class="gin-marker" cx="500" cy="115" data-region="france"/>
       <text class="marker-label" x="500" y="128">FR</text>
@@ -1913,13 +1919,31 @@
       <p class="region-brands">Agitator · Helsinki · Kyrö · Skåne</p>
     </div>
 
+    <!-- Southeast Asia -->
+    <div class="region-card">
+      <p class="region-flag">THA</p>
+      <h3 class="region-name">Southeast Asia</h3>
+      <p class="region-name-cn">东南亚 · 热带植物金酒</p>
+      <p class="region-desc">泰国与新加坡的金酒以热带料理植物为灵感：香兰叶(Pandan)、柠檬草(Lemongrass)、青柠叶(Kaffir Lime)、南姜(Galangal)、蝶豆花(Butterfly Pea Flower)。Iron Balls 和 Chalong Bay 用泰国本土香料创造独特风味；新加坡 Tanglin 和 Lunar 以东南亚植物重新定义金酒。</p>
+      <p class="region-brands">Iron Balls · Chalong Bay · Tanglin · Lunar · Saneha · Mahanakhon</p>
+    </div>
+
+    <!-- Philippines -->
+    <div class="region-card">
+      <p class="region-flag">PHL</p>
+      <h3 class="region-name">Philippines</h3>
+      <p class="region-name-cn">菲律宾 · 全球销量之王</p>
+      <p class="region-desc">菲律宾是全球金酒消费量最大的国家——年销量超4000万9升箱，约占全球40%。Ginebra San Miguel 年销3500万箱，以极低价位(₱30-50/瓶)主导大众市场。这是全球金酒产业不可忽视的体量，但与精酿高端金酒属于完全不同的市场层级。</p>
+      <p class="region-brands">Ginebra San Miguel · Emperador</p>
+    </div>
+
     <!-- CHINA GIN CARD (expanded) -->
     <div class="region-card" style="border-left: 4px solid var(--wine-light);">
       <p class="region-flag">CHN</p>
       <h3 class="region-name">China</h3>
       <p class="region-name-cn">中国 · 新兴精酿金酒浪潮</p>
-      <p class="region-desc">中国金酒市场以>20% CAGR增长，是亚太增速最快的细分。本土品牌将花椒、荷花、佛手柑、枸杞等传统植物融入蒸馏，创造独属东方的金酒语言。上海 Peddlers Gin 获2024/2025 World Gin Awards 最佳中国金酒。1921年上海租界曾有"Gin Lane"蒸馏厂，如今新一代中国金酒从本土植物出发重新定义这一烈酒。</p>
-      <p class="region-brands">Peddlers · Peggy · Dragon's Head · Bao Mountain · Old Pudong</p>
+      <p class="region-desc">中国金酒是亚太增速最快的细分之一。本土品牌将花椒、荷花、佛手柑、枸杞等传统植物融入蒸馏，创造独属东方的金酒语言。上海 Peddlers Gin 获2024/2025 World Gin Awards 最佳中国金酒。1921年上海租界曾有"Gin Lane"蒸馏厂，如今新一代中国金酒从本土植物出发重新定义这一烈酒。</p>
+      <p class="region-brands">Peddlers · Peggy · Dragon's Head · Bao Mountain · Old Pudong · Whistling Andy (台湾)</p>
     </div>
   </div>
 </section>
@@ -2017,9 +2041,9 @@
   <!-- China market stats -->
   <div class="stat-grid stagger" style="margin-top:80px;">
     <div class="stat-card">
-      <p class="stat-value" data-count="$1.5B">0</p>
-      <p class="stat-label">中国金酒市场规模 (2024)</p>
-      <p class="stat-source">Statista / Mordor Intelligence</p>
+      <p class="stat-value" data-count="~1B">0</p>
+      <p class="stat-label">中国金酒市场规模 (估值区间)</p>
+      <p class="stat-source">Statista / Mordor Intelligence · 估值范围较宽</p>
     </div>
     <div class="stat-card">
       <p class="stat-value" data-count="+22%">0</p>
@@ -2464,7 +2488,9 @@
     china: { region: 'China', cn: '中国 · 新兴精酿金酒浪潮', botanical: 'Sichuan Pepper · Lotus · Buddha's Hand · Osmanthus · Goji · Jasmine Tea · Hawthorn', desc: '20%+ CAGR增长。Peddlers获2024/2025世界金酒奖最佳中国金酒。本土植物重新定义金酒语言。', brands: 'Peddlers · Peggy · Dragon's Head · Bao Mountain · Old Pudong · Whistling Andy (TW)' },
     japan: { region: 'Japan', cn: '日本 · 和式金酒', botanical: 'Yuzu · Sansho · Sakura · Gyokuro Tea · Hinoki · Juniper', desc: '"旬"季节感哲学。11种日本植物分三组蒸馏再调和(Ki No Bi)。', brands: 'Ki No Bi · Roku · Nikka Coffey Gin · Oi' },
     australia: { region: 'Australia', cn: '澳大利亚 · 本土植物金酒', botanical: 'Lemon Myrtle · Finger Lime · Wattleseed · Quandong · Pandanus', desc: '以本土植物为灵魂。Bloody Shiraz Gin将Shiraz葡萄浸泡于金酒。', brands: 'Four Pillars · Never Never · Adelaide Hills' },
-    philippines: { region: 'Philippines', cn: '菲律宾 · 大众消费市场', botanical: 'Local Citrus · Tropical Fruits · Juniper', desc: 'Ginebra San Miguel 是全球销量最大的金酒品牌之一，大众市场定位。', brands: 'Ginebra San Miguel' },
+    philippines: { region: 'Philippines', cn: '菲律宾 · 全球销量之王 (>40M箱/年)', botanical: 'Local Citrus · Tropical Fruits · Juniper', desc: '全球金酒消费量最大国家——年销>4000万9升箱，约占全球40%。Ginebra San Miguel 年销3500万箱。大众价位，与精酿高端金酒属不同市场层级。', brands: 'Ginebra San Miguel · Emperador' },
+    thailand: { region: 'Thailand', cn: '泰国 · 热带植物金酒', botanical: 'Pandan · Lemongrass · Kaffir Lime · Galangal · Butterfly Pea Flower', desc: '泰国金酒以热带料理植物为灵感：香兰叶、柠檬草、青柠叶、南姜、蝶豆花。Iron Balls 和 Chalong Bay 用本土香料创造独特风味。', brands: 'Iron Balls · Chalong Bay · Saneha · Mahanakhon' },
+    singapore: { region: 'Singapore', cn: '新加坡 · 东南亚精酿', botanical: 'Pandan · Lemongrass · Kaffir Lime · Local Botanicals', desc: '新加坡金酒同样以东南亚植物为配方核心。Tanglin 使用香兰叶与柠檬草；Lunar 融合本地热带香料。', brands: 'Tanglin · Lunar' },
     france: { region: 'France', cn: '法国 · 葡萄基金酒', botanical: 'Grape-Based Neutral Spirit · Lavender · Juniper · Citrus', desc: '部分法国金酒使用葡萄蒸馏基酒而非谷物，赋予天然果韵。薰衣草是法式金酒的标志。', brands: 'Citadelle · G'Vine · Dolin' }
   };
 
