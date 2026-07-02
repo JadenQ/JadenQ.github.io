@@ -6,205 +6,170 @@
 <title>酒类知识 · Wine Knowledge</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600&family=Inter:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=DM+Mono:wght@400;500&family=Noto+Serif+SC:wght@400;500;600;700&family=Outfit:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 /* ============================================
-   RESET & BASE
+   RESET & BASE — Design System: Natural Wine
    ============================================ */
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  --wine-deep: #722F37;
-  --wine-dark: #4A1C22;
-  --terracotta: #C85A54;
-  --gold: #D4A574;
-  --gold-light: #F9E4B7;
-  --cream: #F5F0E8;
-  --cream-warm: #FAF6EE;
-  --brown-deep: #2C1810;
-  --olive: #8B7355;
-  --olive-light: #A89170;
-  --white: #FEFCF7;
-  --shadow-sm: 0 2px 8px rgba(44, 24, 16, 0.08);
-  --shadow-md: 0 4px 20px rgba(44, 24, 16, 0.12);
-  --shadow-lg: 0 8px 40px rgba(44, 24, 16, 0.16);
-  --shadow-xl: 0 16px 60px rgba(44, 24, 16, 0.20);
-  --radius-sm: 6px;
-  --radius-md: 12px;
-  --radius-lg: 20px;
+  --wine: #6B2737;
+  --wine-dark: #3D151E;
+  --wine-light: #8C3A4A;
+  --terracotta: #C75B4A;
+  --amber: #D4956A;
+  --amber-light: #F0D4A8;
+  --cream: #F7F2EA;
+  --cream-deep: #EDE5D8;
+  --parchment: #FDF9F3;
+  --earth: #2A1A12;
+  --earth-mid: #5C4A3A;
+  --sage: #7A8C6E;
+  --clay: #B8917A;
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'Outfit', 'Helvetica Neue', sans-serif;
+  --font-chinese: 'Noto Serif SC', 'Songti SC', serif;
+  --font-mono: 'DM Mono', 'SF Mono', monospace;
+  --section-gap: 140px;
+  --content-max: 1280px;
+  --nav-height: 64px;
   --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-html {
-  scroll-behavior: smooth;
-  font-size: 16px;
-}
+html { scroll-behavior: smooth; font-size: 16px; -webkit-text-size-adjust: 100%; }
 
 body {
-  font-family: 'Noto Serif SC', 'Songti SC', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  background-color: var(--cream);
-  color: var(--brown-deep);
-  line-height: 1.9;
-  letter-spacing: 0.02em;
+  font-family: var(--font-body);
+  font-weight: 300;
+  color: var(--earth);
+  background: var(--parchment);
+  line-height: 1.8;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Scroll Progress */
+.scroll-progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--wine), var(--terracotta), var(--amber));
+  z-index: 10001;
+  width: 0%;
+  transition: none;
+}
+
 a:focus-visible, button:focus-visible {
-  outline: 2px solid var(--gold);
+  outline: 2px solid var(--amber);
   outline-offset: 2px;
-  border-radius: 2px;
 }
 
 .sr-only {
   position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
+  width: 1px; height: 1px;
+  margin: -1px; overflow: hidden;
+  clip: rect(0,0,0,0); white-space: nowrap; border: 0;
 }
 
 /* ============================================
-   SCROLL REVEAL ANIMATIONS
+   REVEAL ANIMATIONS
    ============================================ */
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(40px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
 .reveal {
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
-
-.reveal.revealed {
-  opacity: 1;
-  transform: translateY(0);
-}
-
+.reveal.revealed { opacity: 1; transform: translateY(0); }
 .reveal-scale {
   opacity: 0;
   transform: scale(0.92);
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  transition: opacity 0.8s ease, transform 0.8s ease;
 }
+.reveal-scale.revealed { opacity: 1; transform: scale(1); }
 
-.reveal-scale.revealed {
-  opacity: 1;
-  transform: scale(1);
+.stagger > * {
+  opacity: 0; transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
 }
-
-.stagger-children > * {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-}
-
-.stagger-children.revealed > *:nth-child(1) { transition-delay: 0.05s; opacity: 1; transform: translateY(0); }
-.stagger-children.revealed > *:nth-child(2) { transition-delay: 0.12s; opacity: 1; transform: translateY(0); }
-.stagger-children.revealed > *:nth-child(3) { transition-delay: 0.19s; opacity: 1; transform: translateY(0); }
-.stagger-children.revealed > *:nth-child(4) { transition-delay: 0.26s; opacity: 1; transform: translateY(0); }
-.stagger-children.revealed > *:nth-child(5) { transition-delay: 0.33s; opacity: 1; transform: translateY(0); }
-.stagger-children.revealed > *:nth-child(6) { transition-delay: 0.40s; opacity: 1; transform: translateY(0); }
+.stagger.revealed > * { opacity: 1; transform: translateY(0); }
+.stagger.revealed > *:nth-child(1) { transition-delay: 0.05s; }
+.stagger.revealed > *:nth-child(2) { transition-delay: 0.12s; }
+.stagger.revealed > *:nth-child(3) { transition-delay: 0.19s; }
+.stagger.revealed > *:nth-child(4) { transition-delay: 0.26s; }
+.stagger.revealed > *:nth-child(5) { transition-delay: 0.33s; }
+.stagger.revealed > *:nth-child(6) { transition-delay: 0.40s; }
 
 /* ============================================
-   BACK TO MAIN SITE LINK (TOP LEFT)
+   BACK LINK (FLOATING)
    ============================================ */
 .back-link {
   position: fixed;
-  top: 20px;
-  left: 20px;
-  z-index: 1000;
+  top: 20px; left: 20px;
+  z-index: 10000;
   display: flex;
   align-items: center;
   gap: 8px;
   padding: 10px 18px;
-  background: rgba(254, 252, 247, 0.92);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(114, 47, 55, 0.12);
-  border-radius: 100px;
-  color: var(--wine-deep);
+  background: rgba(253, 249, 243, 0.82);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  border: 1px solid rgba(107, 39, 55, 0.08);
+  border-radius: 4px;
+  color: var(--wine);
   text-decoration: none;
+  font-family: var(--font-chinese);
   font-size: 0.82rem;
   font-weight: 500;
-  font-family: 'Inter', 'Noto Serif SC', sans-serif;
-  letter-spacing: 0.5px;
-  transition: var(--transition);
-  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 16px rgba(42, 26, 18, 0.06);
 }
-
 .back-link:hover {
-  background: rgba(254, 252, 247, 1);
-  border-color: rgba(114, 47, 55, 0.25);
-  box-shadow: var(--shadow-md);
+  color: var(--terracotta);
+  box-shadow: 0 4px 24px rgba(42, 26, 18, 0.10);
   transform: translateX(-2px);
 }
-
-.back-link svg {
-  width: 16px;
-  height: 16px;
-  flex-shrink: 0;
-}
+.back-link svg { width: 14px; height: 14px; flex-shrink: 0; }
 
 /* ============================================
-   HERO SECTION
+   HERO
    ============================================ */
 .hero {
-  min-height: 65vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
   position: relative;
-  background: linear-gradient(
-    160deg,
-    var(--wine-dark) 0%,
-    var(--wine-deep) 25%,
-    #5C2A30 45%,
-    var(--terracotta) 75%,
-    #D4887A 100%
-  );
-  padding: 80px 20px 60px;
+  height: 65vh;
+  min-height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   overflow: hidden;
+  background:
+    linear-gradient(160deg,
+      var(--wine-dark) 0%,
+      var(--wine) 25%,
+      var(--wine-light) 45%,
+      var(--terracotta) 70%,
+      #D4887A 100%
+    );
 }
-
-.hero::before {
-  content: '';
+.hero-overlay {
   position: absolute;
   inset: 0;
   background-image:
-    radial-gradient(ellipse at 20% 50%, rgba(212, 165, 116, 0.18) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 20%, rgba(249, 228, 183, 0.10) 0%, transparent 40%),
-    radial-gradient(ellipse at 50% 80%, rgba(200, 90, 84, 0.20) 0%, transparent 50%);
+    radial-gradient(ellipse at 20% 50%, rgba(212, 165, 116, 0.16) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(240, 212, 168, 0.10) 0%, transparent 40%),
+    radial-gradient(ellipse at 50% 80%, rgba(200, 90, 84, 0.18) 0%, transparent 50%);
   pointer-events: none;
 }
-
-.hero::after {
-  content: '';
+.hero-noise {
   position: absolute;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
   opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px;
   pointer-events: none;
-}
-
-/* Floating decorative elements */
-.hero-deco {
-  position: absolute;
-  pointer-events: none;
-  z-index: 1;
 }
 
 @keyframes grapeFloat {
@@ -212,149 +177,257 @@ a:focus-visible, button:focus-visible {
   50% { transform: translateY(-20px) rotate(5deg); opacity: 0.14; }
 }
 
-.hero-deco-1 {
-  top: 12%;
-  left: 8%;
-  animation: grapeFloat 7s ease-in-out infinite;
+.hero-deco {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
 }
-
-.hero-deco-2 {
-  bottom: 18%;
-  right: 10%;
-  animation: grapeFloat 9s ease-in-out infinite 2s;
-}
-
-.hero-deco-3 {
-  top: 40%;
-  right: 6%;
-  animation: grapeFloat 8s ease-in-out infinite 4s;
-}
+.hero-deco-1 { top: 12%; left: 8%; animation: grapeFloat 7s ease-in-out infinite; }
+.hero-deco-2 { bottom: 18%; right: 10%; animation: grapeFloat 9s ease-in-out infinite 2s; }
+.hero-deco-3 { top: 40%; right: 6%; animation: grapeFloat 8s ease-in-out infinite 4s; }
 
 .hero-content {
   position: relative;
   z-index: 2;
-  max-width: 800px;
+  color: var(--cream);
+  padding: 0 24px;
 }
-
-.hero-badge {
-  display: inline-block;
-  padding: 8px 24px;
-  border: 1px solid rgba(249, 228, 183, 0.4);
-  border-radius: 100px;
-  color: var(--gold-light);
-  font-size: 0.8rem;
-  letter-spacing: 3px;
+.hero-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.35em;
   text-transform: uppercase;
-  margin-bottom: 30px;
+  color: var(--amber-light);
+  margin-bottom: 32px;
+  opacity: 0.85;
   animation: fadeInUp 0.8s ease-out 0.2s backwards;
 }
-
-.hero-title-chinese {
-  font-family: 'Noto Serif SC', serif;
-  font-size: clamp(2.2rem, 5.5vw, 3.5rem);
-  color: var(--gold-light);
-  font-weight: 600;
-  letter-spacing: 12px;
-  margin-bottom: 8px;
+.hero-title-cn {
+  font-family: var(--font-chinese);
+  font-size: clamp(3.5rem, 8vw, 6rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: 0.15em;
+  margin-bottom: 16px;
+  text-shadow: 0 4px 60px rgba(0,0,0,0.3);
   animation: fadeInUp 0.8s ease-out 0.4s backwards;
-  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
 }
-
-.hero-title {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(2.2rem, 6vw, 4.5rem);
-  color: var(--white);
-  font-weight: 800;
-  letter-spacing: -1px;
-  margin-bottom: 8px;
-  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+.hero-title-en {
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 3vw, 2rem);
+  font-weight: 300;
+  letter-spacing: 0.6em;
+  text-transform: uppercase;
+  color: var(--amber-light);
+  margin-bottom: 48px;
+  opacity: 0.8;
   animation: fadeInUp 0.8s ease-out 0.6s backwards;
 }
-
-.hero-divider {
-  width: 80px;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  margin: 24px auto;
-  animation: fadeInUp 0.8s ease-out 0.8s backwards;
-}
-
 .hero-subtitle {
-  font-family: 'Noto Serif SC', serif;
+  font-family: var(--font-chinese);
   font-size: clamp(0.95rem, 1.8vw, 1.15rem);
-  color: var(--gold-light);
   font-weight: 400;
   max-width: 600px;
   margin: 0 auto;
-  line-height: 1.9;
-  animation: fadeInUp 0.8s ease-out 1s backwards;
+  line-height: 2;
+  color: rgba(247, 242, 234, 0.8);
+  animation: fadeInUp 0.8s ease-out 0.8s backwards;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* ============================================
-   TOPICS GRID SECTION
+   SECTION STYLES
    ============================================ */
-.topics-section {
-  padding: 80px 0;
+.section {
+  padding: var(--section-gap) 40px;
+  max-width: var(--content-max);
+  margin: 0 auto;
+}
+.section-full {
+  padding: var(--section-gap) 40px;
+  max-width: 100%;
+}
+.section-cream {
   background: var(--cream);
+}
+.section-dark {
+  background: var(--earth);
+  color: var(--cream);
+}
+
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--terracotta);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-label::before {
+  content: '';
+  display: inline-block;
+  width: 24px; height: 1px;
+  background: var(--terracotta);
+}
+
+.section-title-cn {
+  font-family: var(--font-chinese);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 8px;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
+  font-weight: 400;
+  line-height: 1.15;
+  margin-bottom: 20px;
+  letter-spacing: -0.01em;
+}
+.section-intro {
+  font-family: var(--font-chinese);
+  font-size: 1.05rem;
+  line-height: 2;
+  color: var(--earth-mid);
+  max-width: 680px;
+}
+.section-dark .section-intro { color: rgba(247,242,234,0.7); }
+
+/* Decorative Divider */
+.divider {
+  width: 100%;
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 0 40px;
+  height: 1px;
   position: relative;
 }
-
-.topics-section::before {
+.divider::after {
   content: '';
   position: absolute;
+  left: 40px; right: 40px;
   top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23722F37' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-  pointer-events: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--clay), transparent);
+  opacity: 0.3;
+}
+.divider-diamond {
+  text-align: center;
+  padding: 20px 0;
+}
+.divider-diamond::before {
+  content: '';
+  display: inline-block;
+  width: 8px; height: 8px;
+  background: var(--wine);
+  transform: rotate(45deg);
+  opacity: 0.4;
 }
 
-.container {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 24px;
+/* ============================================
+   FEATURED CARD
+   ============================================ */
+.featured-card {
+  background: linear-gradient(135deg, var(--wine-dark) 0%, var(--wine) 50%, var(--terracotta) 100%);
+  padding: 60px;
+  margin-bottom: 60px;
+  color: var(--cream);
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  display: block;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  border-radius: 4px;
+}
+.featured-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 64px rgba(42, 26, 18, 0.12);
+}
+.featured-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 30% 60%, rgba(212, 165, 116, 0.10) 0%, transparent 50%);
+}
+.featured-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('images/hero-vineyard.jpg');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.10;
+  mix-blend-mode: overlay;
+}
+.featured-badge {
+  display: inline-block;
+  padding: 5px 16px;
+  border: 1px solid rgba(240, 212, 168, 0.5);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--amber-light);
+  margin-bottom: 24px;
   position: relative;
   z-index: 2;
 }
-
-.section-header {
-  text-align: center;
-  margin-bottom: 60px;
-}
-
-.section-number {
-  display: inline-block;
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
-  font-size: 0.9rem;
-  color: var(--gold);
-  margin-bottom: 12px;
-  letter-spacing: 2px;
-}
-
-.section-title-chinese {
-  font-family: 'Noto Serif SC', serif;
-  font-size: clamp(1.4rem, 3vw, 2rem);
-  color: var(--olive);
-  font-weight: 500;
-  letter-spacing: 6px;
-  margin-bottom: 8px;
-}
-
-.section-title {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(1.6rem, 4vw, 2.5rem);
-  color: var(--wine-deep);
+.featured-title-cn {
+  font-family: var(--font-chinese);
+  font-size: 1.8rem;
   font-weight: 700;
-  margin-bottom: 16px;
+  color: var(--cream);
+  letter-spacing: 4px;
+  margin-bottom: 6px;
+  position: relative;
+  z-index: 2;
 }
-
-.section-divider {
-  width: 50px;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  margin: 16px auto 0;
+.featured-title-en {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--amber-light);
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 2;
+}
+.featured-desc {
+  font-family: var(--font-chinese);
+  font-size: 0.95rem;
+  color: rgba(247,242,234,0.8);
+  max-width: 600px;
+  line-height: 1.9;
+  position: relative;
+  z-index: 2;
+}
+.featured-arrow {
+  position: absolute;
+  right: 48px; bottom: 48px;
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 300;
+  color: var(--amber-light);
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+.featured-card:hover .featured-arrow {
+  background: rgba(255,255,255,0.20);
+  transform: translateX(4px);
 }
 
 /* ============================================
@@ -362,412 +435,219 @@ a:focus-visible, button:focus-visible {
    ============================================ */
 .topics-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 28px;
 }
 
 .topic-card {
-  background: var(--white);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  border: 1px solid rgba(114, 47, 55, 0.08);
-  box-shadow: var(--shadow-sm);
-  transition: var(--transition);
+  padding: 48px 36px;
+  background: var(--parchment);
+  border: 1px solid rgba(107,39,55,0.06);
+  border-radius: 4px;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
   position: relative;
-  text-decoration: none;
-  color: inherit;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
 }
-
-.topic-card.available:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-xl);
-  border-color: rgba(114, 47, 55, 0.2);
-}
-
-.topic-card.available:hover .topic-card-arrow {
-  transform: translateX(4px);
-  opacity: 1;
-}
-
 .topic-card.available {
+  text-decoration: none;
+  color: inherit;
   cursor: pointer;
 }
+.topic-card.available:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 64px rgba(42,26,18,0.08);
+}
+.topic-card.available:hover::after { opacity: 1; }
+.topic-card.available:hover .topic-arrow { transform: translateX(4px); opacity: 1; }
 
 .topic-card.coming-soon {
-  opacity: 0.7;
+  opacity: 0.65;
   cursor: default;
-  filter: grayscale(0.15);
+  filter: grayscale(0.1);
 }
 
-.topic-card-header {
-  padding: 36px 32px 0;
-  position: relative;
+/* Accent line */
+.topic-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(to right, var(--wine), var(--terracotta), var(--amber));
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
-.topic-card-icon {
-  font-size: 2.6rem;
+.topic-emoji {
+  font-size: 2.2rem;
   margin-bottom: 16px;
   display: block;
   line-height: 1;
 }
-
-.topic-card-header h3 {
-  font-family: 'Noto Serif SC', 'Playfair Display', serif;
-  font-size: 1.35rem;
-  color: var(--wine-deep);
+.topic-title-cn {
+  font-family: var(--font-chinese);
+  font-size: 1.15rem;
   font-weight: 700;
+  color: var(--wine-dark);
   margin-bottom: 4px;
-  letter-spacing: 2px;
 }
-
-.topic-card-header .topic-en {
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
+.topic-title-en {
+  font-family: var(--font-display);
   font-size: 0.9rem;
+  font-weight: 400;
+  font-style: italic;
   color: var(--terracotta);
-  margin-bottom: 4px;
+  margin-bottom: 16px;
 }
-
-.topic-card-body {
-  padding: 16px 32px 24px;
+.topic-desc {
+  font-family: var(--font-chinese);
+  font-size: 0.92rem;
+  line-height: 1.9;
+  color: var(--earth-mid);
   flex: 1;
 }
-
-.topic-card-body p {
-  font-size: 0.9rem;
-  color: var(--olive);
-  line-height: 1.9;
-}
-
-.topic-card-footer {
-  padding: 0 32px 28px;
+.topic-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-top: 20px;
+}
+.topic-tag {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--wine);
+}
+.topic-tag.coming {
+  color: var(--earth-mid);
+}
+.topic-arrow {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--amber);
+  opacity: 0.5;
+  transition: all 0.3s ease;
 }
 
-.topic-card-footer .topic-label {
-  display: inline-block;
-  padding: 4px 14px;
-  background: rgba(114, 47, 55, 0.07);
-  border-radius: 100px;
-  font-size: 0.75rem;
-  color: var(--wine-deep);
-  font-weight: 600;
-  letter-spacing: 1px;
-}
-
-.topic-card-footer .topic-label.coming {
-  background: rgba(139, 115, 85, 0.1);
-  color: var(--olive);
-}
-
-.topic-card-arrow {
-  font-size: 1.1rem;
-  color: var(--gold);
-  transition: var(--transition);
-  opacity: 0.6;
-}
-
-/* Card accent line */
-.topic-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(to right, var(--wine-deep), var(--terracotta), var(--gold));
-  opacity: 0;
-  transition: var(--transition);
-}
-
-.topic-card.available:hover::before {
-  opacity: 1;
-}
-
-/* Coming soon card style */
-.topic-card.coming-soon .topic-card-header {
-  position: relative;
-}
-
-.topic-card.coming-soon::after {
+/* Coming-soon badge */
+.topic-card.coming-soon::before {
   content: '即将上线';
   position: absolute;
-  top: 16px;
-  right: 16px;
-  padding: 4px 12px;
-  background: rgba(139, 115, 85, 0.12);
-  border-radius: 100px;
+  top: 14px; right: 14px;
+  padding: 4px 10px;
+  background: rgba(92, 74, 58, 0.08);
+  font-family: var(--font-chinese);
   font-size: 0.7rem;
-  color: var(--olive);
-  font-weight: 500;
+  color: var(--earth-mid);
   letter-spacing: 1px;
-  font-family: 'Noto Serif SC', sans-serif;
-}
-
-/* ============================================
-   FEATURED TOPIC HERO CARD
-   ============================================ */
-.featured-card {
-  background: linear-gradient(135deg, var(--wine-deep) 0%, #5C2A30 50%, var(--terracotta) 100%);
-  border-radius: var(--radius-lg);
-  padding: 50px;
-  margin-bottom: 50px;
-  color: var(--white);
-  position: relative;
-  overflow: hidden;
-  text-decoration: none;
-  display: block;
-  transition: var(--transition);
-  box-shadow: var(--shadow-lg);
-}
-
-.featured-card:hover {
-  box-shadow: var(--shadow-xl);
-  transform: translateY(-4px);
-}
-
-.featured-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at 30% 60%, rgba(212, 165, 116, 0.12) 0%, transparent 50%);
-}
-
-.featured-card::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('images/hero_001.jpg');
-  background-size: cover;
-  background-position: center;
-  opacity: 0.12;
-  mix-blend-mode: overlay;
-}
-
-.featured-badge {
-  display: inline-block;
-  padding: 5px 16px;
-  border: 1px solid rgba(249, 228, 183, 0.5);
-  border-radius: 100px;
-  color: var(--gold-light);
-  font-size: 0.72rem;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin-bottom: 20px;
-  position: relative;
-  z-index: 2;
-}
-
-.featured-card h3 {
-  font-family: 'Noto Serif SC', serif;
-  font-size: 1.8rem;
-  color: var(--white);
-  font-weight: 700;
-  letter-spacing: 4px;
-  margin-bottom: 6px;
-  position: relative;
-  z-index: 2;
-}
-
-.featured-card .featured-en {
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
-  font-size: 1.1rem;
-  color: var(--gold-light);
-  margin-bottom: 16px;
-  position: relative;
-  z-index: 2;
-}
-
-.featured-card p {
-  font-size: 0.95rem;
-  color: rgba(249, 228, 183, 0.8);
-  max-width: 600px;
-  line-height: 1.9;
-  position: relative;
-  z-index: 2;
-}
-
-.featured-arrow {
-  position: absolute;
-  right: 40px;
-  bottom: 40px;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.12);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.3rem;
-  color: var(--gold-light);
-  transition: var(--transition);
-  z-index: 2;
-}
-
-.featured-card:hover .featured-arrow {
-  background: rgba(255, 255, 255, 0.2);
-  transform: translateX(4px);
+  font-weight: 500;
 }
 
 /* ============================================
    FOOTER
    ============================================ */
 .site-footer {
-  background: linear-gradient(180deg, var(--brown-deep) 0%, #1A0E08 100%);
-  color: rgba(249, 228, 183, 0.7);
-  padding: 60px 0 40px;
+  background: var(--earth);
+  color: var(--cream);
+  padding: 80px 40px;
   text-align: center;
-  position: relative;
 }
-
-.site-footer::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-}
-
-.footer-content {
-  max-width: 700px;
-  margin: 0 auto;
-  padding: 0 24px;
-}
-
-.footer-title {
-  font-family: 'Noto Serif SC', serif;
-  font-size: 1.4rem;
-  color: var(--gold);
+.footer-brand {
+  font-family: var(--font-chinese);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--amber-light);
   margin-bottom: 8px;
-  letter-spacing: 4px;
 }
-
-.footer-subtitle {
-  font-family: 'Playfair Display', serif;
+.footer-tagline {
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  font-weight: 400;
   font-style: italic;
-  color: rgba(249, 228, 183, 0.5);
-  margin-bottom: 30px;
+  color: rgba(247,242,234,0.5);
+  margin-bottom: 32px;
 }
-
 .footer-divider {
-  width: 40px;
-  height: 1px;
-  background: var(--gold);
-  margin: 24px auto;
+  width: 40px; height: 1px;
+  background: var(--amber);
+  margin: 0 auto 32px;
   opacity: 0.4;
 }
-
 .footer-links {
   display: flex;
   gap: 24px;
   justify-content: center;
   flex-wrap: wrap;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
-
 .footer-links a {
-  color: rgba(249, 228, 183, 0.6);
+  color: rgba(247,242,234,0.6);
   text-decoration: none;
+  font-family: var(--font-chinese);
   font-size: 0.85rem;
-  transition: var(--transition);
-  font-family: 'Noto Serif SC', serif;
+  transition: color 0.3s ease;
 }
-
-.footer-links a:hover {
-  color: var(--gold-light);
-}
-
+.footer-links a:hover { color: var(--amber-light); }
 .footer-meta {
-  font-size: 0.8rem;
-  line-height: 1.9;
-  opacity: 0.5;
-  font-family: 'Noto Serif SC', serif;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  color: rgba(247,242,234,0.35);
 }
 
 /* ============================================
    RESPONSIVE
    ============================================ */
-@media (max-width: 768px) {
-  .hero {
-    min-height: 50vh;
-    padding: 60px 16px 40px;
-  }
-
-  .hero-title-chinese {
-    letter-spacing: 6px;
-  }
-
-  .featured-card {
-    padding: 32px 24px;
-  }
-
+@media (max-width: 900px) {
+  :root { --section-gap: 100px; }
+  .section, .section-full { padding-left: 24px; padding-right: 24px; }
+  .topics-grid { grid-template-columns: repeat(2, 1fr); }
+  .featured-card { padding: 40px 24px; }
   .featured-arrow {
     position: relative;
-    right: auto;
-    bottom: auto;
+    right: auto; bottom: auto;
     margin-top: 20px;
   }
-
-  .topics-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .topics-section {
-    padding: 50px 0;
-  }
-
-  .back-link {
-    top: 12px;
-    left: 12px;
-    padding: 8px 14px;
-    font-size: 0.75rem;
-  }
+  .hero { min-height: 400px; }
 }
 
-@media (max-width: 480px) {
-  .hero-title-chinese {
-    letter-spacing: 3px;
-  }
-
-  .topic-card-header {
-    padding: 28px 24px 0;
-  }
-
-  .topic-card-body {
-    padding: 12px 24px 20px;
-  }
-
-  .topic-card-footer {
-    padding: 0 24px 24px;
-  }
+@media (max-width: 640px) {
+  :root { --section-gap: 80px; }
+  .topics-grid { grid-template-columns: 1fr; }
+  .hero-title-cn { letter-spacing: 0.08em; }
+  .hero-title-en { letter-spacing: 0.3em; }
+  .topic-card { padding: 36px 24px; }
+  .back-link { top: 12px; left: 12px; padding: 8px 14px; font-size: 0.75rem; }
 }
 
-/* ============================================
-   PRINT STYLES
-   ============================================ */
 @media print {
-  .back-link { display: none; }
-  body { background: #fff; color: #000; }
-  .hero { min-height: auto; padding: 40px; break-after: page; }
-  .topic-card { break-inside: avoid; box-shadow: none; border: 1px solid #ddd; }
+  .back-link, .scroll-progress { display: none; }
+  body { color: black; background: white; }
+  .hero { min-height: auto; padding: 40px 0; break-after: page; background: white; }
+  .hero-content { color: black; }
   .reveal, .reveal-scale { opacity: 1 !important; transform: none !important; }
-  .stagger-children > * { opacity: 1 !important; transform: none !important; }
+  .stagger > * { opacity: 1 !important; transform: none !important; }
+  .topic-card, .featured-card { break-inside: avoid; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal, .reveal-scale { opacity: 1; transform: none; }
+  .stagger > * { opacity: 1; transform: none; }
 }
 </style>
 </head>
 <body>
 
-<!-- BACK TO MAIN SITE -->
+<!-- Scroll Progress -->
+<div class="scroll-progress" aria-hidden="true"></div>
+
+<!-- Back to Main Site -->
 <a href="/" class="back-link" aria-label="返回主页">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <polyline points="15 18 9 12 15 6"></polyline>
@@ -776,162 +656,131 @@ a:focus-visible, button:focus-visible {
 </a>
 
 <!-- ============================================
-     HERO SECTION
+     HERO
      ============================================ -->
-<header class="hero">
+<section class="hero">
   <!-- Decorative elements -->
   <div class="hero-deco hero-deco-1">
-    <svg width="80" height="100" viewBox="0 0 80 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="30" cy="40" r="8" fill="rgba(249,228,183,0.08)"/>
-      <circle cx="45" cy="35" r="8" fill="rgba(249,228,183,0.06)"/>
-      <circle cx="38" cy="52" r="8" fill="rgba(249,228,183,0.07)"/>
-      <circle cx="50" cy="48" r="8" fill="rgba(249,228,183,0.05)"/>
-      <circle cx="35" cy="65" r="8" fill="rgba(249,228,183,0.06)"/>
-      <circle cx="48" cy="62" r="8" fill="rgba(249,228,183,0.04)"/>
-      <path d="M40 10 Q42 25 38 30" stroke="rgba(249,228,183,0.1)" stroke-width="1.5" fill="none"/>
-      <path d="M38 12 Q30 18 25 15" stroke="rgba(249,228,183,0.08)" stroke-width="1" fill="none"/>
+    <svg width="80" height="100" viewBox="0 0 80 100" fill="none">
+      <circle cx="30" cy="40" r="8" fill="rgba(240,212,168,0.08)"/>
+      <circle cx="45" cy="35" r="8" fill="rgba(240,212,168,0.06)"/>
+      <circle cx="38" cy="52" r="8" fill="rgba(240,212,168,0.07)"/>
+      <circle cx="50" cy="48" r="8" fill="rgba(240,212,168,0.05)"/>
+      <circle cx="35" cy="65" r="8" fill="rgba(240,212,168,0.06)"/>
     </svg>
   </div>
   <div class="hero-deco hero-deco-2">
-    <svg width="60" height="90" viewBox="0 0 60 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M30 5 C30 5 10 30 10 50 C10 65 20 75 30 75 C40 75 50 65 50 50 C50 30 30 5 30 5Z" stroke="rgba(249,228,183,0.06)" stroke-width="1" fill="none"/>
-      <path d="M30 75 L30 88" stroke="rgba(249,228,183,0.08)" stroke-width="1.5"/>
+    <svg width="60" height="90" viewBox="0 0 60 90" fill="none">
+      <path d="M30 5 C30 5 10 30 10 50 C10 65 20 75 30 75 C40 75 50 65 50 50 C50 30 30 5 30 5Z" stroke="rgba(240,212,168,0.06)" stroke-width="1" fill="none"/>
+      <path d="M30 75 L30 88" stroke="rgba(240,212,168,0.08)" stroke-width="1.5"/>
     </svg>
   </div>
   <div class="hero-deco hero-deco-3">
-    <svg width="50" height="60" viewBox="0 0 50 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="20" cy="20" r="6" fill="rgba(249,228,183,0.06)"/>
-      <circle cx="32" cy="18" r="6" fill="rgba(249,228,183,0.05)"/>
-      <circle cx="25" cy="32" r="6" fill="rgba(249,228,183,0.07)"/>
-      <circle cx="35" cy="30" r="6" fill="rgba(249,228,183,0.04)"/>
+    <svg width="50" height="60" viewBox="0 0 50 60" fill="none">
+      <circle cx="20" cy="20" r="6" fill="rgba(240,212,168,0.06)"/>
+      <circle cx="32" cy="18" r="6" fill="rgba(240,212,168,0.05)"/>
+      <circle cx="25" cy="32" r="6" fill="rgba(240,212,168,0.07)"/>
     </svg>
   </div>
 
+  <div class="hero-overlay"></div>
+  <div class="hero-noise"></div>
+
   <div class="hero-content">
-    <span class="hero-badge">Knowledge · 知识库</span>
-    <p class="hero-title-chinese">酒类知识</p>
-    <h1 class="hero-title">WINE KNOWLEDGE</h1>
-    <div class="hero-divider"></div>
+    <div class="hero-label">Knowledge · 知识库</div>
+    <h1 class="hero-title-cn">酒类知识</h1>
+    <div class="hero-title-en">WINE KNOWLEDGE</div>
     <p class="hero-subtitle">从自然酒的纯粹哲学，到世界各地的酿造传统——探索关于酒的一切。</p>
   </div>
-</header>
+</section>
 
 <!-- ============================================
-     TOPICS SECTION
+     TOPICS
      ============================================ -->
-<section class="topics-section">
-  <div class="container">
-    <div class="section-header reveal">
-      <span class="section-number">§ Explore</span>
-      <p class="section-title-chinese">探索主题</p>
-      <h2 class="section-title">Browse by Topic</h2>
-      <div class="section-divider"></div>
-    </div>
+<div class="divider"><div class="divider-diamond"></div></div>
 
-    <!-- Featured: Natural Wine -->
-    <a href="natural-wine.html" class="featured-card reveal-scale">
-      <span class="featured-badge">推荐阅读 · Featured</span>
-      <h3>自然酒</h3>
-      <p class="featured-en">Natural Wine</p>
-      <p>从八千年前格鲁吉亚的 Qvevri 陶罐，到 Beaujolais 的现代革命——一部关于发酵、工业化与回归的完整指南。深度探索自然酒的历史、哲学、酿造工艺与全球文化。</p>
-      <div class="featured-arrow">→</div>
+<section class="section">
+  <div class="reveal">
+    <div class="section-label">§ Explore</div>
+    <h2 class="section-title-cn">探索主题</h2>
+    <div class="section-title">Browse by Topic</div>
+    <div class="section-intro">每个主题都是一段独立的深度探索。点击即可进入，从哲学到实践，从历史到未来。</div>
+  </div>
+
+  <!-- Featured: Natural Wine -->
+  <a href="natural-wine.html" class="featured-card reveal-scale">
+    <div class="featured-badge">推荐 · Featured</div>
+    <div class="featured-title-cn">自然酒</div>
+    <div class="featured-title-en">Natural Wine</div>
+    <p class="featured-desc">从八千年前格鲁吉亚的 Qvevri 陶罐，到 Beaujolais 的现代革命——一部关于发酵、工业化与回归的完整指南。深度探索自然酒的历史、哲学、酿造工艺与全球文化。</p>
+    <div class="featured-arrow">→</div>
+  </a>
+
+  <!-- Topic Cards -->
+  <div class="topics-grid stagger">
+
+    <a href="natural-wine.html" class="topic-card available">
+      <span class="topic-emoji">🍇</span>
+      <div class="topic-title-cn">自然酒</div>
+      <div class="topic-title-en">Natural Wine</div>
+      <p class="topic-desc">极简干预的酿酒哲学——"不加不减"，让葡萄、土壤与气候直接说话。深度研究报告，涵盖历史、产区、工艺与争议。</p>
+      <div class="topic-footer">
+        <span class="topic-tag">深度阅读</span>
+        <span class="topic-arrow">→</span>
+      </div>
     </a>
 
-    <!-- Topic Cards Grid -->
-    <div class="topics-grid stagger-children">
-
-      <!-- Natural Wine Card -->
-      <a href="natural-wine.html" class="topic-card available">
-        <div class="topic-card-header">
-          <span class="topic-card-icon">🍇</span>
-          <h3>自然酒</h3>
-          <p class="topic-en">Natural Wine</p>
-        </div>
-        <div class="topic-card-body">
-          <p>极简干预的酿酒哲学——"不加不减"，让葡萄、土壤与气候直接说话。深度研究报告，涵盖历史、产区、工艺与争议。</p>
-        </div>
-        <div class="topic-card-footer">
-          <span class="topic-label">深度阅读</span>
-          <span class="topic-card-arrow">→</span>
-        </div>
-      </a>
-
-      <!-- Orange Wine -->
-      <div class="topic-card coming-soon">
-        <div class="topic-card-header">
-          <span class="topic-card-icon">🍊</span>
-          <h3>橙酒</h3>
-          <p class="topic-en">Orange Wine</p>
-        </div>
-        <div class="topic-card-body">
-          <p>白葡萄带皮浸渍——古老技法的复兴。探索格鲁吉亚传统与斯洛文尼亚先锋派如何重新定义白葡萄酒的边界。</p>
-        </div>
-        <div class="topic-card-footer">
-          <span class="topic-label coming">即将上线</span>
-        </div>
+    <div class="topic-card coming-soon">
+      <span class="topic-emoji">🍊</span>
+      <div class="topic-title-cn">橙酒</div>
+      <div class="topic-title-en">Orange Wine</div>
+      <p class="topic-desc">白葡萄带皮浸渍——古老技法的复兴。探索格鲁吉亚传统与斯洛文尼亚先锋派如何重新定义白葡萄酒的边界。</p>
+      <div class="topic-footer">
+        <span class="topic-tag coming">即将上线</span>
       </div>
-
-      <!-- Biodynamic Wine -->
-      <div class="topic-card coming-soon">
-        <div class="topic-card-header">
-          <span class="topic-card-icon">🌙</span>
-          <h3>生物动力法</h3>
-          <p class="topic-en">Biodynamic Wine</p>
-        </div>
-        <div class="topic-card-body">
-          <p>跟随月相与宇宙节律的耕种哲学。从 Rudolf Steiner 的灵性科学到现代酒庄实践，生物动力法如何影响风土表达。</p>
-        </div>
-        <div class="topic-card-footer">
-          <span class="topic-label coming">即将上线</span>
-        </div>
-      </div>
-
-      <!-- Old World vs New World -->
-      <div class="topic-card coming-soon">
-        <div class="topic-card-header">
-          <span class="topic-card-icon">🌍</span>
-          <h3>旧世界 vs 新世界</h3>
-          <p class="topic-en">Old World vs New World</p>
-        </div>
-        <div class="topic-card-body">
-          <p>风土传统与技术创新——法国、意大利的经典传承与加州、澳洲的先锋实验之间的对话与碰撞。</p>
-        </div>
-        <div class="topic-card-footer">
-          <span class="topic-label coming">即将上线</span>
-        </div>
-      </div>
-
-      <!-- Wine Tasting -->
-      <div class="topic-card coming-soon">
-        <div class="topic-card-header">
-          <span class="topic-card-icon">👃</span>
-          <h3>品鉴指南</h3>
-          <p class="topic-en">Wine Tasting Guide</p>
-        </div>
-        <div class="topic-card-body">
-          <p>从观色、闻香到品味——系统化的感官训练方法。学会识别单宁、酸度、酒体与余韵，建立自己的品鉴体系。</p>
-        </div>
-        <div class="topic-card-footer">
-          <span class="topic-label coming">即将上线</span>
-        </div>
-      </div>
-
-      <!-- Cocktails -->
-      <div class="topic-card coming-soon">
-        <div class="topic-card-header">
-          <span class="topic-card-icon">🍸</span>
-          <h3>鸡尾酒艺术</h3>
-          <p class="topic-en">Cocktail Art</p>
-        </div>
-        <div class="topic-card-body">
-          <p>经典配方的解构与重构——从 Martini 到 Negroni，理解鸡尾酒的平衡法则与创作逻辑。</p>
-        </div>
-        <div class="topic-card-footer">
-          <span class="topic-label coming">即将上线</span>
-        </div>
-      </div>
-
     </div>
+
+    <div class="topic-card coming-soon">
+      <span class="topic-emoji">🌙</span>
+      <div class="topic-title-cn">生物动力法</div>
+      <div class="topic-title-en">Biodynamic Wine</div>
+      <p class="topic-desc">跟随月相与宇宙节律的耕种哲学。从 Rudolf Steiner 的灵性科学到现代酒庄实践，生物动力法如何影响风土表达。</p>
+      <div class="topic-footer">
+        <span class="topic-tag coming">即将上线</span>
+      </div>
+    </div>
+
+    <div class="topic-card coming-soon">
+      <span class="topic-emoji">🌍</span>
+      <div class="topic-title-cn">旧世界 vs 新世界</div>
+      <div class="topic-title-en">Old World vs New World</div>
+      <p class="topic-desc">风土传统与技术创新——法国、意大利的经典传承与加州、澳洲的先锋实验之间的对话与碰撞。</p>
+      <div class="topic-footer">
+        <span class="topic-tag coming">即将上线</span>
+      </div>
+    </div>
+
+    <div class="topic-card coming-soon">
+      <span class="topic-emoji">👃</span>
+      <div class="topic-title-cn">品鉴指南</div>
+      <div class="topic-title-en">Wine Tasting Guide</div>
+      <p class="topic-desc">从观色、闻香到品味——系统化的感官训练方法。学会识别单宁、酸度、酒体与余韵，建立自己的品鉴体系。</p>
+      <div class="topic-footer">
+        <span class="topic-tag coming">即将上线</span>
+      </div>
+    </div>
+
+    <a href="gin/" class="topic-card available">
+      <span class="topic-emoji">🫒</span>
+      <div class="topic-title-cn">金酒</div>
+      <div class="topic-title-en">Gin</div>
+      <p class="topic-desc">从荷兰杜松子酒到全球精酿复兴——杜松子蒸馏烈酒的完全指南。涵盖八大分类、世界产区、经典鸡尾酒与市场趋势。</p>
+      <div class="topic-footer">
+        <span class="topic-tag">深度阅读</span>
+        <span class="topic-arrow">→</span>
+      </div>
+    </a>
+
   </div>
 </section>
 
@@ -939,32 +788,34 @@ a:focus-visible, button:focus-visible {
      FOOTER
      ============================================ -->
 <footer class="site-footer">
-  <div class="footer-content">
-    <p class="footer-title">酒类知识</p>
-    <p class="footer-subtitle">Wine Knowledge · Curated by Jaden</p>
-    <div class="footer-divider"></div>
-    <div class="footer-links">
-      <a href="/">← 返回主页</a>
-      <a href="natural-wine.html">自然酒</a>
-    </div>
-    <p class="footer-meta">探索永无止境。更多内容即将上线。</p>
+  <div class="footer-brand">酒类知识</div>
+  <div class="footer-tagline">Wine Knowledge · Curated by Jaden</div>
+  <div class="footer-divider"></div>
+  <div class="footer-links">
+    <a href="/">← 返回主页</a>
+    <a href="natural-wine.html">自然酒</a>
+    <a href="gin/">金酒</a>
   </div>
+  <div class="footer-meta">探索永无止境 · 更多内容即将上线</div>
 </footer>
 
 <!-- ============================================
-     SCROLL REVEAL
+     JAVASCRIPT
      ============================================ -->
 <script>
 (function() {
   'use strict';
 
-  // Intersection Observer for scroll reveal
-  var observerOptions = {
-    root: null,
-    rootMargin: '0px 0px -60px 0px',
-    threshold: 0.1
-  };
+  // Scroll Progress
+  var scrollProgress = document.querySelector('.scroll-progress');
+  window.addEventListener('scroll', function() {
+    var scrollTop = window.pageYOffset;
+    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    var progress = Math.min(scrollTop / docHeight * 100, 100);
+    scrollProgress.style.width = progress + '%';
+  });
 
+  // Intersection Observer for reveal
   var observer = new IntersectionObserver(function(entries) {
     entries.forEach(function(entry) {
       if (entry.isIntersecting) {
@@ -972,9 +823,9 @@ a:focus-visible, button:focus-visible {
         observer.unobserve(entry.target);
       }
     });
-  }, observerOptions);
+  }, { rootMargin: '0px 0px -60px 0px', threshold: 0.1 });
 
-  document.querySelectorAll('.reveal, .reveal-scale, .stagger-children').forEach(function(el) {
+  document.querySelectorAll('.reveal, .reveal-scale, .stagger').forEach(function(el) {
     observer.observe(el);
   });
 })();

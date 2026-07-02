@@ -1,0 +1,2027 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>金酒 — 杜松子蒸馏烈酒完全指南</title>
+  <meta name="description" content="金酒完全指南：从荷兰Jenever到全球精酿复兴，探索杜松子蒸馏烈酒的世界。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=DM+Mono:wght@400;500&family=Noto+Serif+SC:wght@400;500;600;700&family=Outfit:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --wine: #6B2737;
+      --wine-dark: #3D151E;
+      --wine-light: #8C3A4A;
+      --terracotta: #C75B4A;
+      --amber: #D4956A;
+      --amber-light: #F0D4A8;
+      --cream: #F7F2EA;
+      --cream-deep: #EDE5D8;
+      --parchment: #FDF9F3;
+      --earth: #2A1A12;
+      --earth-mid: #5C4A3A;
+      --sage: #7A8C6E;
+      --clay: #B8917A;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'Outfit', 'Helvetica Neue', sans-serif;
+      --font-chinese: 'Noto Serif SC', 'Songti SC', serif;
+      --font-mono: 'DM Mono', 'SF Mono', monospace;
+      --section-gap: 140px;
+      --content-max: 1280px;
+      --content-narrow: 860px;
+      --nav-height: 64px;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; font-size: 16px; -webkit-text-size-adjust: 100%; }
+
+    body {
+      font-family: var(--font-body);
+      font-weight: 300;
+      color: var(--earth);
+      background: var(--parchment);
+      line-height: 1.8;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid var(--amber);
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* ============================================
+       CUSTOM CURSOR
+       ============================================ */
+    .cursor-dot {
+      position: fixed;
+      top: 0; left: 0;
+      width: 8px; height: 8px;
+      background: var(--wine);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 100000;
+      mix-blend-mode: difference;
+      transition: width 0.3s ease, height 0.3s ease, margin 0.3s ease;
+      will-change: transform;
+    }
+    .cursor-dot.cursor-hover {
+      width: 32px; height: 32px;
+      margin-left: -12px; margin-top: -12px;
+      background: var(--amber);
+    }
+
+    /* ============================================
+       SCROLL PROGRESS
+       ============================================ */
+    .scroll-progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--wine), var(--terracotta), var(--amber));
+      z-index: 10001;
+      width: 0%;
+      transition: none;
+    }
+
+    /* ============================================
+       NAVIGATION
+       ============================================ */
+    .site-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--nav-height);
+      background: rgba(253, 249, 243, 0.82);
+      backdrop-filter: blur(20px) saturate(1.4);
+      -webkit-backdrop-filter: blur(20px) saturate(1.4);
+      border-bottom: 1px solid rgba(107, 39, 55, 0.08);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      padding: 0 40px;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+    .site-nav.nav-hidden { transform: translateY(-100%); }
+    .site-nav.nav-scrolled { box-shadow: 0 2px 30px rgba(42, 26, 18, 0.06); }
+    .nav-brand {
+      font-family: var(--font-chinese);
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--wine);
+      white-space: nowrap;
+      margin-right: 40px;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .nav-brand:hover { color: var(--terracotta); }
+    .nav-links {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      flex: 1;
+    }
+    .nav-links::-webkit-scrollbar { display: none; }
+    .nav-links a {
+      font-family: var(--font-chinese);
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--earth-mid);
+      text-decoration: none;
+      white-space: nowrap;
+      padding: 6px 12px;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--wine);
+      background: rgba(107, 39, 55, 0.06);
+    }
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: 2px; left: 50%;
+      transform: translateX(-50%);
+      width: 4px; height: 4px;
+      background: var(--wine);
+      border-radius: 50%;
+    }
+
+    /* ============================================
+       HERO
+       ============================================ */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 700px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: url('images/hero_001.jpg') center/cover no-repeat;
+      transform: scale(1.1);
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg,
+          rgba(42, 26, 18, 0.55) 0%,
+          rgba(61, 21, 30, 0.65) 40%,
+          rgba(42, 26, 18, 0.80) 100%
+        );
+    }
+    .hero-noise {
+      position: absolute;
+      inset: 0;
+      opacity: 0.04;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      color: var(--cream);
+      padding: 0 24px;
+    }
+    .hero-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--amber-light);
+      margin-bottom: 32px;
+      opacity: 0.85;
+    }
+    .hero-title-cn {
+      font-family: var(--font-chinese);
+      font-size: clamp(4rem, 10vw, 8rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: 0.15em;
+      margin-bottom: 16px;
+      text-shadow: 0 4px 60px rgba(0,0,0,0.3);
+    }
+    .hero-title-en {
+      font-family: var(--font-display);
+      font-size: clamp(1.2rem, 3vw, 2rem);
+      font-weight: 300;
+      letter-spacing: 0.6em;
+      text-transform: uppercase;
+      color: var(--amber-light);
+      margin-bottom: 48px;
+      opacity: 0.8;
+    }
+    .hero-subtitle {
+      font-family: var(--font-chinese);
+      font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+      font-weight: 400;
+      max-width: 640px;
+      margin: 0 auto;
+      line-height: 2;
+      color: rgba(247, 242, 234, 0.8);
+    }
+    .hero-scroll-hint {
+      position: absolute;
+      bottom: 48px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+    }
+    .hero-scroll-hint .scroll-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, var(--amber-light), transparent);
+      margin: 0 auto;
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
+      50%      { opacity: 0.8; transform: scaleY(1); }
+    }
+
+    /* ============================================
+       SHARED SECTION STYLES
+       ============================================ */
+    .section {
+      padding: var(--section-gap) 40px;
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+    .section-full {
+      padding: var(--section-gap) 40px;
+      max-width: 100%;
+    }
+    .section-narrow {
+      padding: var(--section-gap) 40px;
+      max-width: var(--content-narrow);
+      margin: 0 auto;
+    }
+    .section-dark {
+      background: var(--earth);
+      color: var(--cream);
+    }
+    .section-cream {
+      background: var(--cream);
+    }
+    .section-wine {
+      background: var(--wine-dark);
+      color: var(--cream);
+    }
+
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-label::before {
+      content: '';
+      display: inline-block;
+      width: 24px;
+      height: 1px;
+      background: var(--terracotta);
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      font-weight: 400;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      letter-spacing: -0.01em;
+    }
+    .section-title-cn {
+      font-family: var(--font-chinese);
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 12px;
+    }
+    .section-intro {
+      font-family: var(--font-chinese);
+      font-size: 1.05rem;
+      line-height: 2;
+      color: var(--earth-mid);
+      max-width: 680px;
+      margin-bottom: 60px;
+    }
+    .section-dark .section-intro { color: rgba(247,242,234,0.7); }
+    .section-dark .section-title { color: var(--cream); }
+    .section-dark .section-title-cn { color: var(--cream); }
+    .section-wine .section-intro { color: rgba(247,242,234,0.7); }
+
+    /* Decorative Divider */
+    .divider {
+      width: 100%;
+      max-width: var(--content-max);
+      margin: 0 auto;
+      padding: 0 40px;
+      height: 1px;
+      position: relative;
+    }
+    .divider::after {
+      content: '';
+      position: absolute;
+      left: 40px; right: 40px;
+      top: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--clay), transparent);
+      opacity: 0.3;
+    }
+    .divider-diamond {
+      text-align: center;
+      padding: 20px 0;
+    }
+    .divider-diamond::before {
+      content: '';
+      display: inline-block;
+      width: 8px; height: 8px;
+      background: var(--wine);
+      transform: rotate(45deg);
+      opacity: 0.4;
+    }
+
+    /* ============================================
+       REVEAL ANIMATIONS
+       ============================================ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .reveal.revealed { opacity: 1; transform: translateY(0); }
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-50px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal-left.revealed { opacity: 1; transform: translateX(0); }
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(50px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal-right.revealed { opacity: 1; transform: translateX(0); }
+    .reveal-scale {
+      opacity: 0;
+      transform: scale(0.92);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal-scale.revealed { opacity: 1; transform: scale(1); }
+
+    .stagger > * {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .stagger.revealed > * { opacity: 1; transform: translateY(0); }
+    .stagger.revealed > *:nth-child(1) { transition-delay: 0.05s; }
+    .stagger.revealed > *:nth-child(2) { transition-delay: 0.12s; }
+    .stagger.revealed > *:nth-child(3) { transition-delay: 0.19s; }
+    .stagger.revealed > *:nth-child(4) { transition-delay: 0.26s; }
+    .stagger.revealed > *:nth-child(5) { transition-delay: 0.33s; }
+    .stagger.revealed > *:nth-child(6) { transition-delay: 0.40s; }
+    .stagger.revealed > *:nth-child(7) { transition-delay: 0.47s; }
+    .stagger.revealed > *:nth-child(8) { transition-delay: 0.54s; }
+    .stagger.revealed > *:nth-child(9) { transition-delay: 0.61s; }
+
+    /* ============================================
+       PULL QUOTES
+       ============================================ */
+    .pull-quote {
+      text-align: center;
+      padding: 80px 40px;
+      max-width: 800px;
+      margin: 80px auto;
+      position: relative;
+    }
+    .pull-quote::before,
+    .pull-quote::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 1px;
+      background: var(--wine);
+      margin: 0 auto 40px;
+      opacity: 0.4;
+    }
+    .pull-quote::after { margin: 40px auto 0; }
+    .pull-quote blockquote {
+      font-family: var(--font-chinese);
+      font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+      font-weight: 500;
+      line-height: 2;
+      color: var(--wine-dark);
+      font-style: normal;
+    }
+    .pull-quote cite {
+      display: block;
+      margin-top: 24px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-style: normal;
+      letter-spacing: 0.1em;
+      color: var(--earth-mid);
+    }
+
+    /* ============================================
+       PRINCIPLE CARDS
+       ============================================ */
+    .principles-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+      margin-top: 60px;
+    }
+    .principle-card {
+      background: var(--parchment);
+      border: 1px solid rgba(107, 39, 55, 0.08);
+      border-radius: 4px;
+      padding: 40px 36px;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      position: relative;
+    }
+    .principle-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 60px rgba(42, 26, 18, 0.08);
+    }
+    .principle-number {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      font-weight: 300;
+      color: var(--amber);
+      line-height: 1;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+    .principle-dot {
+      display: inline-block;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+    .dot-wine { background: var(--wine); }
+    .dot-terracotta { background: var(--terracotta); }
+    .dot-amber { background: var(--amber); }
+    .dot-sage { background: var(--sage); }
+    .dot-clay { background: var(--clay); }
+    .dot-earth { background: var(--earth); }
+    .dot-light { background: var(--wine-light); }
+    .dot-cream { background: var(--cream-deep); border: 1px solid var(--clay); }
+    .principle-title {
+      font-family: var(--font-chinese);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--wine-dark);
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+    .principle-desc {
+      font-family: var(--font-chinese);
+      font-size: 0.92rem;
+      line-height: 1.9;
+      color: var(--earth-mid);
+    }
+
+    /* ============================================
+       COMPARISON BLOCK (Table)
+       ============================================ */
+    .comparison-block {
+      margin-top: 80px;
+      background: var(--cream);
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid rgba(107,39,55,0.06);
+    }
+    .comparison-header {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      background: var(--wine-dark);
+      color: var(--cream);
+    }
+    .comparison-header div {
+      padding: 20px 24px;
+      font-family: var(--font-chinese);
+      font-weight: 600;
+      font-size: 0.88rem;
+      text-align: center;
+      border-right: 1px solid rgba(247,242,234,0.1);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .comparison-header div:last-child { border-right: none; }
+    .comparison-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-bottom: 1px solid rgba(107,39,55,0.06);
+    }
+    .comparison-row:last-child { border-bottom: none; }
+    .comparison-row div {
+      padding: 16px 24px;
+      font-family: var(--font-chinese);
+      font-size: 0.85rem;
+      line-height: 1.7;
+      text-align: center;
+      border-right: 1px solid rgba(107,39,55,0.06);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .comparison-row div:last-child { border-right: none; }
+    .comparison-row .highlight-col {
+      background: rgba(107, 39, 55, 0.04);
+    }
+
+    /* ============================================
+       TIMELINE
+       ============================================ */
+    .timeline {
+      position: relative;
+      padding: 40px 0;
+      margin-top: 60px;
+    }
+    .timeline-line {
+      position: absolute;
+      left: 50%;
+      top: 0; bottom: 0;
+      width: 2px;
+      background: rgba(107, 39, 55, 0.12);
+      transform: translateX(-50%);
+    }
+    .timeline-line-fill {
+      position: absolute;
+      left: 0; top: 0;
+      width: 100%;
+      height: 0%;
+      background: linear-gradient(to bottom, var(--wine), var(--terracotta));
+      transition: height 0.1s linear;
+    }
+    .timeline-item {
+      position: relative;
+      width: 50%;
+      padding: 0 60px 80px;
+    }
+    .timeline-item:nth-child(odd) {
+      left: 0;
+      text-align: right;
+      padding-right: 60px;
+      padding-left: 0;
+    }
+    .timeline-item:nth-child(even) {
+      left: 50%;
+      text-align: left;
+      padding-left: 60px;
+      padding-right: 0;
+    }
+    .timeline-dot {
+      position: absolute;
+      top: 6px;
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: var(--parchment);
+      border: 2px solid var(--wine);
+      z-index: 2;
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+    .timeline-dot.active {
+      background: var(--wine);
+      transform: scale(1.3);
+    }
+    .timeline-item:nth-child(odd) .timeline-dot { right: -7px; }
+    .timeline-item:nth-child(even) .timeline-dot { left: -7px; }
+    .timeline-year {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      color: var(--terracotta);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+    .timeline-title {
+      font-family: var(--font-chinese);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--wine-dark);
+      margin-bottom: 8px;
+      line-height: 1.5;
+    }
+    .timeline-desc {
+      font-family: var(--font-chinese);
+      font-size: 0.88rem;
+      line-height: 1.9;
+      color: var(--earth-mid);
+    }
+
+    /* ============================================
+       SPECTRUM
+       ============================================ */
+    .spectrum-flow {
+      display: flex;
+      gap: 0;
+      margin-top: 60px;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .spectrum-card {
+      flex: 1;
+      padding: 40px 28px;
+      text-align: center;
+      transition: flex 0.4s ease;
+      position: relative;
+      cursor: pointer;
+    }
+    .spectrum-card:hover { flex: 1.5; }
+    .spectrum-card .s-level {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      opacity: 0.7;
+    }
+    .spectrum-card .s-title {
+      font-family: var(--font-chinese);
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .spectrum-card .s-desc {
+      font-family: var(--font-chinese);
+      font-size: 0.8rem;
+      line-height: 1.7;
+      opacity: 0.85;
+    }
+    .spectrum-card:nth-child(1) { background: #E8DDD0; color: var(--earth); }
+    .spectrum-card:nth-child(2) { background: #C5C9A8; color: var(--earth); }
+    .spectrum-card:nth-child(3) { background: var(--sage); color: #fff; }
+    .spectrum-card:nth-child(4) { background: var(--terracotta); color: #fff; }
+    .spectrum-card:nth-child(5) { background: var(--wine); color: var(--cream); }
+    .spectrum-card:nth-child(6) { background: var(--amber); color: var(--earth); }
+    .spectrum-card:nth-child(7) { background: var(--wine-light); color: var(--cream); }
+    .spectrum-card:nth-child(8) { background: #6B7B6E; color: var(--cream); }
+
+    /* ============================================
+       STYLE CARDS
+       ============================================ */
+    .styles-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin-top: 60px;
+    }
+    .style-card {
+      position: relative;
+      padding: 52px 36px 40px;
+      border-radius: 4px;
+      overflow: hidden;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      border: 1px solid rgba(107,39,55,0.06);
+      background: var(--parchment);
+    }
+    .style-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 64px rgba(42,26,18,0.08);
+    }
+    .style-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 4px;
+    }
+    .style-card:nth-child(1)::before { background: var(--amber); }
+    .style-card:nth-child(2)::before { background: var(--terracotta); }
+    .style-card:nth-child(3)::before { background: var(--wine-light); }
+    .style-card:nth-child(4)::before { background: var(--earth); }
+    .style-card:nth-child(5)::before { background: var(--clay); }
+    .style-card:nth-child(6)::before { background: var(--sage); }
+    .style-tag {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      margin-bottom: 16px;
+    }
+    .style-name {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 500;
+      color: var(--wine-dark);
+      margin-bottom: 4px;
+    }
+    .style-name-cn {
+      font-family: var(--font-chinese);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--earth-mid);
+      margin-bottom: 16px;
+    }
+    .style-desc {
+      font-family: var(--font-chinese);
+      font-size: 0.88rem;
+      line-height: 1.9;
+      color: var(--earth-mid);
+    }
+
+    /* ============================================
+       TECHNIQUE CARDS (Dark Section)
+       ============================================ */
+    .techniques-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      margin-top: 60px;
+    }
+    .technique-card {
+      padding: 48px;
+      border-right: 1px solid rgba(247,242,234,0.08);
+      position: relative;
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+    .technique-card:last-child { border-right: none; }
+    .technique-num {
+      font-family: var(--font-display);
+      font-size: 4rem;
+      font-weight: 300;
+      color: var(--amber);
+      opacity: 0.3;
+      line-height: 1;
+      margin-bottom: 24px;
+    }
+    .technique-name-cn {
+      font-family: var(--font-chinese);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--cream);
+      margin-bottom: 4px;
+    }
+    .technique-name-en {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-style: italic;
+      color: var(--amber-light);
+      opacity: 0.7;
+      margin-bottom: 20px;
+    }
+    .technique-desc {
+      font-family: var(--font-chinese);
+      font-size: 0.92rem;
+      line-height: 1.9;
+      color: rgba(247,242,234,0.7);
+    }
+
+    /* ============================================
+       REGION CARDS
+       ============================================ */
+    .region-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 60px;
+    }
+    .region-card {
+      padding: 32px;
+      background: var(--parchment);
+      border: 1px solid rgba(107,39,55,0.06);
+      border-radius: 4px;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+    .region-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 60px rgba(42,26,18,0.08);
+    }
+    .region-flag {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: var(--terracotta);
+      margin-bottom: 12px;
+    }
+    .region-name {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 500;
+      color: var(--wine-dark);
+      margin-bottom: 4px;
+    }
+    .region-name-cn {
+      font-family: var(--font-chinese);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--earth-mid);
+      margin-bottom: 16px;
+    }
+    .region-desc {
+      font-family: var(--font-chinese);
+      font-size: 0.88rem;
+      line-height: 1.9;
+      color: var(--earth-mid);
+    }
+    .region-brands {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      color: var(--clay);
+      margin-top: 16px;
+    }
+
+    /* ============================================
+       COCKTAIL CARDS
+       ============================================ */
+    .cocktail-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin-top: 60px;
+    }
+    .cocktail-card {
+      position: relative;
+      padding: 52px 36px 40px;
+      border-radius: 4px;
+      overflow: hidden;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      border: 1px solid rgba(107,39,55,0.06);
+      background: var(--parchment);
+    }
+    .cocktail-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 64px rgba(42,26,18,0.08);
+    }
+    .cocktail-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 4px;
+    }
+    .cocktail-card:nth-child(1)::before { background: var(--sage); }
+    .cocktail-card:nth-child(2)::before { background: var(--wine); }
+    .cocktail-card:nth-child(3)::before { background: var(--terracotta); }
+    .cocktail-card:nth-child(4)::before { background: var(--amber); }
+    .cocktail-card:nth-child(5)::before { background: var(--wine-light); }
+    .cocktail-card:nth-child(6)::before { background: var(--clay); }
+    .cocktail-era {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      margin-bottom: 16px;
+    }
+    .cocktail-name {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 500;
+      color: var(--wine-dark);
+      margin-bottom: 4px;
+    }
+    .cocktail-name-cn {
+      font-family: var(--font-chinese);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--earth-mid);
+      margin-bottom: 16px;
+    }
+    .cocktail-desc {
+      font-family: var(--font-chinese);
+      font-size: 0.88rem;
+      line-height: 1.9;
+      color: var(--earth-mid);
+    }
+
+    /* ============================================
+       STAT CARDS
+       ============================================ */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-top: 60px;
+    }
+    .stat-card {
+      padding: 40px 20px;
+      background: var(--parchment);
+      border: 1px solid rgba(107,39,55,0.06);
+      border-radius: 4px;
+      text-align: center;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+    .stat-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 48px rgba(42,26,18,0.06);
+    }
+    .stat-value {
+      font-family: var(--font-display);
+      font-size: 2.8rem;
+      font-weight: 300;
+      color: var(--wine);
+      line-height: 1.1;
+    }
+    .stat-label {
+      font-family: var(--font-chinese);
+      font-size: 0.82rem;
+      line-height: 1.5;
+      color: var(--earth-mid);
+      margin-top: 12px;
+    }
+    .stat-source {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--clay);
+      margin-top: 8px;
+    }
+
+    /* ============================================
+       DEBATE / TREND COLUMNS
+       ============================================ */
+    .debate-columns {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+      margin-top: 60px;
+    }
+    .debate-col {
+      padding: 48px;
+      border-radius: 4px;
+    }
+    .debate-col.col-controversy {
+      background: rgba(107, 39, 55, 0.04);
+      border-left: 4px solid var(--wine);
+    }
+    .debate-col.col-future {
+      background: rgba(122, 140, 110, 0.08);
+      border-left: 4px solid var(--sage);
+    }
+    .debate-col .col-icon {
+      width: 24px; height: 24px;
+      margin-bottom: 20px;
+    }
+    .debate-col .col-icon.triangle {
+      background: var(--terracotta);
+      clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    }
+    .debate-col .col-icon.circle {
+      background: var(--sage);
+      border-radius: 50%;
+    }
+    .debate-col h3 {
+      font-family: var(--font-chinese);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--wine-dark);
+      margin-bottom: 16px;
+    }
+    .debate-col p {
+      font-family: var(--font-chinese);
+      font-size: 0.92rem;
+      line-height: 1.9;
+      color: var(--earth-mid);
+    }
+
+    /* ============================================
+       TREND CARDS
+       ============================================ */
+    .trends-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 60px;
+    }
+    .trend-card {
+      padding: 36px 28px;
+      background: var(--parchment);
+      border: 1px solid rgba(107,39,55,0.06);
+      border-radius: 4px;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .trend-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 48px rgba(42,26,18,0.06);
+    }
+    .trend-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 100%; height: 3px;
+    }
+    .trend-card:nth-child(1)::after { background: var(--sage); }
+    .trend-card:nth-child(2)::after { background: var(--terracotta); }
+    .trend-card:nth-child(3)::after { background: var(--amber-light); }
+    .trend-card:nth-child(4)::after { background: var(--wine); }
+    .trend-card:nth-child(5)::after { background: var(--clay); }
+    .trend-card:nth-child(6)::after { background: var(--wine-light); }
+    .trend-title {
+      font-family: var(--font-chinese);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--wine-dark);
+      margin-bottom: 12px;
+    }
+    .trend-desc {
+      font-family: var(--font-chinese);
+      font-size: 0.88rem;
+      line-height: 1.9;
+      color: var(--earth-mid);
+    }
+
+    /* ============================================
+       FOOTER
+       ============================================ */
+    .site-footer {
+      background: var(--earth);
+      padding: 80px 40px 40px;
+      text-align: center;
+      color: var(--cream);
+    }
+    .footer-title {
+      font-family: var(--font-chinese);
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--amber-light);
+    }
+    .footer-subtitle {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-style: italic;
+      color: rgba(247,242,234,0.5);
+      margin-top: 8px;
+    }
+    .footer-divider {
+      width: 40px; height: 1px;
+      background: var(--amber);
+      margin: 32px auto;
+      opacity: 0.4;
+    }
+    .footer-meta {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      color: rgba(247,242,234,0.6);
+    }
+    .footer-links {
+      margin-top: 24px;
+    }
+    .footer-links a {
+      font-family: var(--font-chinese);
+      font-size: 0.85rem;
+      color: rgba(247,242,234,0.7);
+      text-decoration: none;
+      transition: color 0.3s ease;
+      margin: 0 16px;
+    }
+    .footer-links a:hover { color: var(--amber-light); }
+
+    /* ============================================
+       RESPONSIVE
+       ============================================ */
+    @media (max-width: 1200px) {
+      .principles-grid { grid-template-columns: repeat(2, 1fr); }
+      .stat-grid { grid-template-columns: repeat(2, 1fr); }
+      .techniques-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 900px) {
+      :root { --section-gap: 100px; }
+      .section, .section-full, .section-narrow { padding-left: 24px; padding-right: 24px; }
+      .principles-grid, .styles-grid, .techniques-grid, .trends-grid, .cocktail-grid { grid-template-columns: 1fr; }
+      .region-grid { grid-template-columns: repeat(2, 1fr); }
+      .timeline-item, .timeline-item:nth-child(odd), .timeline-item:nth-child(even) {
+        width: 100%; left: 0;
+        text-align: left;
+        padding-left: 40px;
+        padding-right: 0;
+      }
+      .timeline-line { left: 16px; transform: none; }
+      .timeline-dot { left: 9px !important; right: auto !important; }
+      .spectrum-flow { flex-direction: column; }
+      .spectrum-card:hover { flex: 1; }
+      .debate-columns { grid-template-columns: 1fr; }
+      .comparison-header, .comparison-row { grid-template-columns: 1fr; }
+      .comparison-header div, .comparison-row div { text-align: left; }
+    }
+    @media (max-width: 640px) {
+      :root { --section-gap: 80px; --nav-height: 56px; }
+      .hero-title-cn { letter-spacing: 0.08em; }
+      .hero-title-en { letter-spacing: 0.3em; }
+      .region-grid, .stat-grid { grid-template-columns: 1fr; }
+      .cursor-dot { display: none !important; }
+      body { cursor: auto; }
+    }
+
+    @media print {
+      .site-nav, .scroll-progress, .cursor-dot { display: none; }
+      .hero { min-height: auto; padding: 60px 40px; background: none !important; }
+      .hero-bg, .hero-overlay, .hero-noise, .hero-scroll-hint { display: none; }
+      .hero-content { color: var(--earth); }
+      .hero-title-cn, .hero-title-en, .hero-subtitle { text-shadow: none; }
+      .section-dark, .section-wine { background: var(--parchment); color: var(--earth); }
+      .section-dark .section-title, .section-dark .section-title-cn { color: var(--wine-dark); }
+      .section-dark .section-intro { color: var(--earth-mid); }
+      .reveal, .reveal-left, .reveal-right, .reveal-scale, .stagger, .stagger > * {
+        opacity: 1 !important; transform: none !important; transition: none !important;
+      }
+      .principle-card, .style-card, .region-card, .cocktail-card, .stat-card, .trend-card, .technique-card {
+        break-inside: avoid; box-shadow: none; border: 1px solid #ccc;
+      }
+      .timeline-line, .timeline-line-fill, .timeline-dot { display: none; }
+      body { font-size: 11pt; color: #000; background: #fff; }
+      a { color: inherit; text-decoration: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal, .reveal-left, .reveal-right, .reveal-scale { opacity: 1; transform: none; transition: 0.01ms; }
+      .stagger > * { opacity: 1; transform: none; transition: 0.01ms; }
+      .cursor-dot { display: none !important; }
+      body { cursor: auto; }
+      .hero-scroll-hint .scroll-line { animation: none; }
+      .spectrum-card { transition: none; }
+      .principle-card, .style-card, .region-card, .cocktail-card, .stat-card, .trend-card { transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Custom Cursor -->
+<div class="cursor-dot" id="cursorDot"></div>
+
+<!-- Scroll Progress -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- Navigation -->
+<nav class="site-nav" id="siteNav" aria-label="Main navigation">
+  <a href="/wines/" class="nav-brand">金酒</a>
+  <div class="nav-links">
+    <a href="#definition">定义</a>
+    <a href="#history">历史</a>
+    <a href="#classification">分类</a>
+    <a href="#production">工艺</a>
+    <a href="#regions">全球</a>
+    <a href="#cocktails">鸡尾酒</a>
+    <a href="#trends">趋势</a>
+    <a href="#market">市场</a>
+  </div>
+</nav>
+
+<!-- ==================== HERO ==================== -->
+<header class="hero" id="top">
+  <div class="hero-bg" data-parallax="0.3"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-noise"></div>
+  <div class="hero-content" data-parallax="0.15">
+    <p class="hero-label">Spirits · 烈酒知识</p>
+    <h1 class="hero-title-cn">金酒</h1>
+    <p class="hero-title-en">Gin</p>
+    <p class="hero-subtitle">从荷兰杜松子酒到全球精酿复兴<br>一部横跨四百年的植物蒸馏传奇</p>
+  </div>
+  <div class="hero-scroll-hint">
+    <div class="scroll-line"></div>
+  </div>
+</header>
+
+<!-- ==================== §1 DEFINITION ==================== -->
+<div class="divider"><div class="divider-diamond"></div></div>
+
+<section class="section" id="definition">
+  <div class="section-label">§1</div>
+  <h2 class="section-title-cn">什么是金酒</h2>
+  <h2 class="section-title">What Is Gin?</h2>
+  <p class="section-intro">一种以杜松子为核心植物成分的蒸馏烈酒，承载着四百年的工艺传承与文化演变。法律定义要求杜松子风味须为主导性且可识别的——这不仅是风味标准，更是法律底线。</p>
+
+  <div class="principles-grid stagger">
+    <div class="principle-card">
+      <p class="principle-number">01</p>
+      <h3 class="principle-title"><span class="principle-dot dot-sage"></span>杜松子 · Juniper</h3>
+      <p class="principle-desc">金酒的灵魂成分。杜松子提供标志性的松脂清香（α-pinene），这是金酒的法律定义核心——没有杜松子的主导风味，就不叫金酒。主要来源为地中海区域的刺柏浆果。</p>
+    </div>
+    <div class="principle-card">
+      <p class="principle-number">02</p>
+      <h3 class="principle-title"><span class="principle-dot dot-terracotta"></span>植物配方 · Botanicals</h3>
+      <p class="principle-desc">除杜松子外，金酒可包含任意数量的辅助植物。经典"三大支柱"为芫荽籽（Coriander，柑橘辛香）、当归根（Angelica，泥土定香）、柑橘皮（Citrus，清新明亮）。现代金酒的植物配方可多达30余种。</p>
+    </div>
+    <div class="principle-card">
+      <p class="principle-number">03</p>
+      <h3 class="principle-title"><span class="principle-dot dot-amber"></span>蒸馏工艺 · Distillation</h3>
+      <p class="principle-desc">金酒的制作始于中性基酒（通常为谷物蒸馏的高度白酒），再通过浸泡法或蒸气注入法提取植物风味。铜壶蒸馏器产出浓郁复杂的风味，柱式蒸馏器产出纯净轻盈的酒体。</p>
+    </div>
+    <div class="principle-card">
+      <p class="principle-number">04</p>
+      <h3 class="principle-title"><span class="principle-dot dot-clay"></span>全球传承 · Global Heritage</h3>
+      <p class="principle-desc">从17世纪荷兰的 Jenever 到英国的 Gin Craze，从殖民时代的金汤力到日本和式金酒的东方美学，金酒的历史是一部跨文化的植物蒸馏叙事，如今在六大洲焕发精酿复兴。</p>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stat-grid stagger" style="margin-top:80px;">
+    <div class="stat-card">
+      <p class="stat-value" data-count="400+">0</p>
+      <p class="stat-label">年历史跨度<br>Since Jenever (1600s)</p>
+      <p class="stat-source">Difford's Guide</p>
+    </div>
+    <div class="stat-card">
+      <p class="stat-value" data-count="37.5">0</p>
+      <p class="stat-label">最低ABV (%)<br>EU Regulation 2019/787</p>
+      <p class="stat-source">EU Spirit Regulation</p>
+    </div>
+    <div class="stat-card">
+      <p class="stat-value" data-count="8+">0</p>
+      <p class="stat-label">主要分类<br>Gin Style Categories</p>
+      <p class="stat-source">Gin Foundry</p>
+    </div>
+    <div class="stat-card">
+      <p class="stat-value" data-count="$15.7B">0</p>
+      <p class="stat-label">全球市场规模<br>Market Size 2024</p>
+      <p class="stat-source">Grand View Research</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== §2 HISTORY ==================== -->
+<div class="divider"><div class="divider-diamond"></div></div>
+
+<section class="section section-cream" id="history">
+  <div class="section-label">§2</div>
+  <h2 class="section-title-cn">历史脉络</h2>
+  <h2 class="section-title">History & Origins</h2>
+  <p class="section-intro">从荷兰药酒到全球烈酒之王，金酒的四百年跌宕传奇。</p>
+
+  <div class="timeline reveal">
+    <div class="timeline-line"><div class="timeline-line-fill"></div></div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <p class="timeline-year">1600s</p>
+      <h3 class="timeline-title">荷兰起源 · Jenever</h3>
+      <p class="timeline-desc">荷兰医生 Franciscus Sylvius 推广杜松子浸泡蒸馏酒作为药酒 Jenever（传统叙事归功于他，但 Jenever 的实际历史更早），用于治疗肾结石和胃病。士兵饮用暖身，称之为"荷兰勇气"（<span lang="en">Dutch Courage</span>）。这便是金酒的前身。</p>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <p class="timeline-year">1720s–1751</p>
+      <h3 class="timeline-title">金酒狂潮 · Gin Craze</h3>
+      <p class="timeline-desc">威廉三世放宽蒸馏限制，金酒涌入英国。伦敦人均年消费达10升纯酒精。街头标语"Gin: Drunk for a penny, Dead drunk for twopence"折射了社会灾难。1751年 Gin Act 终收紧管制。</p>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <p class="timeline-year">1830s</p>
+      <h3 class="timeline-title">伦敦干金酒诞生 · London Dry</h3>
+      <p class="timeline-desc">Aeneas Coffey 发明连续柱式蒸馏器，使蒸馏效率大幅提升。由此诞生了更纯净、更干爽的 London Dry Gin 风格——不加甜味、植物风味通过蒸馏提取而非浸泡添加。</p>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <p class="timeline-year">1800s–1900s</p>
+      <h3 class="timeline-title">殖民传播 · Gin & Tonic</h3>
+      <p class="timeline-desc">英国殖民者将金酒带到印度、非洲、东南亚。为对抗疟疾，将奎宁溶于碳酸水制成汤力水，再与金酒混合——Gin & Tonic 就此诞生，成为帝国社交的标志性饮品。</p>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <p class="timeline-year">1920–1933</p>
+      <h3 class="timeline-title">禁酒令 · Prohibition</h3>
+      <p class="timeline-desc">美国禁酒令期间"浴缸金酒"泛滥——劣质基酒加杜松子油勾兑。但也催生了鸡尾酒文化：混饮掩盖劣质风味，Martini 和 Negroni 的经典配方在此时期逐渐定型。</p>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <p class="timeline-year">2000s–Now</p>
+      <h3 class="timeline-title">精酿复兴 · Craft Gin Revolution</h3>
+      <p class="timeline-desc">Sipsmith 获伦敦首张小型蒸馏许可，点燃精酿金酒运动。全球涌现数千家小型蒸馏厂，从日本和式到澳洲本土植物，金酒从"酒吧基酒"重新升华为"匠心烈酒"。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== §3 CLASSIFICATION ==================== -->
+<div class="divider"><div class="divider-diamond"></div></div>
+
+<section class="section" id="classification">
+  <div class="section-label">§3</div>
+  <h2 class="section-title-cn">分类体系</h2>
+  <h2 class="section-title">Gin Classification</h2>
+  <p class="section-intro">从传统荷式到现代新西方，八大金酒风格的定义、法规与风味特征。</p>
+
+  <!-- Spectrum Flow -->
+  <div class="spectrum-flow reveal">
+    <div class="spectrum-card">
+      <p class="s-level">Level 1</p>
+      <h4 class="s-title">Genever</h4>
+      <p class="s-desc">荷式杜松子酒，麦芽酒基底，丰满厚重</p>
+    </div>
+    <div class="spectrum-card">
+      <p class="s-level">Level 2</p>
+      <h4 class="s-title">London Dry</h4>
+      <p class="s-desc">金酒黄金标准，纯净干爽</p>
+    </div>
+    <div class="spectrum-card">
+      <p class="s-level">Level 3</p>
+      <h4 class="s-title">Plymouth</h4>
+      <p class="s-desc">GI保护，圆润泥土感</p>
+    </div>
+    <div class="spectrum-card">
+      <p class="s-level">Level 4</p>
+      <h4 class="s-title">Old Tom</h4>
+      <p class="s-desc">轻度甜化，桥梁风格</p>
+    </div>
+    <div class="spectrum-card">
+      <p class="s-level">Level 5</p>
+      <h4 class="s-title">Navy Strength</h4>
+      <p class="s-desc">57%+ ABV，浓缩强劲</p>
+    </div>
+    <div class="spectrum-card">
+      <p class="s-level">Level 6</p>
+      <h4 class="s-title">New Western</h4>
+      <p class="s-desc">创意植物，杜松子不再绝对主导</p>
+    </div>
+    <div class="spectrum-card">
+      <p class="s-level">Level 7</p>
+      <h4 class="s-title">Sloe Gin</h4>
+      <p class="s-desc">黑刺李浸泡，甜润果香</p>
+    </div>
+    <div class="spectrum-card">
+      <p class="s-level">Level 8</p>
+      <h4 class="s-title">Compound</h4>
+      <p class="s-desc">调配金酒，最低品质等级</p>
+    </div>
+  </div>
+
+  <!-- Detailed classification table -->
+  <div class="comparison-block reveal">
+    <div class="comparison-header">
+      <div>分类</div>
+      <div>法规要求</div>
+      <div>ABV</div>
+      <div>风味特征</div>
+    </div>
+    <div class="comparison-row">
+      <div><strong>Genever</strong><br>荷式杜松子酒</div>
+      <div>EU独立分类：含≥30%麦芽酒(Malt Wine)；杜松子须主导</div>
+      <div>30–38%</div>
+      <div>麦芽谷物底蕴，杜松子草本，饱满厚重</div>
+    </div>
+    <div class="comparison-row">
+      <div><strong>London Dry</strong><br>伦敦干金酒</div>
+      <div>≤0.1g/L甜味；杜松子须源自蒸馏；不可添加色素/香料</div>
+      <div>≥37.5%<br>(通常40%+)</div>
+      <div class="highlight-col">纯净干爽，杜松子主导，柑橘辛香</div>
+    </div>
+    <div class="comparison-row">
+      <div><strong>Plymouth</strong><br>普利茅斯金酒</div>
+      <div>地理标志保护(GI)；仅在Plymouth郡生产；典型41.2% ABV</div>
+      <div>≥41.2%</div>
+      <div>圆润饱满，当归根泥土感更重</div>
+    </div>
+    <div class="comparison-row">
+      <div><strong>Old Tom</strong><br>老汤姆金酒</div>
+      <div>归类为Gin/Distilled Gin；行业惯例允许甜化（约≤20g/L）</div>
+      <div>≥37.5%<br>(通常40-47%)</div>
+      <div>半甜，柔和杜松子，带麦芽余韵</div>
+    </div>
+    <div class="comparison-row">
+      <div><strong>Navy Strength</strong><br>海军强度</div>
+      <div>无独立法规；按基础分类+≥57% ABV</div>
+      <div>≥57%</div>
+      <div>浓缩版风味，更强劲饱满</div>
+    </div>
+    <div class="comparison-row">
+      <div><strong>New Western</strong><br>新西方金酒</div>
+      <div>归类为Distilled Gin；杜松子须存在但不必绝对主导</div>
+      <div>≥37.5%<br>(通常41-45%)</div>
+      <div class="highlight-col">创意植物主导：黄瓜、玫瑰、日本植物</div>
+    </div>
+    <div class="comparison-row">
+      <div><strong>Sloe Gin</strong><br>黑刺李金酒</div>
+      <div>归类为Gin-based Liqueur；浸泡工艺</div>
+      <div>25–30%</div>
+      <div>甜润果香，红宝石色，黑刺李酸涩</div>
+    </div>
+    <div class="comparison-row">
+      <div><strong>Compound</strong><br>调配金酒</div>
+      <div>最低等级；允许浸泡后添加风味</div>
+      <div>≥37.5%</div>
+      <div>粗糙简单，缺乏层次</div>
+    </div>
+  </div>
+
+  <!-- Representative brands as style cards -->
+  <div class="styles-grid stagger" style="margin-top:60px;">
+    <div class="style-card">
+      <p class="style-tag">London Dry · 法定标准</p>
+      <h3 class="style-name">Beefeater</h3>
+      <p class="style-name-cn">比费特金酒</p>
+      <p class="style-desc">1863年起在伦敦蒸馏，经典London Dry标杆。12种植物配方，杜松子主导，芫荽籽柑橘辛香鲜明。</p>
+    </div>
+    <div class="style-card">
+      <p class="style-tag">New Western · 创意先锋</p>
+      <h3 class="style-name">Hendrick's</h3>
+      <p class="style-name-cn">亨德里克金酒</p>
+      <p class="style-desc">黄瓜与保加利亚玫瑰花瓣是其标志性植物。蒸气注入法蒸馏，完全颠覆London Dry范式，开创New Western风格。</p>
+    </div>
+    <div class="style-card">
+      <p class="style-tag">Craft · 精酿领袖</p>
+      <h3 class="style-name">Sipsmith</h3>
+      <p class="style-name-cn">西普史密斯</p>
+      <p class="style-desc">2009年获伦敦200年来首张小型蒸馏许可，点燃全球精酿金酒运动。伦敦手工壶式蒸馏，品质标杆。</p>
+    </div>
+    <div class="style-card">
+      <p class="style-tag">Japanese · 和式美学</p>
+      <h3 class="style-name">Roku</h3>
+      <p class="style-name-cn">六金酒</p>
+      <p class="style-desc">三得利出品，六种日本季节植物：樱花、樱叶、煎茶、山椒、柚子、柚子皮。每个季节的味道凝聚于一瓶。</p>
+    </div>
+    <div class="style-card">
+      <p class="style-tag">Australian · 本土植物</p>
+      <h3 class="style-name">Four Pillars</h3>
+      <p class="style-name-cn">四柱金酒</p>
+      <p class="style-desc">澳洲最受认可的精酿金酒品牌。使用柠檬桃金娘、手指青柠等本土植物。Bloody Shiraz Gin 将Shiraz葡萄浸泡于金酒中。</p>
+    </div>
+    <div class="style-card">
+      <p class="style-tag">Mediterranean · 地中海</p>
+      <h3 class="style-name">Gin Mare</h3>
+      <p class="style-name-cn">地中海金酒</p>
+      <p class="style-desc">使用橄榄、番茄、迷迭香和百里香——地中海风味的金酒表达。西班牙Gin-Tonic文化的精酿代表。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== §4 PRODUCTION ==================== -->
+<div class="divider"><div class="divider-diamond"></div></div>
+
+<section class="section-full section-dark" id="production">
+  <div style="max-width: var(--content-max); margin: 0 auto;">
+    <div class="section-label">§4</div>
+    <h2 class="section-title-cn">生产工艺</h2>
+    <h2 class="section-title">Production & Craft</h2>
+    <p class="section-intro">蒸馏方法、植物提取工艺与配方艺术——金酒风味的科学密码。</p>
+
+    <div class="techniques-grid stagger">
+      <div class="technique-card">
+        <p class="technique-num">01</p>
+        <h3 class="technique-name-cn">浸泡法</h3>
+        <p class="technique-name-en">Maceration</p>
+        <p class="technique-desc">将植物配方直接浸泡在中性基酒中数小时至数天，让风味物质充分释放。浸泡后酒液与植物一同进入壶式蒸馏器。产出风味浓郁厚重、层次复杂的金酒。</p>
+      </div>
+      <div class="technique-card">
+        <p class="technique-num">02</p>
+        <h3 class="technique-name-cn">蒸气注入法</h3>
+        <p class="technique-name-en">Vapor Infusion</p>
+        <p class="technique-desc">将植物置于蒸馏器顶部的金酒篮子中。加热基酒产生的蒸气穿过植物时提取挥发性萜烯化合物。产出更轻盈清新、芳香优雅的金酒。</p>
+      </div>
+      <div class="technique-card">
+        <p class="technique-num">03</p>
+        <h3 class="technique-name-cn">壶式蒸馏</h3>
+        <p class="technique-name-en">Pot Still</p>
+        <p class="technique-desc">传统铜壶蒸馏器，每次蒸馏为一批次。产出风味更浓郁、更复杂。大多数精酿金酒和高端金酒使用壶式蒸馏。蒸馏师通过"切点"精确控制风味区间。</p>
+      </div>
+    </div>
+
+    <!-- Pull quote inside dark section -->
+    <div class="pull-quote" style="margin-top:60px;">
+      <blockquote style="color: var(--cream);">金酒风味的"三大支柱"——杜松子提供松脂清香（α-pinene），芫荽籽贡献柑橘辛香（linalool），当归根赋予泥土定香（phthalides）。这三者构成金酒风味建筑的基石。</blockquote>
+      <cite style="color: rgba(247,242,234,0.5);">— Distilling.com: An Introduction to Gin Botanicals</cite>
+    </div>
+
+    <!-- Botanical cards inside dark section -->
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 60px;" class="stagger">
+      <div style="padding: 36px 28px; border-radius: 4px; border: 1px solid rgba(247,242,234,0.08);">
+        <p style="font-family: var(--font-display); font-size: 1.6rem; font-weight: 500; color: var(--amber-light); margin-bottom: 4px;">Juniper</p>
+        <p style="font-family: var(--font-chinese); font-size: 1rem; font-weight: 600; color: var(--cream); margin-bottom: 16px;">杜松子</p>
+        <p style="font-family: var(--font-chinese); font-size: 0.88rem; line-height: 1.9; color: rgba(247,242,234,0.7);">松脂清香，α-pinene 为主。地中海刺柏浆果，金酒的法定灵魂。</p>
+      </div>
+      <div style="padding: 36px 28px; border-radius: 4px; border: 1px solid rgba(247,242,234,0.08);">
+        <p style="font-family: var(--font-display); font-size: 1.6rem; font-weight: 500; color: var(--amber-light); margin-bottom: 4px;">Coriander</p>
+        <p style="font-family: var(--font-chinese); font-size: 1rem; font-weight: 600; color: var(--cream); margin-bottom: 16px;">芫荽籽</p>
+        <p style="font-family: var(--font-chinese); font-size: 0.88rem; line-height: 1.9; color: rgba(247,242,234,0.7);">柑橘辛香，linalool 为核心。来自摩洛哥/印度，金酒的第二支柱。</p>
+      </div>
+      <div style="padding: 36px 28px; border-radius: 4px; border: 1px solid rgba(247,242,234,0.08);">
+        <p style="font-family: var(--font-display); font-size: 1.6rem; font-weight: 500; color: var(--amber-light); margin-bottom: 4px;">Angelica</p>
+        <p style="font-family: var(--font-chinese); font-size: 1rem; font-weight: 600; color: var(--cream); margin-bottom: 16px;">当归根</p>
+        <p style="font-family: var(--font-chinese); font-size: 0.88rem; line-height: 1.9; color: rgba(247,242,234,0.7);">泥土定香，phthalides 提供结构感。来自欧洲/中国，"风味锚点"。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== §5 GLOBAL REGIONS ==================== -->
+<div class="divider"><div class="divider-diamond"></div></div>
+
+<section class="section section-cream" id="regions">
+  <div class="section-label">§5</div>
+  <h2 class="section-title-cn">世界金酒地图</h2>
+  <h2 class="section-title">Gin Around the World</h2>
+  <p class="section-intro">六大洲金酒风格——每片土地都有自己的植物配方语言。</p>
+
+  <div class="region-grid stagger">
+    <div class="region-card">
+      <p class="region-flag">GBR</p>
+      <h3 class="region-name">United Kingdom</h3>
+      <p class="region-name-cn">英国 · London Dry 传统</p>
+      <p class="region-desc">伦敦干金酒的诞生地与法律定义发源地。2008年 Sipsmith 获伦敦200年来首张小型蒸馏许可，如今英国拥有400+蒸馏厂。</p>
+      <p class="region-brands">Beefeater · Tanqueray · Gordon's · Sipsmith · Hendrick's</p>
+    </div>
+    <div class="region-card">
+      <p class="region-flag">NLD</p>
+      <h3 class="region-name">Netherlands</h3>
+      <p class="region-name-cn">荷兰 · Genever 传统</p>
+      <p class="region-desc">金酒的祖先——Genever 使用麦芽酒为基底，杜松子风味通过壶式蒸馏提取。风格分为 Ouve（丰满谷物）和 Jonge（更轻盈中性）。</p>
+      <p class="region-brands">Bols · Boomsma · Genever de Munnik · Filliers</p>
+    </div>
+    <div class="region-card">
+      <p class="region-flag">JPN</p>
+      <h3 class="region-name">Japan</h3>
+      <p class="region-name-cn">日本 · 和式金酒</p>
+      <p class="region-desc">融入"旬"（季节感）哲学，使用柚子、山椒、樱花、煎茶、丝柏等本土植物。Ki No Bi 使用11种日本植物分三组蒸馏再调和。</p>
+      <p class="region-brands">Ki No Bi · Roku · Nikka Coffey Gin · Oi</p>
+    </div>
+    <div class="region-card">
+      <p class="region-flag">USA</p>
+      <h3 class="region-name">United States</h3>
+      <p class="region-name-cn">美国 · 精酿金酒运动</p>
+      <p class="region-desc">打破 London Dry 范式束缚。New Western 风格允许杜松子之外的风味平等表达。美国没有金酒法规定义限制，创意自由度全球最高。</p>
+      <p class="region-brands">St. George · Aviation · Grey Whale · Rusty Blade</p>
+    </div>
+    <div class="region-card">
+      <p class="region-flag">AUS</p>
+      <h3 class="region-name">Australia</h3>
+      <p class="region-name-cn">澳大利亚 · 本土植物金酒</p>
+      <p class="region-desc">以本土植物为灵魂：柠檬桃金娘、手指青柠、金合欢籽、quandong。Four Pillars 的 Bloody Shiraz Gin 将红葡萄浸泡于金酒中。</p>
+      <p class="region-brands">Four Pillars · Never Never · Adelaide Hills · Bass & Flinders</p>
+    </div>
+    <div class="region-card">
+      <p class="region-flag">ESP</p>
+      <h3 class="region-name">Spain</h3>
+      <p class="region-name-cn">西班牙 · Gin-Tonic 文化</p>
+      <p class="region-desc">全球最热烈的 Gin-Tonic 文化——超大杯气球杯、冰块堆砌、精美植物点缀。西班牙将 Gin-Tonic 升华为社交仪式。</p>
+      <p class="region-brands">Gin Mare · Larios · Nordés · 100% Premium</p>
+    </div>
+    <div class="region-card">
+      <p class="region-flag">IND</p>
+      <h3 class="region-name">India</h3>
+      <p class="region-name-cn">印度 · 新兴精酿</p>
+      <p class="region-desc">全球金酒消费量最大国家之一。本土植物配方融入姜黄、生姜、柠檬草、咖喱叶等印度香料。</p>
+      <p class="region-brands">Greater Than · Jodhpur · Stranger & Sons · Samsara</p>
+    </div>
+    <div class="region-card">
+      <p class="region-flag">ZAF</p>
+      <h3 class="region-name">South Africa</h3>
+      <p class="region-name-cn">南非 · Fynbos 金酒</p>
+      <p class="region-desc">以独有的 Fynbos 生物群落植物为特色——路易波士、蜜灌木、buchu。这些植物在全球金酒世界中无任何平行替代。</p>
+      <p class="region-brands">Inverroche · Black Snake · Hope on Hopkins · Stillwolf</p>
+    </div>
+    <div class="region-card">
+      <p class="region-flag">SWE</p>
+      <h3 class="region-name">Nordic</h3>
+      <p class="region-name-cn">北欧 · 采摘文化金酒</p>
+      <p class="region-desc">继承深厚采摘文化传统，使用沙棘、越橘、云杉嫩芽、桦树叶等极地植物。北欧金酒的清冽美学——冰原植物、纯净蒸馏、极简表达。</p>
+      <p class="region-brands">Agitator · Helsinki · Kyrö · Skåne</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== §6 COCKTAILS ==================== -->
+<div class="divider"><div class="divider-diamond"></div></div>
+
+<section class="section" id="cocktails">
+  <div class="section-label">§6</div>
+  <h2 class="section-title-cn">经典鸡尾酒</h2>
+  <h2 class="section-title">Classic Gin Cocktails</h2>
+  <p class="section-intro">金酒是鸡尾酒世界最 versatile 的基酒——六大经典配方及其故事。</p>
+
+  <div class="cocktail-grid stagger">
+    <div class="cocktail-card">
+      <p class="cocktail-era">Circa 1800s · Colonial India</p>
+      <h3 class="cocktail-name">Gin & Tonic</h3>
+      <p class="cocktail-name-cn">金汤力</p>
+      <p class="cocktail-desc">英殖民者在印度将奎宁水与金酒混合对抗疟疾，意外创造了全球最受欢迎的金酒鸡尾酒。一杯好的G&T需要：高品质金酒、冰块、汤力水、柑橘点缀。</p>
+    </div>
+    <div class="cocktail-card">
+      <p class="cocktail-era">Circa 1900s · Prohibition Era</p>
+      <h3 class="cocktail-name">Martini</h3>
+      <p class="cocktail-name-cn">马丁尼</p>
+      <p class="cocktail-desc">"鸡尾酒中的鸡尾酒"。干马丁尼：金酒+干味美思，橄榄或柠檬皮点缀。禁酒令时期，混饮掩盖劣质金酒催生了此经典配方。</p>
+    </div>
+    <div class="cocktail-card">
+      <p class="cocktail-era">Circa 1919 · Florence, Italy</p>
+      <h3 class="cocktail-name">Negroni</h3>
+      <p class="cocktail-name-cn">尼格罗尼</p>
+      <p class="cocktail-desc">1:1:1的完美等式：金酒·Campari·红味美思。Camillo Negroni 在佛罗伦萨将Americano中的苏打水换成金酒，苦甜交织，层次深邃。</p>
+    </div>
+    <div class="cocktail-card">
+      <p class="cocktail-era">Circa 1870s · London</p>
+      <h3 class="cocktail-name">Tom Collins</h3>
+      <p class="cocktail-name-cn">汤姆柯林斯</p>
+      <p class="cocktail-desc">金酒+柠檬汁+糖+苏打水，长饮杯服务。清爽酸甜，夏天最解渴的金酒鸡尾酒。最初使用Old Tom Gin，名字源于一个恶作剧传说。</p>
+    </div>
+    <div class="cocktail-card">
+      <p class="cocktail-era">Circa 1915 · Raffles Hotel</p>
+      <h3 class="cocktail-name">Singapore Sling</h3>
+      <p class="cocktail-name-cn">新加坡司令</p>
+      <p class="cocktail-desc">金酒+樱桃白兰地+味美思+Benedictine+青柠汁+菠萝汁+Grenadine。粉红色长饮，殖民地社交的象征。</p>
+    </div>
+    <div class="cocktail-card">
+      <p class="cocktail-era">Circa 1920s · Detroit / Seattle</p>
+      <h3 class="cocktail-name">Last Word</h3>
+      <p class="cocktail-name-cn">最后的话</p>
+      <p class="cocktail-desc">1:1:1:1等比例：金酒·绿查特露斯·马拉斯奇诺利口酒·青柠汁。被遗忘半个世纪后由 Seattle 酒吧重新发掘，成为精酿酒吧标志性鸡尾酒。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== §7 TRENDS ==================== -->
+<div class="divider"><div class="divider-diamond"></div></div>
+
+<section class="section section-cream" id="trends">
+  <div class="section-label">§7</div>
+  <h2 class="section-title-cn">当代趋势与争议</h2>
+  <h2 class="section-title">Contemporary Trends</h2>
+  <p class="section-intro">精酿复兴、可持续生产与风味创新——金酒的未来正在被重新书写。</p>
+
+  <div class="debate-columns stagger">
+    <div class="debate-col col-controversy">
+      <div class="col-icon triangle"></div>
+      <h3>争议与挑战</h3>
+      <p>金酒总销量下降2.8-3.5%，但超高端价值增长5-9%。"品质化悖论"引发讨论：精酿品牌能否在大众市场中维持差异化？过度创新是否会让金酒失去"杜松子"这一法定灵魂？低度/无酒精金酒是否还算"金酒"？市场泡沫是否即将破裂？</p>
+    </div>
+    <div class="debate-col col-future">
+      <div class="col-icon circle"></div>
+      <h3>未来方向</h3>
+      <p>"金酒的风土"概念兴起——每个产区的本土植物配方都在定义独特的地域身份。桶陈金酒、可持续生产、低度化创新成为新增长引擎。亚太地区增速最快，日本和式金酒的东方美学在全球市场获得独特定位。</p>
+    </div>
+  </div>
+
+  <div class="trends-grid stagger" style="margin-top:60px;">
+    <div class="trend-card">
+      <h3 class="trend-title">精酿蒸馏运动</h3>
+      <p class="trend-desc">全球精酿金酒蒸馏厂从2008年几十家增长到如今数千家。"小批量、手工蒸馏、本地植物"成为新范式。"喝得更少但更好"推动品质升级。</p>
+    </div>
+    <div class="trend-card">
+      <h3 class="trend-title">可持续生产</h3>
+      <p class="trend-desc">蒸馏厂从植物采购到废物处理全面拥抱可持续：本地植物减少碳排，蒸馏余热回收，废酒糟转化为饲料或燃料，有机认证逐渐成为标准。</p>
+    </div>
+    <div class="trend-card">
+      <h3 class="trend-title">低度/无酒精金酒</h3>
+      <p class="trend-desc">IWSR数据：无低度品类+9%增长，无酒精烈酒11% CAGR至2027。55%的美国饮酒者已成为"弹性素食饮酒者"。Seedlip引领无酒精金酒运动。</p>
+    </div>
+    <div class="trend-card">
+      <h3 class="trend-title">风味创新</h3>
+      <p class="trend-desc">现代金酒不再局限于杜松子主导。地域植物成为差异化核心：日本柚子、澳洲柠檬桃金娘、南非路易波士、印度姜黄。</p>
+    </div>
+    <div class="trend-card">
+      <h3 class="trend-title">地域身份崛起</h3>
+      <p class="trend-desc">"金酒的风土"概念兴起——每个产区的本土植物配方都在定义独特的地域身份，就像葡萄酒的风土一样讲述土地的语言。</p>
+    </div>
+    <div class="trend-card">
+      <h3 class="trend-title">桶陈金酒</h3>
+      <p class="trend-desc">将金酒置于橡木桶中短暂陈酿，赋予微妙木香、香料和色泽。Nikka Coffey Gin的轻柔桶陈已成为行业标杆。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== §8 MARKET ==================== -->
+<div class="divider"><div class="divider-diamond"></div></div>
+
+<section class="section" id="market">
+  <div class="section-label">§8</div>
+  <h2 class="section-title-cn">市场数据</h2>
+  <h2 class="section-title">Market & Data</h2>
+  <p class="section-intro">全球金酒市场规模、增长趋势与头部品牌格局。</p>
+
+  <div class="stat-grid stagger">
+    <div class="stat-card">
+      <p class="stat-value" data-count="$15.7B">0</p>
+      <p class="stat-label">全球市场规模 (2024)</p>
+      <p class="stat-source">Grand View Research</p>
+    </div>
+    <div class="stat-card">
+      <p class="stat-value" data-count="5.7%">0</p>
+      <p class="stat-label">CAGR 至 2030 (~$22B)</p>
+      <p class="stat-source">Growth Forecast</p>
+    </div>
+    <div class="stat-card">
+      <p class="stat-value" data-count="9%">0</p>
+      <p class="stat-label">精酿金酒价值 CAGR</p>
+      <p class="stat-source">IWSR / BeverageDaily</p>
+    </div>
+    <div class="stat-card">
+      <p class="stat-value" data-count="-3.5%">0</p>
+      <p class="stat-label">全球销量 YoY 下降</p>
+      <p class="stat-source">Premiumisation Paradox</p>
+    </div>
+  </div>
+
+  <!-- Top brands table -->
+  <div class="comparison-block reveal" style="margin-top:80px;">
+    <div class="comparison-header">
+      <div>排名</div>
+      <div>品牌</div>
+      <div>母公司</div>
+      <div>年销量</div>
+    </div>
+    <div class="comparison-row">
+      <div>#1</div>
+      <div><strong>Gordon's</strong></div>
+      <div>Diageo</div>
+      <div>~4.0M 9L箱</div>
+    </div>
+    <div class="comparison-row">
+      <div>#2</div>
+      <div><strong>Bombay Sapphire</strong></div>
+      <div>Bacardi</div>
+      <div>~3.6M 9L箱</div>
+    </div>
+    <div class="comparison-row">
+      <div>#3</div>
+      <div><strong>Hendrick's</strong></div>
+      <div>William Grant</div>
+      <div>~2.3M 9L箱</div>
+    </div>
+    <div class="comparison-row">
+      <div>#4</div>
+      <div><strong>Beefeater</strong></div>
+      <div>Pernod Ricard</div>
+      <div>~2.2M 9L箱</div>
+    </div>
+    <div class="comparison-row">
+      <div>#5</div>
+      <div><strong>Tanqueray</strong></div>
+      <div>Diageo</div>
+      <div class="highlight-col">~2.0M 9L箱</div>
+    </div>
+  </div>
+
+  <!-- Pull quote -->
+  <div class="pull-quote reveal">
+    <blockquote>IWSR 2024 数据揭示金酒市场的"品质化悖论"：全球销量下降，但超高端价值增长5-9%。精酿金酒以9% CAGR的价值增速领跑。消费者正在从"量"转向"质"——喝得更少，喝得更好。</blockquote>
+    <cite>— IWSR / The Spirits Business: Gin Category Premiumisation Trend 2024</cite>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="site-footer">
+  <p class="footer-title">金酒 · 杜松子蒸馏烈酒完全指南</p>
+  <p class="footer-subtitle">Gin — A Comprehensive Guide</p>
+  <div class="footer-divider"></div>
+  <p class="footer-meta">2025 · JadenQ · 从荷兰杜松子酒到全球精酿复兴</p>
+  <div class="footer-links">
+    <a href="/wines/">← 返回酒类知识库</a>
+    <a href="/wines/natural-wine.html">自然酒</a>
+  </div>
+</footer>
+
+<!-- ==================== JAVASCRIPT ==================== -->
+<script>
+(function() {
+  'use strict';
+
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---- Custom Cursor ----
+  const cursor = document.querySelector('.cursor-dot');
+  if (cursor && !prefersReduced) {
+    let cx = 0, cy = 0, tx = 0, ty = 0;
+    document.addEventListener('mousemove', function(e) {
+      tx = e.clientX;
+      ty = e.clientY;
+    });
+    const interactives = 'a, button, .principle-card, .style-card, .region-card, .cocktail-card, .stat-card, .trend-card, .technique-card, .spectrum-card, .comparison-row';
+    document.addEventListener('mouseover', function(e) {
+      if (e.target.closest(interactives)) cursor.classList.add('cursor-hover');
+    });
+    document.addEventListener('mouseout', function(e) {
+      if (e.target.closest(interactives)) cursor.classList.remove('cursor-hover');
+    });
+    function animateCursor() {
+      cx += (tx - cx) * 0.15;
+      cy += (ty - cy) * 0.15;
+      cursor.style.transform = 'translate(' + (cx - 4) + 'px, ' + (cy - 4) + 'px)';
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+  } else if (cursor) {
+    cursor.style.display = 'none';
+  }
+
+  // ---- Scroll Progress ----
+  const progressBar = document.querySelector('.scroll-progress');
+  function updateProgress() {
+    if (!progressBar) return;
+    const scrollTop = window.pageYOffset;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    progressBar.style.width = progress + '%';
+  }
+
+  // ---- Nav ----
+  const nav = document.querySelector('.site-nav');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  const sections = [];
+  navLinks.forEach(function(link) {
+    const href = link.getAttribute('href');
+    if (href && href.startsWith('#')) {
+      const sec = document.querySelector(href);
+      if (sec) sections.push({ el: sec, link: link });
+    }
+  });
+
+  let lastScrollY = 0;
+  function updateNav() {
+    const scrollY = window.pageYOffset;
+    if (scrollY > 100) {
+      nav.classList.add('nav-scrolled');
+      if (scrollY > lastScrollY && scrollY > 400) {
+        nav.classList.add('nav-hidden');
+      } else {
+        nav.classList.remove('nav-hidden');
+      }
+    } else {
+      nav.classList.remove('nav-scrolled');
+      nav.classList.remove('nav-hidden');
+    }
+    lastScrollY = scrollY;
+    let current = '';
+    sections.forEach(function(s) {
+      const top = s.el.offsetTop - 200;
+      if (scrollY >= top) current = s.link.getAttribute('href');
+    });
+    navLinks.forEach(function(link) {
+      link.classList.toggle('active', link.getAttribute('href') === current);
+    });
+  }
+
+  // ---- Parallax ----
+  function updateParallax() {
+    if (prefersReduced) return;
+    const scrollY = window.pageYOffset;
+    document.querySelectorAll('[data-parallax]').forEach(function(el) {
+      const speed = parseFloat(el.getAttribute('data-parallax')) || 0.2;
+      const yPos = -(scrollY * speed);
+      el.style.transform = el.classList.contains('hero-bg')
+        ? 'scale(1.1) translateY(' + yPos + 'px)'
+        : 'translateY(' + yPos + 'px)';
+    });
+  }
+
+  // ---- Reveal ----
+  if (!prefersReduced && 'IntersectionObserver' in window) {
+    const revealObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale, .stagger').forEach(function(el) {
+      revealObserver.observe(el);
+    });
+  } else {
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale, .stagger').forEach(function(el) {
+      el.classList.add('revealed');
+    });
+  }
+
+  // ---- Stats Count-Up ----
+  function animateCount(el) {
+    const target = el.getAttribute('data-count');
+    if (!target) return;
+    const parsed = parseCountTarget(target);
+    const duration = 1800;
+    const start = performance.now();
+    function step(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = parsed.start + (parsed.end - parsed.start) * eased;
+      el.textContent = formatCount(current, parsed);
+      if (progress < 1) requestAnimationFrame(step);
+      else el.textContent = target;
+    }
+    requestAnimationFrame(step);
+  }
+
+  function parseCountTarget(str) {
+    let prefix = '', suffix = '', start = 0, end = 0;
+    let cleaned = str;
+    if (cleaned.startsWith('~')) { prefix += '~'; cleaned = cleaned.slice(1); }
+    if (cleaned.startsWith('<')) { prefix += '<'; cleaned = cleaned.slice(1); }
+    if (cleaned.startsWith('+')) { prefix += '+'; cleaned = cleaned.slice(1); }
+    if (cleaned.startsWith('$')) { prefix += '$'; cleaned = cleaned.slice(1); }
+    if (cleaned.startsWith('-')) { prefix += '-'; cleaned = cleaned.slice(1); }
+    if (cleaned.endsWith('%')) { suffix = '%'; cleaned = cleaned.slice(0, -1); }
+    if (cleaned.endsWith('B')) { suffix = 'B' + suffix; cleaned = cleaned.slice(0, -1); }
+    if (cleaned.endsWith('+')) { suffix = '+' + suffix; cleaned = cleaned.slice(0, -1); }
+    const parts = cleaned.split('-');
+    start = parseFloat(parts[0]) || 0;
+    end = parts.length > 1 ? parseFloat(parts[1]) || start : start;
+    return { start: 0, end: end, prefix: prefix, suffix: suffix, hasRange: parts.length > 1, rangeStart: start };
+  }
+
+  function formatCount(val, p) {
+    const rounded = Math.round(val * 10) / 10;
+    if (p.hasRange && val >= p.rangeStart * 0.5) {
+      const s = Math.round(val * 0.77 * 10) / 10;
+      return p.prefix + (s > 0 ? Math.round(s) : 0) + '-' + Math.round(rounded) + p.suffix;
+    }
+    return p.prefix + Math.round(rounded) + p.suffix;
+  }
+
+  if ('IntersectionObserver' in window) {
+    const statObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          animateCount(entry.target);
+          statObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    document.querySelectorAll('[data-count]').forEach(function(el) {
+      statObserver.observe(el);
+    });
+  }
+
+  // ---- Timeline Line Draw ----
+  if (!prefersReduced) {
+    const timeline = document.querySelector('.timeline');
+    const timelineFill = document.querySelector('.timeline-line-fill');
+    const timelineDots = document.querySelectorAll('.timeline-dot');
+    function updateTimeline() {
+      if (!timeline || !timelineFill) return;
+      const rect = timeline.getBoundingClientRect();
+      const viewportCenter = window.innerHeight * 0.6;
+      const progress = Math.max(0, Math.min(1, (viewportCenter - rect.top) / rect.height));
+      timelineFill.style.height = (progress * 100) + '%';
+      timelineDots.forEach(function(dot) {
+        const dotRect = dot.getBoundingClientRect();
+        if (dotRect.top < viewportCenter) dot.classList.add('active');
+      });
+    }
+    window.addEventListener('scroll', updateTimeline, { passive: true });
+  }
+
+  // ---- Unified Scroll Handler ----
+  let ticking = false;
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      requestAnimationFrame(function() {
+        updateProgress();
+        updateNav();
+        updateParallax();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, { passive: true });
+
+  updateProgress();
+  updateNav();
+  updateParallax();
+
+  // ---- Smooth scroll ----
+  navLinks.forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      const href = this.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if (target) {
+          const top = target.offsetTop - 80;
+          window.scrollTo({ top: top, behavior: prefersReduced ? 'auto' : 'smooth' });
+        }
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

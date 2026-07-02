@@ -1,2793 +1,2089 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>自然酒 · Natural Wine — 完全指南</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600&family=Inter:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-/* ============================================
-   RESET & BASE
-   ============================================ */
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-:root {
-  --wine-deep: #722F37;
-  --wine-dark: #4A1C22;
-  --terracotta: #C85A54;
-  --gold: #D4A574;
-  --gold-light: #F9E4B7;
-  --cream: #F5F0E8;
-  --cream-warm: #FAF6EE;
-  --brown-deep: #2C1810;
-  --olive: #8B7355;
-  --olive-light: #A89170;
-  --white: #FEFCF7;
-  --shadow-sm: 0 2px 8px rgba(44, 24, 16, 0.08);
-  --shadow-md: 0 4px 20px rgba(44, 24, 16, 0.12);
-  --shadow-lg: 0 8px 40px rgba(44, 24, 16, 0.16);
-  --shadow-xl: 0 16px 60px rgba(44, 24, 16, 0.20);
-  --radius-sm: 6px;
-  --radius-md: 12px;
-  --radius-lg: 20px;
-  --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-html {
-  scroll-behavior: smooth;
-  font-size: 16px;
-}
-
-body {
-  font-family: 'Noto Serif SC', 'Songti SC', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  background-color: var(--cream);
-  color: var(--brown-deep);
-  line-height: 1.9;
-  letter-spacing: 0.02em;
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* Focus styles for keyboard navigation */
-a:focus-visible, button:focus-visible {
-  outline: 2px solid var(--gold);
-  outline-offset: 2px;
-  border-radius: 2px;
-}
-
-/* ============================================
-   SCROLL PROGRESS BAR
-   ============================================ */
-.scroll-progress {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 0%;
-  height: 3px;
-  background: linear-gradient(90deg, var(--wine-deep), var(--terracotta), var(--gold));
-  z-index: 9999;
-  transition: width 0.1s linear;
-}
-
-/* ============================================
-   TYPOGRAPHY
-   ============================================ */
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Noto Serif SC', 'Playfair Display', Georgia, serif;
-  font-weight: 700;
-  line-height: 1.3;
-  color: var(--wine-deep);
-}
-
-.chinese-text {
-  font-family: 'Noto Serif SC', 'Songti SC', serif;
-}
-
-/* ============================================
-   ACCESSIBILITY
-   ============================================ */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
-
-/* ============================================
-   SCROLL-TRIGGERED REVEAL ANIMATIONS
-   ============================================ */
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(40px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes fadeInLeft {
-  from { opacity: 0; transform: translateX(-40px); }
-  to { opacity: 1; transform: translateX(0); }
-}
-
-@keyframes fadeInRight {
-  from { opacity: 0; transform: translateX(40px); }
-  to { opacity: 1; transform: translateX(0); }
-}
-
-@keyframes scaleIn {
-  from { opacity: 0; transform: scale(0.92); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-@keyframes floatUp {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
-}
-
-@keyframes grapeFloat {
-  0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.08; }
-  50% { transform: translateY(-20px) rotate(5deg); opacity: 0.15; }
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 0.4; transform: scaleY(1); }
-  50% { opacity: 1; transform: scaleY(1.2); }
-}
-
-/* Reveal system — elements start hidden */
-.reveal {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-}
-
-.reveal.revealed {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.reveal-left {
-  opacity: 0;
-  transform: translateX(-40px);
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-}
-
-.reveal-left.revealed {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.reveal-right {
-  opacity: 0;
-  transform: translateX(40px);
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-}
-
-.reveal-right.revealed {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.reveal-scale {
-  opacity: 0;
-  transform: scale(0.9);
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-}
-
-.reveal-scale.revealed {
-  opacity: 1;
-  transform: scale(1);
-}
-
-/* Staggered children */
-.stagger-children > * {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-}
-
-.stagger-children.revealed > *:nth-child(1) { transition-delay: 0.05s; opacity: 1; transform: translateY(0); }
-.stagger-children.revealed > *:nth-child(2) { transition-delay: 0.12s; opacity: 1; transform: translateY(0); }
-.stagger-children.revealed > *:nth-child(3) { transition-delay: 0.19s; opacity: 1; transform: translateY(0); }
-.stagger-children.revealed > *:nth-child(4) { transition-delay: 0.26s; opacity: 1; transform: translateY(0); }
-.stagger-children.revealed > *:nth-child(5) { transition-delay: 0.33s; opacity: 1; transform: translateY(0); }
-.stagger-children.revealed > *:nth-child(6) { transition-delay: 0.40s; opacity: 1; transform: translateY(0); }
-.stagger-children.revealed > *:nth-child(7) { transition-delay: 0.47s; opacity: 1; transform: translateY(0); }
-.stagger-children.revealed > *:nth-child(8) { transition-delay: 0.54s; opacity: 1; transform: translateY(0); }
-
-/* ============================================
-   IMAGE PLACEHOLDERS
-   ============================================ */
-.img-placeholder {
-  width: 100%;
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  position: relative;
-  min-height: 260px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-size: cover;
-  background-position: center;
-  box-shadow: var(--shadow-md);
-  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.img-placeholder:hover {
-  transform: scale(1.015);
-}
-
-.img-placeholder::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(44, 24, 16, 0.15) 0%,
-    rgba(44, 24, 16, 0.05) 50%,
-    rgba(44, 24, 16, 0.25) 100%
-  );
-  pointer-events: none;
-}
-
-/* ============================================
-   DECORATIVE SVG DIVIDERS
-   ============================================ */
-.svg-divider {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px 0;
-  opacity: 0.3;
-}
-
-.svg-divider svg {
-  width: 200px;
-  height: 40px;
-}
-
-/* ============================================
-   HERO SECTION
-   ============================================ */
-.hero {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  position: relative;
-  background: linear-gradient(
-    160deg,
-    var(--wine-dark) 0%,
-    var(--wine-deep) 25%,
-    #5C2A30 45%,
-    var(--terracotta) 75%,
-    #D4887A 100%
-  );
-  padding: 60px 20px;
-  overflow: hidden;
-}
-
-.hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image:
-    radial-gradient(ellipse at 20% 50%, rgba(212, 165, 116, 0.18) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 20%, rgba(249, 228, 183, 0.12) 0%, transparent 40%),
-    radial-gradient(ellipse at 50% 80%, rgba(200, 90, 84, 0.22) 0%, transparent 50%);
-  pointer-events: none;
-}
-
-.hero::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-  opacity: 0.04;
-  pointer-events: none;
-}
-
-/* Floating decorative grape elements in hero */
-.hero-deco {
-  position: absolute;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.hero-deco-1 {
-  top: 12%;
-  left: 8%;
-  animation: grapeFloat 7s ease-in-out infinite;
-}
-
-.hero-deco-2 {
-  bottom: 18%;
-  right: 10%;
-  animation: grapeFloat 9s ease-in-out infinite 2s;
-}
-
-.hero-deco-3 {
-  top: 40%;
-  right: 5%;
-  animation: grapeFloat 8s ease-in-out infinite 4s;
-}
-
-.hero-img-placeholder {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background-image: url('images/hero_001.jpg');
-  background-size: cover;
-  background-position: center;
-  opacity: 0.35;
-  filter: saturate(0.85) brightness(0.65);
-}
-
-.hero-content {
-  position: relative;
-  z-index: 2;
-  max-width: 900px;
-}
-
-.hero-badge {
-  display: inline-block;
-  padding: 8px 24px;
-  border: 1px solid rgba(249, 228, 183, 0.4);
-  border-radius: 100px;
-  color: var(--gold-light);
-  font-size: 0.8rem;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  margin-bottom: 30px;
-  animation: fadeInUp 0.8s ease-out 0.2s backwards;
-}
-
-.hero-title-chinese {
-  font-family: 'Noto Serif SC', serif;
-  font-size: clamp(2.4rem, 6vw, 4rem);
-  color: var(--gold-light);
-  font-weight: 600;
-  letter-spacing: 14px;
-  margin-bottom: 10px;
-  animation: fadeInUp 0.8s ease-out 0.4s backwards;
-  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
-}
-
-.hero-title {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(2.5rem, 7vw, 5rem);
-  color: var(--white);
-  font-weight: 800;
-  letter-spacing: -1px;
-  margin-bottom: 10px;
-  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-  animation: fadeInUp 0.8s ease-out 0.6s backwards;
-}
-
-.hero-title-cn-sub {
-  font-family: 'Noto Serif SC', serif;
-  font-size: clamp(1rem, 2vw, 1.3rem);
-  color: rgba(249, 228, 183, 0.7);
-  font-weight: 400;
-  letter-spacing: 4px;
-  margin-bottom: 16px;
-  animation: fadeInUp 0.8s ease-out 0.7s backwards;
-}
-
-.hero-divider {
-  width: 80px;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  margin: 25px auto;
-  animation: fadeInUp 0.8s ease-out 0.8s backwards;
-}
-
-.hero-subtitle {
-  font-family: 'Noto Serif SC', serif;
-  font-size: clamp(1rem, 2.2vw, 1.3rem);
-  color: var(--gold-light);
-  font-weight: 400;
-  max-width: 650px;
-  margin: 0 auto 40px;
-  line-height: 1.9;
-  animation: fadeInUp 0.8s ease-out 1s backwards;
-}
-
-.hero-scroll {
-  animation: fadeInUp 0.8s ease-out 1.2s backwards;
-  color: rgba(249, 228, 183, 0.6);
-  font-size: 0.75rem;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  margin-top: 40px;
-}
-
-.hero-scroll::after {
-  content: '';
-  display: block;
-  width: 1px;
-  height: 40px;
-  background: rgba(249, 228, 183, 0.4);
-  margin: 12px auto 0;
-  animation: pulse 2s ease-in-out infinite;
-}
-
-/* ============================================
-   NAVIGATION
-   ============================================ */
-.nav-toc {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: rgba(254, 252, 247, 0.95);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(114, 47, 55, 0.1);
-  padding: 14px 0;
-  transition: var(--transition);
-}
-
-.nav-toc.scrolled {
-  box-shadow: 0 2px 20px rgba(44, 24, 16, 0.1);
-}
-
-.nav-toc-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  overflow-x: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.nav-toc-inner::-webkit-scrollbar {
-  display: none;
-}
-
-.nav-logo {
-  font-family: 'Noto Serif SC', serif;
-  font-size: 1.1rem;
-  color: var(--wine-deep);
-  font-weight: 600;
-  white-space: nowrap;
-  margin-right: 16px;
-  flex-shrink: 0;
-}
-
-.nav-link {
-  display: inline-block;
-  padding: 6px 14px;
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--olive);
-  text-decoration: none;
-  border-radius: 100px;
-  white-space: nowrap;
-  transition: var(--transition);
-  flex-shrink: 0;
-  font-family: 'Noto Serif SC', serif;
-}
-
-.nav-link:hover,
-.nav-link.active {
-  background: rgba(114, 47, 55, 0.08);
-  color: var(--wine-deep);
-}
-
-/* ============================================
-   CONTAINER & SECTIONS
-   ============================================ */
-.container {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 24px;
-}
-
-.container-narrow {
-  max-width: 820px;
-  margin: 0 auto;
-  padding: 0 24px;
-}
-
-section {
-  padding: 100px 0;
-  position: relative;
-}
-
-.section-header {
-  text-align: center;
-  margin-bottom: 60px;
-}
-
-.section-number {
-  display: inline-block;
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
-  font-size: 0.9rem;
-  color: var(--gold);
-  margin-bottom: 12px;
-  letter-spacing: 2px;
-}
-
-.section-title-chinese {
-  font-family: 'Noto Serif SC', serif;
-  font-size: clamp(1.5rem, 3.5vw, 2.2rem);
-  color: var(--olive);
-  font-weight: 500;
-  letter-spacing: 8px;
-  margin-bottom: 8px;
-}
-
-.section-title {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(1.8rem, 4.5vw, 2.8rem);
-  color: var(--wine-deep);
-  font-weight: 700;
-  margin-bottom: 16px;
-}
-
-.section-subtitle {
-  font-size: 1rem;
-  color: var(--olive);
-  max-width: 680px;
-  margin: 0 auto;
-  line-height: 1.9;
-  font-family: 'Noto Serif SC', serif;
-}
-
-.section-divider {
-  width: 50px;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  margin: 20px auto;
-}
-
-/* ============================================
-   SECTION 1: WHAT IS NATURAL WINE
-   ============================================ */
-.definition-section {
-  background: var(--cream);
-}
-
-.definition-hero {
-  background: linear-gradient(135deg, var(--wine-deep) 0%, #5C2A30 60%, #8B4553 100%);
-  border-radius: var(--radius-lg);
-  padding: 60px 50px;
-  color: var(--white);
-  margin-bottom: 60px;
-  position: relative;
-  overflow: hidden;
-  box-shadow: var(--shadow-xl);
-}
-
-.definition-hero::before {
-  content: '\201C';
-  position: absolute;
-  top: -20px;
-  left: 30px;
-  font-family: 'Playfair Display', serif;
-  font-size: 12rem;
-  color: rgba(212, 165, 116, 0.12);
-  line-height: 1;
-}
-
-.definition-hero p {
-  font-family: 'Noto Serif SC', serif;
-  font-size: clamp(1.05rem, 2vw, 1.25rem);
-  line-height: 2;
-  position: relative;
-  z-index: 2;
-  color: var(--gold-light);
-}
-
-.definition-hero .highlight {
-  color: var(--white);
-  font-weight: 600;
-}
-
-.principles-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 24px;
-  margin-bottom: 60px;
-}
-
-.principle-card {
-  background: var(--white);
-  border-radius: var(--radius-md);
-  padding: 32px;
-  border: 1px solid rgba(114, 47, 55, 0.08);
-  transition: var(--transition);
-  position: relative;
-  overflow: hidden;
-}
-
-.principle-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
-  border-color: rgba(114, 47, 55, 0.15);
-}
-
-.principle-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 4px;
-  height: 100%;
-  background: linear-gradient(to bottom, var(--wine-deep), var(--terracotta));
-}
-
-.principle-icon {
-  font-size: 2rem;
-  margin-bottom: 16px;
-}
-
-.principle-card h3 {
-  font-size: 1.15rem;
-  margin-bottom: 10px;
-  color: var(--wine-deep);
-}
-
-.principle-card p {
-  font-size: 0.92rem;
-  color: var(--olive);
-  line-height: 1.9;
-}
-
-/* Pull quotes */
-.pull-quote {
-  border-left: 3px solid var(--gold);
-  padding: 24px 32px;
-  margin: 40px 0;
-  background: rgba(212, 165, 116, 0.06);
-  border-radius: 0 var(--radius-md) var(--radius-md) 0;
-}
-
-.pull-quote p {
-  font-family: 'Noto Serif SC', serif;
-  font-size: 1.1rem;
-  color: var(--wine-deep);
-  line-height: 2;
-}
-
-.pull-quote cite {
-  display: block;
-  margin-top: 12px;
-  font-family: 'Noto Serif SC', sans-serif;
-  font-style: normal;
-  font-size: 0.85rem;
-  color: var(--olive);
-}
-
-/* Comparison text blocks */
-.comparison-block {
-  background: var(--white);
-  border-radius: var(--radius-md);
-  padding: 40px;
-  margin-bottom: 30px;
-  border: 1px solid rgba(114, 47, 55, 0.08);
-  transition: var(--transition);
-}
-
-.comparison-block:hover {
-  box-shadow: var(--shadow-md);
-}
-
-.comparison-block h3 {
-  font-size: 1.3rem;
-  margin-bottom: 16px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.comparison-block p {
-  font-size: 0.95rem;
-  line-height: 2;
-  color: #4A3828;
-  margin-bottom: 12px;
-}
-
-/* ============================================
-   SECTION 2: HISTORY TIMELINE
-   ============================================ */
-.timeline-section {
-  background: linear-gradient(180deg, var(--cream) 0%, var(--cream-warm) 100%);
-}
-
-.timeline-section::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23722F37' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-  pointer-events: none;
-}
-
-.timeline {
-  position: relative;
-  padding: 40px 0;
-}
-
-.timeline::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 2px;
-  height: 100%;
-  background: linear-gradient(
-    to bottom,
-    transparent,
-    var(--gold) 10%,
-    var(--gold) 90%,
-    transparent
-  );
-}
-
-.timeline-item {
-  display: flex;
-  align-items: flex-start;
-  margin-bottom: 60px;
-  position: relative;
-}
-
-.timeline-item:nth-child(odd) {
-  flex-direction: row;
-}
-
-.timeline-item:nth-child(even) {
-  flex-direction: row-reverse;
-}
-
-.timeline-content {
-  width: 45%;
-  background: var(--white);
-  border-radius: var(--radius-md);
-  padding: 32px;
-  border: 1px solid rgba(114, 47, 55, 0.08);
-  box-shadow: var(--shadow-sm);
-  transition: var(--transition);
-}
-
-.timeline-content:hover {
-  box-shadow: var(--shadow-lg);
-  transform: translateY(-3px);
-  border-color: rgba(114, 47, 55, 0.15);
-}
-
-.timeline-dot {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 18px;
-  height: 18px;
-  background: var(--wine-deep);
-  border: 3px solid var(--gold);
-  border-radius: 50%;
-  z-index: 2;
-  top: 36px;
-  box-shadow: 0 0 0 4px rgba(212, 165, 116, 0.2);
-}
-
-.timeline-date {
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
-  font-size: 0.9rem;
-  color: var(--terracotta);
-  margin-bottom: 8px;
-  letter-spacing: 1px;
-}
-
-.timeline-content h3 {
-  font-size: 1.2rem;
-  margin-bottom: 12px;
-  color: var(--wine-deep);
-}
-
-.timeline-content p {
-  font-size: 0.9rem;
-  color: var(--olive);
-  line-height: 1.9;
-}
-
-/* ============================================
-   PIONEERS SECTION
-   ============================================ */
-.pioneers-section {
-  background: var(--cream-warm);
-  position: relative;
-}
-
-.pioneers-section::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at 80% 20%, rgba(212, 165, 116, 0.06) 0%, transparent 50%);
-  pointer-events: none;
-}
-
-.pioneer-card {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 40px;
-  background: var(--white);
-  border-radius: var(--radius-lg);
-  padding: 40px;
-  margin-bottom: 30px;
-  border: 1px solid rgba(114, 47, 55, 0.08);
-  box-shadow: var(--shadow-sm);
-  transition: var(--transition);
-  position: relative;
-  z-index: 2;
-}
-
-.pioneer-card:hover {
-  box-shadow: var(--shadow-lg);
-  transform: translateY(-2px);
-}
-
-.pioneer-visual {
-  background: linear-gradient(135deg, var(--wine-deep), var(--terracotta));
-  border-radius: var(--radius-md);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 30px;
-  text-align: center;
-  min-height: 200px;
-  position: relative;
-  overflow: hidden;
-}
-
-.pioneer-visual::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at 30% 70%, rgba(249, 228, 183, 0.1) 0%, transparent 50%);
-}
-
-.pioneer-emoji {
-  font-size: 3rem;
-  margin-bottom: 12px;
-}
-
-.pioneer-years {
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
-  color: var(--gold-light);
-  font-size: 0.9rem;
-}
-
-.pioneer-role {
-  color: var(--white);
-  font-size: 0.8rem;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin-top: 8px;
-  opacity: 0.8;
-  font-family: 'Inter', sans-serif;
-}
-
-.pioneer-info h3 {
-  font-size: 1.5rem;
-  margin-bottom: 6px;
-  color: var(--wine-deep);
-}
-
-.pioneer-info .pioneer-subtitle {
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
-  color: var(--terracotta);
-  margin-bottom: 16px;
-  font-size: 1rem;
-}
-
-.pioneer-info p {
-  font-size: 0.92rem;
-  color: #4A3828;
-  line-height: 2;
-  margin-bottom: 12px;
-}
-
-/* ============================================
-   SECTION 3: THE SPECTRUM
-   ============================================ */
-.spectrum-section {
-  background: var(--cream);
-}
-
-.spectrum-flow {
-  display: flex;
-  gap: 4px;
-  margin-bottom: 40px;
-  overflow-x: auto;
-  padding-bottom: 10px;
-}
-
-.spectrum-card {
-  flex: 1;
-  min-width: 200px;
-  border-radius: var(--radius-md);
-  padding: 28px 24px;
-  color: var(--white);
-  position: relative;
-  overflow: hidden;
-  transition: var(--transition);
-}
-
-.spectrum-card:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-xl);
-}
-
-.spectrum-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: radial-gradient(circle at 80% 20%, rgba(255,255,255,0.1) 0%, transparent 50%);
-  pointer-events: none;
-}
-
-.spectrum-card.conventional {
-  background: linear-gradient(135deg, #6B7280, #4B5563);
-}
-.spectrum-card.sustainable {
-  background: linear-gradient(135deg, #5B8C5A, #3D6B3D);
-}
-.spectrum-card.organic {
-  background: linear-gradient(135deg, #7BA05B, #527A3A);
-}
-.spectrum-card.biodynamic {
-  background: linear-gradient(135deg, #8B6F47, #6B4F2F);
-}
-.spectrum-card.natural {
-  background: linear-gradient(135deg, var(--wine-deep), #5C2A30);
-}
-
-.spectrum-card h3 {
-  font-size: 1.1rem;
-  color: var(--white);
-  margin-bottom: 14px;
-  font-family: 'Playfair Display', serif;
-}
-
-.spectrum-card ul {
-  list-style: none;
-  font-size: 0.82rem;
-  line-height: 2;
-  opacity: 0.92;
-  font-family: 'Noto Serif SC', serif;
-}
-
-.spectrum-card ul li::before {
-  content: '\2192 ';
-  opacity: 0.6;
-}
-
-.spectrum-arrow {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  color: var(--gold);
-  flex-shrink: 0;
-}
-
-/* ============================================
-   SECTION 4: STYLES
-   ============================================ */
-.styles-section {
-  background: linear-gradient(180deg, var(--cream-warm) 0%, var(--cream) 100%);
-  position: relative;
-}
-
-.styles-section::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23722F37' fill-opacity='0.02' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E");
-  pointer-events: none;
-}
-
-.styles-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 28px;
-  position: relative;
-  z-index: 2;
-}
-
-.style-card {
-  background: var(--white);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  border: 1px solid rgba(114, 47, 55, 0.08);
-  transition: var(--transition);
-  box-shadow: var(--shadow-sm);
-}
-
-.style-card:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-xl);
-  border-color: rgba(114, 47, 55, 0.15);
-}
-
-.style-card-header {
-  padding: 32px 28px 20px;
-  position: relative;
-}
-
-.style-card-icon {
-  font-size: 2.8rem;
-  margin-bottom: 14px;
-  display: block;
-}
-
-.style-card-header h3 {
-  font-size: 1.3rem;
-  color: var(--wine-deep);
-  margin-bottom: 4px;
-}
-
-.style-card-header .style-french {
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
-  font-size: 0.9rem;
-  color: var(--terracotta);
-}
-
-.style-card-body {
-  padding: 0 28px 28px;
-}
-
-.style-card-body p {
-  font-size: 0.9rem;
-  color: #4A3828;
-  line-height: 1.9;
-  margin-bottom: 16px;
-}
-
-.style-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.style-tag {
-  display: inline-block;
-  padding: 4px 12px;
-  background: rgba(114, 47, 55, 0.06);
-  border-radius: 100px;
-  font-size: 0.75rem;
-  color: var(--wine-deep);
-  font-weight: 500;
-  transition: var(--transition);
-}
-
-.style-tag:hover {
-  background: rgba(114, 47, 55, 0.12);
-}
-
-/* ============================================
-   SECTION 5: REGIONS
-   ============================================ */
-.regions-section {
-  background: var(--cream);
-}
-
-.region-group {
-  margin-bottom: 50px;
-}
-
-.region-country {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 20px;
-}
-
-.region-country h3 {
-  font-size: 1.6rem;
-  color: var(--wine-deep);
-}
-
-.region-flag {
-  font-size: 1.5rem;
-}
-
-.region-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
-}
-
-.region-card {
-  background: var(--white);
-  border-radius: var(--radius-md);
-  padding: 28px;
-  border: 1px solid rgba(114, 47, 55, 0.08);
-  transition: var(--transition);
-}
-
-.region-card:hover {
-  box-shadow: var(--shadow-lg);
-  border-color: rgba(114, 47, 55, 0.15);
-  transform: translateY(-2px);
-}
-
-.region-card h4 {
-  font-size: 1.1rem;
-  color: var(--wine-deep);
-  margin-bottom: 8px;
-}
-
-.region-card p {
-  font-size: 0.88rem;
-  color: var(--olive);
-  line-height: 1.9;
-}
-
-.region-card .region-grapes {
-  margin-top: 12px;
-  font-size: 0.8rem;
-  color: var(--terracotta);
-  font-style: italic;
-}
-
-/* ============================================
-   SECTION 6: MARKET & CULTURE
-   ============================================ */
-.market-section {
-  background: linear-gradient(180deg, var(--cream-warm) 0%, var(--cream) 100%);
-}
-
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 24px;
-  margin-bottom: 60px;
-}
-
-.stat-card {
-  background: var(--white);
-  border-radius: var(--radius-lg);
-  padding: 36px 28px;
-  text-align: center;
-  border: 1px solid rgba(114, 47, 55, 0.08);
-  box-shadow: var(--shadow-sm);
-  transition: var(--transition);
-  position: relative;
-  overflow: hidden;
-}
-
-.stat-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(to right, var(--wine-deep), var(--terracotta), var(--gold));
-}
-
-.stat-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
-}
-
-.stat-value {
-  font-family: 'Playfair Display', serif;
-  font-size: 2.8rem;
-  font-weight: 800;
-  color: var(--wine-deep);
-  line-height: 1.1;
-  margin-bottom: 8px;
-}
-
-.stat-label {
-  font-size: 0.85rem;
-  color: var(--olive);
-  font-weight: 500;
-  margin-bottom: 4px;
-  font-family: 'Noto Serif SC', serif;
-}
-
-.stat-detail {
-  font-size: 0.78rem;
-  color: var(--olive-light);
-  font-style: italic;
-}
-
-.culture-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 24px;
-}
-
-.culture-card {
-  background: var(--white);
-  border-radius: var(--radius-md);
-  padding: 32px;
-  border: 1px solid rgba(114, 47, 55, 0.08);
-  transition: var(--transition);
-}
-
-.culture-card:hover {
-  box-shadow: var(--shadow-md);
-}
-
-.culture-card h3 {
-  font-size: 1.15rem;
-  color: var(--wine-deep);
-  margin-bottom: 16px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.culture-card ul {
-  list-style: none;
-  padding: 0;
-}
-
-.culture-card ul li {
-  padding: 8px 0;
-  font-size: 0.88rem;
-  color: #4A3828;
-  border-bottom: 1px solid rgba(114, 47, 55, 0.06);
-  line-height: 1.7;
-}
-
-.culture-card ul li:last-child {
-  border-bottom: none;
-}
-
-.culture-card ul li strong {
-  color: var(--wine-deep);
-}
-
-/* ============================================
-   SECTION 7: CONTROVERSIES & FUTURE
-   ============================================ */
-.controversies-section {
-  background: var(--cream);
-}
-
-.two-column {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 32px;
-  margin-bottom: 40px;
-}
-
-.column-card {
-  background: var(--white);
-  border-radius: var(--radius-lg);
-  padding: 36px;
-  border: 1px solid rgba(114, 47, 55, 0.08);
-  transition: var(--transition);
-}
-
-.column-card:hover {
-  box-shadow: var(--shadow-md);
-}
-
-.column-card h3 {
-  font-size: 1.3rem;
-  margin-bottom: 20px;
-  color: var(--wine-deep);
-}
-
-.column-card h4 {
-  font-size: 1rem;
-  color: var(--terracotta);
-  margin-bottom: 8px;
-  margin-top: 20px;
-}
-
-.column-card h4:first-of-type {
-  margin-top: 0;
-}
-
-.column-card p {
-  font-size: 0.9rem;
-  color: #4A3828;
-  line-height: 1.9;
-  margin-bottom: 8px;
-}
-
-.future-box {
-  background: linear-gradient(135deg, var(--wine-deep) 0%, #5C2A30 50%, var(--terracotta) 100%);
-  border-radius: var(--radius-lg);
-  padding: 50px;
-  color: var(--white);
-  position: relative;
-  overflow: hidden;
-  box-shadow: var(--shadow-xl);
-}
-
-.future-box::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at 80% 20%, rgba(212, 165, 116, 0.15) 0%, transparent 50%);
-}
-
-.future-box h3 {
-  font-size: 1.8rem;
-  color: var(--gold-light);
-  margin-bottom: 24px;
-  position: relative;
-  z-index: 2;
-}
-
-.future-trends {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
-  position: relative;
-  z-index: 2;
-}
-
-.trend-item {
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: var(--radius-md);
-  border: 1px solid rgba(249, 228, 183, 0.15);
-  transition: var(--transition);
-}
-
-.trend-item:hover {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(249, 228, 183, 0.3);
-  transform: translateY(-2px);
-}
-
-.trend-item h4 {
-  font-size: 1rem;
-  color: var(--gold-light);
-  margin-bottom: 8px;
-}
-
-.trend-item p {
-  font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.8);
-  line-height: 1.8;
-}
-
-/* ============================================
-   GRAPE VARIETIES
-   ============================================ */
-.grapes-section {
-  background: var(--cream-warm);
-}
-
-.grapes-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
-}
-
-.grape-card {
-  background: var(--white);
-  border-radius: var(--radius-md);
-  padding: 28px;
-  border: 1px solid rgba(114, 47, 55, 0.08);
-  transition: var(--transition);
-}
-
-.grape-card:hover {
-  box-shadow: var(--shadow-lg);
-  transform: translateY(-3px);
-}
-
-.grape-card h4 {
-  font-size: 1.1rem;
-  color: var(--wine-deep);
-  margin-bottom: 6px;
-}
-
-.grape-card .grape-type {
-  font-size: 0.78rem;
-  color: var(--terracotta);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 10px;
-  font-weight: 600;
-}
-
-.grape-card p {
-  font-size: 0.88rem;
-  color: var(--olive);
-  line-height: 1.9;
-}
-
-/* ============================================
-   TECHNIQUES
-   ============================================ */
-.techniques-section {
-  background: var(--cream);
-  position: relative;
-}
-
-.techniques-section::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23722F37' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-  pointer-events: none;
-}
-
-.techniques-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 24px;
-  position: relative;
-  z-index: 2;
-}
-
-.technique-card {
-  background: var(--white);
-  border-radius: var(--radius-md);
-  padding: 32px;
-  border: 1px solid rgba(114, 47, 55, 0.08);
-  transition: var(--transition);
-}
-
-.technique-card:hover {
-  box-shadow: var(--shadow-lg);
-  transform: translateY(-3px);
-  border-color: rgba(114, 47, 55, 0.15);
-}
-
-.technique-card h3 {
-  font-size: 1.15rem;
-  color: var(--wine-deep);
-  margin-bottom: 12px;
-}
-
-.technique-card p {
-  font-size: 0.9rem;
-  color: #4A3828;
-  line-height: 1.9;
-}
-
-/* ============================================
-   CERTIFICATIONS TABLE
-   ============================================ */
-.cert-table-wrapper {
-  overflow-x: auto;
-  margin: 40px 0;
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-md);
-}
-
-.cert-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: var(--white);
-  font-size: 0.88rem;
-}
-
-.cert-table thead {
-  background: linear-gradient(135deg, var(--wine-deep), #5C2A30);
-}
-
-.cert-table thead th {
-  padding: 16px 20px;
-  color: var(--gold-light);
-  font-family: 'Noto Serif SC', 'Playfair Display', serif;
-  font-weight: 600;
-  text-align: left;
-  font-size: 0.95rem;
-}
-
-.cert-table tbody tr {
-  border-bottom: 1px solid rgba(114, 47, 55, 0.06);
-  transition: var(--transition);
-}
-
-.cert-table tbody tr:hover {
-  background: rgba(212, 165, 116, 0.06);
-}
-
-.cert-table tbody td {
-  padding: 14px 20px;
-  color: #4A3828;
-  line-height: 1.6;
-  vertical-align: top;
-}
-
-.cert-table tbody td:first-child {
-  font-weight: 600;
-  color: var(--wine-deep);
-}
-
-/* ============================================
-   KEY DATES
-   ============================================ */
-.key-dates {
-  background: var(--white);
-  border-radius: var(--radius-lg);
-  padding: 40px;
-  border: 1px solid rgba(114, 47, 55, 0.08);
-  margin-top: 50px;
-  box-shadow: var(--shadow-sm);
-}
-
-.key-dates h3 {
-  font-size: 1.5rem;
-  color: var(--wine-deep);
-  margin-bottom: 24px;
-  text-align: center;
-}
-
-.key-dates-list {
-  display: grid;
-  gap: 16px;
-}
-
-.key-date-item {
-  display: grid;
-  grid-template-columns: 150px 1fr;
-  gap: 20px;
-  padding: 12px 0;
-  border-bottom: 1px solid rgba(114, 47, 55, 0.06);
-}
-
-.key-date-item:last-child {
-  border-bottom: none;
-}
-
-.key-date-year {
-  font-family: 'Playfair Display', serif;
-  font-weight: 700;
-  color: var(--terracotta);
-  font-size: 1rem;
-}
-
-.key-date-desc {
-  font-size: 0.9rem;
-  color: #4A3828;
-  line-height: 1.8;
-}
-
-/* ============================================
-   FOOTER
-   ============================================ */
-.site-footer {
-  background: linear-gradient(180deg, var(--brown-deep) 0%, #1A0E08 100%);
-  color: rgba(249, 228, 183, 0.7);
-  padding: 60px 0 40px;
-  text-align: center;
-  position: relative;
-}
-
-.site-footer::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-}
-
-.footer-content {
-  max-width: 700px;
-  margin: 0 auto;
-  padding: 0 24px;
-}
-
-.footer-title {
-  font-family: 'Noto Serif SC', serif;
-  font-size: 1.4rem;
-  color: var(--gold);
-  margin-bottom: 8px;
-  letter-spacing: 4px;
-}
-
-.footer-subtitle {
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
-  color: rgba(249, 228, 183, 0.5);
-  margin-bottom: 30px;
-}
-
-.footer-divider {
-  width: 40px;
-  height: 1px;
-  background: var(--gold);
-  margin: 24px auto;
-  opacity: 0.4;
-}
-
-.footer-meta {
-  font-size: 0.8rem;
-  line-height: 1.9;
-  opacity: 0.6;
-  font-family: 'Noto Serif SC', serif;
-}
-
-.footer-credits {
-  margin-top: 30px;
-  font-size: 0.75rem;
-  opacity: 0.4;
-}
-
-/* ============================================
-   RESPONSIVE
-   ============================================ */
-@media (max-width: 900px) {
-  .two-column {
-    grid-template-columns: 1fr;
-  }
-
-  .pioneer-card {
-    grid-template-columns: 1fr;
-  }
-
-  .timeline::before {
-    left: 20px;
-  }
-
-  .timeline-item,
-  .timeline-item:nth-child(even) {
-    flex-direction: row;
-    padding-left: 50px;
-  }
-
-  .timeline-content {
-    width: 100%;
-  }
-
-  .timeline-dot {
-    left: 20px;
-    transform: translateX(-50%);
-  }
-
-  .key-date-item {
-    grid-template-columns: 1fr;
-    gap: 4px;
-  }
-}
-
-@media (max-width: 640px) {
-  section {
-    padding: 60px 0;
-  }
-
-  .hero {
-    padding: 40px 16px;
-  }
-
-  .hero-title-chinese {
-    letter-spacing: 6px;
-  }
-
-  .definition-hero {
-    padding: 36px 28px;
-  }
-
-  .pioneer-card {
-    padding: 24px;
-  }
-
-  .future-box {
-    padding: 30px 24px;
-  }
-
-  .nav-toc-inner {
-    padding: 0 12px;
-  }
-
-  .spectrum-flow {
-    flex-direction: column;
-  }
-
-  .spectrum-arrow {
-    transform: rotate(90deg);
-  }
-
-  .stats-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .section-title-chinese {
-    letter-spacing: 4px;
-  }
-}
-
-/* ============================================
-   PRINT STYLES
-   ============================================ */
-@media print {
-  .scroll-progress,
-  .nav-toc,
-  .hero-deco {
-    display: none;
-  }
-
-  .hero {
-    min-height: auto;
-    padding: 60px 40px;
-    break-after: page;
-  }
-
-  section {
-    padding: 40px 0;
-    break-inside: avoid;
-  }
-
-  .timeline::before {
-    display: none;
-  }
-
-  .timeline-item {
-    flex-direction: column !important;
-    margin-bottom: 30px;
-  }
-
-  .timeline-content {
-    width: 100%;
-  }
-
-  .timeline-dot {
-    display: none;
-  }
-
-  .spectrum-flow {
-    flex-direction: column;
-  }
-
-  .style-card, .stat-card, .region-card, .principle-card {
-    break-inside: avoid;
-    box-shadow: none;
-    border: 1px solid #ddd;
-  }
-
-  body {
-    font-size: 11pt;
-    color: #000;
-    background: #fff;
-  }
-
-  a {
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .reveal, .reveal-left, .reveal-right, .reveal-scale {
-    opacity: 1 !important;
-    transform: none !important;
-  }
-
-  .stagger-children > * {
-    opacity: 1 !important;
-    transform: none !important;
-  }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>自然酒 — 极简干预酿造法完全指南</title>
+  <meta name="description" content="自然酒完全指南：从古老陶罐到现代革命，探索极简干预酿造法的世界。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=DM+Mono:wght@400;500&family=Noto+Serif+SC:wght@400;500;600;700&family=Outfit:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --wine: #6B2737;
+      --wine-dark: #3D151E;
+      --wine-light: #8C3A4A;
+      --terracotta: #C75B4A;
+      --amber: #D4956A;
+      --amber-light: #F0D4A8;
+      --cream: #F7F2EA;
+      --cream-deep: #EDE5D8;
+      --parchment: #FDF9F3;
+      --earth: #2A1A12;
+      --earth-mid: #5C4A3A;
+      --sage: #7A8C6E;
+      --clay: #B8917A;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'Outfit', 'Helvetica Neue', sans-serif;
+      --font-chinese: 'Noto Serif SC', 'Songti SC', serif;
+      --font-mono: 'DM Mono', 'SF Mono', monospace;
+      --section-gap: 140px;
+      --content-max: 1280px;
+      --content-narrow: 860px;
+      --nav-height: 64px;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; font-size: 16px; -webkit-text-size-adjust: 100%; }
+
+    body {
+      font-family: var(--font-body);
+      font-weight: 300;
+      color: var(--earth);
+      background: var(--parchment);
+      line-height: 1.8;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* Custom Cursor */
+    .cursor-dot {
+      position: fixed;
+      top: 0; left: 0;
+      width: 8px; height: 8px;
+      background: var(--wine);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 100000;
+      mix-blend-mode: difference;
+      transition: width 0.3s ease, height 0.3s ease, margin 0.3s ease;
+      will-change: transform;
+    }
+    .cursor-dot.cursor-hover {
+      width: 32px; height: 32px;
+      margin-left: -12px; margin-top: -12px;
+      background: var(--amber);
+    }
+
+    /* Scroll Progress */
+    .scroll-progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--wine), var(--terracotta), var(--amber));
+      z-index: 10001;
+      width: 0%;
+      transition: none;
+    }
+
+    /* ============================================
+       NAVIGATION
+       ============================================ */
+    .site-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--nav-height);
+      background: rgba(253, 249, 243, 0.82);
+      backdrop-filter: blur(20px) saturate(1.4);
+      -webkit-backdrop-filter: blur(20px) saturate(1.4);
+      border-bottom: 1px solid rgba(107, 39, 55, 0.08);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      padding: 0 40px;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+    .site-nav.nav-hidden { transform: translateY(-100%); }
+    .site-nav.nav-scrolled { box-shadow: 0 2px 30px rgba(42, 26, 18, 0.06); }
+    .nav-brand {
+      font-family: var(--font-chinese);
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--wine);
+      white-space: nowrap;
+      margin-right: 40px;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .nav-brand:hover {
+      color: var(--terracotta);
+    }
+    .nav-links {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      flex: 1;
+    }
+    .nav-links::-webkit-scrollbar { display: none; }
+    .nav-links a {
+      font-family: var(--font-chinese);
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--earth-mid);
+      text-decoration: none;
+      white-space: nowrap;
+      padding: 6px 12px;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--wine);
+      background: rgba(107, 39, 55, 0.06);
+    }
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: 2px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px; height: 4px;
+      background: var(--wine);
+      border-radius: 50%;
+    }
+
+    /* ============================================
+       HERO
+       ============================================ */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 700px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: url('images/hero-vineyard.jpg') center/cover no-repeat;
+      transform: scale(1.1);
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg,
+          rgba(42, 26, 18, 0.55) 0%,
+          rgba(61, 21, 30, 0.65) 40%,
+          rgba(42, 26, 18, 0.80) 100%
+        );
+    }
+    .hero-noise {
+      position: absolute;
+      inset: 0;
+      opacity: 0.04;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      color: var(--cream);
+      padding: 0 24px;
+    }
+    .hero-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--amber-light);
+      margin-bottom: 32px;
+      opacity: 0.85;
+    }
+    .hero-title-cn {
+      font-family: var(--font-chinese);
+      font-size: clamp(4rem, 10vw, 8rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: 0.15em;
+      margin-bottom: 16px;
+      text-shadow: 0 4px 60px rgba(0,0,0,0.3);
+    }
+    .hero-title-en {
+      font-family: var(--font-display);
+      font-size: clamp(1.2rem, 3vw, 2rem);
+      font-weight: 300;
+      letter-spacing: 0.6em;
+      text-transform: uppercase;
+      color: var(--amber-light);
+      margin-bottom: 48px;
+      opacity: 0.8;
+    }
+    .hero-subtitle {
+      font-family: var(--font-chinese);
+      font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+      font-weight: 400;
+      max-width: 640px;
+      margin: 0 auto;
+      line-height: 2;
+      color: rgba(247, 242, 234, 0.8);
+    }
+    .hero-scroll-hint {
+      position: absolute;
+      bottom: 48px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+    }
+    .hero-scroll-hint .scroll-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, var(--amber-light), transparent);
+      margin: 0 auto;
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
+      50% { opacity: 0.8; transform: scaleY(1); }
+    }
+
+    /* ============================================
+       SHARED SECTION STYLES
+       ============================================ */
+    .section {
+      padding: var(--section-gap) 40px;
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+    .section-full {
+      padding: var(--section-gap) 40px;
+      max-width: 100%;
+    }
+    .section-narrow {
+      padding: var(--section-gap) 40px;
+      max-width: var(--content-narrow);
+      margin: 0 auto;
+    }
+    .section-dark {
+      background: var(--earth);
+      color: var(--cream);
+    }
+    .section-cream {
+      background: var(--cream);
+    }
+    .section-wine {
+      background: var(--wine-dark);
+      color: var(--cream);
+    }
+
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-label::before {
+      content: '';
+      display: inline-block;
+      width: 24px;
+      height: 1px;
+      background: var(--terracotta);
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      font-weight: 400;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      letter-spacing: -0.01em;
+    }
+    .section-title-cn {
+      font-family: var(--font-chinese);
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 12px;
+    }
+    .section-intro {
+      font-family: var(--font-chinese);
+      font-size: 1.05rem;
+      line-height: 2;
+      color: var(--earth-mid);
+      max-width: 680px;
+      margin-bottom: 60px;
+    }
+    .section-dark .section-intro { color: rgba(247,242,234,0.7); }
+
+    /* Decorative Divider */
+    .divider {
+      width: 100%;
+      max-width: var(--content-max);
+      margin: 0 auto;
+      padding: 0 40px;
+      height: 1px;
+      position: relative;
+    }
+    .divider::after {
+      content: '';
+      position: absolute;
+      left: 40px; right: 40px;
+      top: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--clay), transparent);
+      opacity: 0.3;
+    }
+    .divider-diamond {
+      text-align: center;
+      padding: 20px 0;
+    }
+    .divider-diamond::before {
+      content: '';
+      display: inline-block;
+      width: 8px; height: 8px;
+      background: var(--wine);
+      transform: rotate(45deg);
+      opacity: 0.4;
+    }
+
+    /* ============================================
+       REVEAL ANIMATIONS
+       ============================================ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .reveal.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-50px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal-left.revealed { opacity: 1; transform: translateX(0); }
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(50px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal-right.revealed { opacity: 1; transform: translateX(0); }
+    .reveal-scale {
+      opacity: 0;
+      transform: scale(0.92);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal-scale.revealed { opacity: 1; transform: scale(1); }
+
+    .stagger > * {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .stagger.revealed > * {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .stagger.revealed > *:nth-child(1) { transition-delay: 0.05s; }
+    .stagger.revealed > *:nth-child(2) { transition-delay: 0.12s; }
+    .stagger.revealed > *:nth-child(3) { transition-delay: 0.19s; }
+    .stagger.revealed > *:nth-child(4) { transition-delay: 0.26s; }
+    .stagger.revealed > *:nth-child(5) { transition-delay: 0.33s; }
+    .stagger.revealed > *:nth-child(6) { transition-delay: 0.40s; }
+    .stagger.revealed > *:nth-child(7) { transition-delay: 0.47s; }
+    .stagger.revealed > *:nth-child(8) { transition-delay: 0.54s; }
+    .stagger.revealed > *:nth-child(9) { transition-delay: 0.61s; }
+    .stagger.revealed > *:nth-child(10) { transition-delay: 0.68s; }
+    .stagger.revealed > *:nth-child(11) { transition-delay: 0.75s; }
+    .stagger.revealed > *:nth-child(12) { transition-delay: 0.82s; }
+
+    /* ============================================
+       PULL QUOTES
+       ============================================ */
+    .pull-quote {
+      text-align: center;
+      padding: 80px 40px;
+      max-width: 800px;
+      margin: 80px auto;
+      position: relative;
+    }
+    .pull-quote::before,
+    .pull-quote::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 1px;
+      background: var(--wine);
+      margin: 0 auto 40px;
+      opacity: 0.4;
+    }
+    .pull-quote::after {
+      margin: 40px auto 0;
+    }
+    .pull-quote blockquote {
+      font-family: var(--font-chinese);
+      font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+      font-weight: 500;
+      line-height: 2;
+      color: var(--wine-dark);
+      font-style: normal;
+    }
+    .pull-quote cite {
+      display: block;
+      margin-top: 24px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-style: normal;
+      letter-spacing: 0.1em;
+      color: var(--earth-mid);
+    }
+
+    /* ============================================
+       PRINCIPLE CARDS (§1)
+       ============================================ */
+    .principles-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+      margin-top: 60px;
+    }
+    .principle-card {
+      background: var(--parchment);
+      border: 1px solid rgba(107, 39, 55, 0.08);
+      border-radius: 4px;
+      padding: 40px 36px;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      position: relative;
+    }
+    .principle-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 60px rgba(42, 26, 18, 0.08);
+    }
+    .principle-number {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      font-weight: 300;
+      color: var(--amber);
+      line-height: 1;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+    .principle-dot {
+      display: inline-block;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+    .dot-wine { background: var(--wine); }
+    .dot-terracotta { background: var(--terracotta); }
+    .dot-amber { background: var(--amber); }
+    .dot-sage { background: var(--sage); }
+    .dot-clay { background: var(--clay); }
+    .dot-earth { background: var(--earth); }
+    .dot-light { background: var(--wine-light); }
+    .dot-cream { background: var(--cream-deep); border: 1px solid var(--clay); }
+    .principle-title {
+      font-family: var(--font-chinese);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--wine-dark);
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+    .principle-desc {
+      font-family: var(--font-chinese);
+      font-size: 0.92rem;
+      line-height: 1.9;
+      color: var(--earth-mid);
+    }
+
+    /* Comparison Block */
+    .comparison-block {
+      margin-top: 80px;
+      background: var(--cream);
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid rgba(107,39,55,0.06);
+    }
+    .comparison-header {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      background: var(--wine-dark);
+      color: var(--cream);
+    }
+    .comparison-header div {
+      padding: 20px 24px;
+      font-family: var(--font-chinese);
+      font-weight: 600;
+      font-size: 0.88rem;
+      text-align: center;
+      border-right: 1px solid rgba(247,242,234,0.1);
+    }
+    .comparison-header div:last-child { border-right: none; }
+    .comparison-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-bottom: 1px solid rgba(107,39,55,0.06);
+    }
+    .comparison-row:last-child { border-bottom: none; }
+    .comparison-row div {
+      padding: 16px 24px;
+      font-family: var(--font-chinese);
+      font-size: 0.85rem;
+      line-height: 1.7;
+      text-align: center;
+      border-right: 1px solid rgba(107,39,55,0.06);
+    }
+    .comparison-row div:last-child { border-right: none; }
+    .comparison-row .highlight-col {
+      background: rgba(107, 39, 55, 0.04);
+    }
+
+    /* ============================================
+       TIMELINE (§2)
+       ============================================ */
+    .timeline {
+      position: relative;
+      padding: 40px 0;
+      margin-top: 60px;
+    }
+    .timeline-line {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: rgba(107, 39, 55, 0.12);
+      transform: translateX(-50%);
+    }
+    .timeline-line-fill {
+      position: absolute;
+      left: 0; top: 0;
+      width: 100%;
+      height: 0%;
+      background: linear-gradient(to bottom, var(--wine), var(--terracotta));
+      transition: height 0.1s linear;
+    }
+    .timeline-item {
+      position: relative;
+      width: 50%;
+      padding: 0 60px 80px;
+    }
+    .timeline-item:nth-child(odd) {
+      left: 0;
+      text-align: right;
+      padding-right: 60px;
+      padding-left: 0;
+    }
+    .timeline-item:nth-child(even) {
+      left: 50%;
+      text-align: left;
+      padding-left: 60px;
+      padding-right: 0;
+    }
+    .timeline-dot {
+      position: absolute;
+      top: 6px;
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: var(--parchment);
+      border: 2px solid var(--wine);
+      z-index: 2;
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+    .timeline-dot.active {
+      background: var(--wine);
+      transform: scale(1.3);
+    }
+    .timeline-item:nth-child(odd) .timeline-dot {
+      right: -7px;
+    }
+    .timeline-item:nth-child(even) .timeline-dot {
+      left: -7px;
+    }
+    .timeline-year {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      color: var(--terracotta);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+    .timeline-title {
+      font-family: var(--font-chinese);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--wine-dark);
+      margin-bottom: 8px;
+      line-height: 1.5;
+    }
+    .timeline-desc {
+      font-family: var(--font-chinese);
+      font-size: 0.88rem;
+      line-height: 1.9;
+      color: var(--earth-mid);
+    }
+
+    /* ============================================
+       PIONEER CARDS (§3)
+       ============================================ */
+    .pioneers-layout {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+      margin-top: 60px;
+    }
+    .pioneer-card {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 36px;
+      padding: 48px;
+      background: var(--parchment);
+      border: 1px solid rgba(107,39,55,0.06);
+      border-radius: 4px;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      align-items: start;
+    }
+    .pioneer-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 64px rgba(42,26,18,0.07);
+    }
+    .pioneer-avatar {
+      width: 120px; height: 120px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--wine), var(--terracotta));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 300;
+      color: var(--cream);
+    }
+    .pioneer-name {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 500;
+      color: var(--wine-dark);
+      margin-bottom: 4px;
+    }
+    .pioneer-years {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--earth-mid);
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+    }
+    .pioneer-role {
+      font-family: var(--font-chinese);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--terracotta);
+      margin-bottom: 16px;
+    }
+    .pioneer-bio {
+      font-family: var(--font-chinese);
+      font-size: 0.92rem;
+      line-height: 1.9;
+      color: var(--earth-mid);
+    }
+
+    .gang-card {
+      background: var(--cream);
+      padding: 48px;
+      border-radius: 4px;
+      border-left: 4px solid var(--wine);
+      margin-top: 48px;
+    }
+    .gang-card h3 {
+      font-family: var(--font-chinese);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--wine-dark);
+      margin-bottom: 16px;
+    }
+    .gang-card p {
+      font-family: var(--font-chinese);
+      font-size: 0.92rem;
+      line-height: 1.9;
+      color: var(--earth-mid);
+    }
+
+    /* ============================================
+       SPECTRUM (§4)
+       ============================================ */
+    .spectrum-flow {
+      display: flex;
+      gap: 0;
+      margin-top: 60px;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .spectrum-card {
+      flex: 1;
+      padding: 40px 28px;
+      text-align: center;
+      transition: transform 0.4s ease, flex 0.4s ease;
+      position: relative;
+      cursor: pointer;
+    }
+    .spectrum-card:hover {
+      flex: 1.5;
+    }
+    .spectrum-card .s-level {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      opacity: 0.7;
+    }
+    .spectrum-card .s-title {
+      font-family: var(--font-chinese);
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .spectrum-card .s-desc {
+      font-family: var(--font-chinese);
+      font-size: 0.8rem;
+      line-height: 1.7;
+      opacity: 0.85;
+    }
+    .spectrum-card:nth-child(1) { background: #E8DDD0; color: var(--earth); }
+    .spectrum-card:nth-child(2) { background: #C5C9A8; color: var(--earth); }
+    .spectrum-card:nth-child(3) { background: var(--sage); color: #fff; }
+    .spectrum-card:nth-child(4) { background: var(--terracotta); color: #fff; }
+    .spectrum-card:nth-child(5) { background: var(--wine); color: var(--cream); }
+
+    .cert-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 60px;
+    }
+    .cert-card {
+      padding: 32px;
+      background: var(--parchment);
+      border: 1px solid rgba(107,39,55,0.08);
+      border-radius: 4px;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+    .cert-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 48px rgba(42,26,18,0.06);
+    }
+    .cert-name {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--wine);
+      margin-bottom: 8px;
+    }
+    .cert-desc {
+      font-family: var(--font-chinese);
+      font-size: 0.85rem;
+      line-height: 1.8;
+      color: var(--earth-mid);
+    }
+
+    /* ============================================
+       STYLE CARDS (§5)
+       ============================================ */
+    .styles-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin-top: 60px;
+    }
+    .style-card {
+      position: relative;
+      padding: 52px 36px 40px;
+      border-radius: 6px;
+      overflow: hidden;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      border: 1px solid rgba(107,39,55,0.06);
+      background: var(--parchment);
+    }
+    .style-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 64px rgba(42,26,18,0.08);
+    }
+    .style-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 4px;
+    }
+    .style-card:nth-child(1)::before { background: var(--amber); }
+    .style-card:nth-child(2)::before { background: var(--terracotta); }
+    .style-card:nth-child(3)::before { background: var(--wine-light); }
+    .style-card:nth-child(4)::before { background: var(--earth); }
+    .style-card:nth-child(5)::before { background: var(--clay); }
+    .style-card:nth-child(6)::before { background: var(--sage); }
+    .style-tag {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      margin-bottom: 16px;
+    }
+    .style-name {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 500;
+      color: var(--wine-dark);
+      margin-bottom: 4px;
+    }
+    .style-name-cn {
+      font-family: var(--font-chinese);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--earth-mid);
+      margin-bottom: 16px;
+    }
+    .style-desc {
+      font-family: var(--font-chinese);
+      font-size: 0.88rem;
+      line-height: 1.9;
+      color: var(--earth-mid);
+    }
+
+    /* ============================================
+       GRAPE CARDS (§6)
+       ============================================ */
+    .grapes-container {
+      margin-top: 60px;
+    }
+    .grape-row {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 40px;
+      padding: 36px 0;
+      border-bottom: 1px solid rgba(107,39,55,0.08);
+      align-items: center;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+    .grape-row:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(42,26,18,0.04);
+    }
+    .grape-name {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--wine);
+    }
+    .grape-info {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .grape-type {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--sage);
+    }
+    .grape-desc {
+      font-family: var(--font-chinese);
+      font-size: 0.92rem;
+      line-height: 1.8;
+      color: var(--earth-mid);
+    }
+    .grape-region {
+      font-family: var(--font-chinese);
+      font-size: 0.8rem;
+      color: var(--clay);
+    }
+
+    /* ============================================
+       TECHNIQUE CARDS (§7)
+       ============================================ */
+    .techniques-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      margin-top: 60px;
+      border: 1px solid rgba(247,242,234,0.1);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .technique-card {
+      padding: 48px 36px;
+      border-right: 1px solid rgba(247,242,234,0.1);
+      border-bottom: 1px solid rgba(247,242,234,0.1);
+      transition: transform 0.4s ease, background 0.4s ease;
+      position: relative;
+    }
+    .technique-card:hover {
+      background: rgba(247,242,234,0.04);
+      transform: translateY(-4px);
+    }
+    .technique-num {
+      font-family: var(--font-display);
+      font-size: 4rem;
+      font-weight: 300;
+      color: var(--amber);
+      opacity: 0.3;
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+    .technique-name {
+      font-family: var(--font-chinese);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--cream);
+      margin-bottom: 6px;
+    }
+    .technique-en {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--amber-light);
+      margin-bottom: 16px;
+      opacity: 0.7;
+    }
+    .technique-desc {
+      font-family: var(--font-chinese);
+      font-size: 0.88rem;
+      line-height: 1.9;
+      color: rgba(247,242,234,0.7);
+    }
+
+    /* ============================================
+       REGIONS (§8)
+       ============================================ */
+    .regions-container {
+      margin-top: 60px;
+    }
+    .region-group {
+      margin-bottom: 64px;
+    }
+    .region-country {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 400;
+      color: var(--wine);
+      margin-bottom: 8px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--wine);
+      display: inline-block;
+    }
+    .region-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin-top: 24px;
+    }
+    .region-card {
+      padding: 32px;
+      background: var(--parchment);
+      border: 1px solid rgba(107,39,55,0.06);
+      border-radius: 4px;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+    .region-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 48px rgba(42,26,18,0.06);
+    }
+    .region-name {
+      font-family: var(--font-chinese);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--wine-dark);
+      margin-bottom: 8px;
+    }
+    .region-desc {
+      font-family: var(--font-chinese);
+      font-size: 0.85rem;
+      line-height: 1.8;
+      color: var(--earth-mid);
+    }
+
+    /* ============================================
+       STATS (§9)
+       ============================================ */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+      margin-top: 60px;
+    }
+    .stat-card {
+      text-align: center;
+      padding: 40px 20px;
+      background: var(--parchment);
+      border: 1px solid rgba(107,39,55,0.06);
+      border-radius: 4px;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+    .stat-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 48px rgba(42,26,18,0.06);
+    }
+    .stat-value {
+      font-family: var(--font-display);
+      font-size: 2.8rem;
+      font-weight: 300;
+      color: var(--wine);
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+    .stat-label {
+      font-family: var(--font-chinese);
+      font-size: 0.82rem;
+      color: var(--earth-mid);
+      line-height: 1.5;
+    }
+
+    /* Wine Bar Culture */
+    .culture-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin-top: 60px;
+    }
+    .culture-card {
+      padding: 40px 32px;
+      background: var(--cream);
+      border-radius: 4px;
+      border: 1px solid rgba(107,39,55,0.06);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+    .culture-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 56px rgba(42,26,18,0.06);
+    }
+    .culture-city {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 500;
+      color: var(--wine);
+      margin-bottom: 4px;
+    }
+    .culture-sub {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      color: var(--earth-mid);
+      margin-bottom: 16px;
+    }
+    .culture-desc {
+      font-family: var(--font-chinese);
+      font-size: 0.88rem;
+      line-height: 1.8;
+      color: var(--earth-mid);
+    }
+
+    /* Key Dates */
+    .dates-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 20px;
+      margin-top: 40px;
+    }
+    .date-item {
+      padding: 24px;
+      background: var(--parchment);
+      border-radius: 4px;
+      border-left: 3px solid var(--terracotta);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+    .date-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 36px rgba(42,26,18,0.05);
+    }
+    .date-when {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--terracotta);
+      letter-spacing: 0.1em;
+      margin-bottom: 6px;
+    }
+    .date-what {
+      font-family: var(--font-chinese);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--wine-dark);
+      line-height: 1.5;
+    }
+
+    /* ============================================
+       CONTROVERSY & FUTURE (§10)
+       ============================================ */
+    .debate-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      margin-top: 60px;
+    }
+    .debate-col {
+      padding: 48px;
+      border-radius: 6px;
+    }
+    .debate-col.controversy {
+      background: rgba(107,39,55,0.04);
+      border: 1px solid rgba(107,39,55,0.1);
+    }
+    .debate-col.future {
+      background: rgba(122,140,110,0.08);
+      border: 1px solid rgba(122,140,110,0.15);
+    }
+    .debate-heading {
+      font-family: var(--font-chinese);
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .debate-heading .icon-shape {
+      width: 12px; height: 12px;
+      display: inline-block;
+    }
+    .icon-shape.triangle {
+      background: var(--terracotta);
+      clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    }
+    .icon-shape.circle {
+      background: var(--sage);
+      border-radius: 50%;
+    }
+    .debate-item {
+      margin-bottom: 24px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid rgba(107,39,55,0.06);
+    }
+    .debate-col.future .debate-item {
+      border-bottom-color: rgba(122,140,110,0.12);
+    }
+    .debate-item:last-child { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
+    .debate-item h4 {
+      font-family: var(--font-chinese);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--wine-dark);
+      margin-bottom: 8px;
+    }
+    .debate-item p {
+      font-family: var(--font-chinese);
+      font-size: 0.85rem;
+      line-height: 1.8;
+      color: var(--earth-mid);
+    }
+
+    .trends-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 60px;
+    }
+    .trend-card {
+      padding: 36px 28px;
+      background: var(--parchment);
+      border: 1px solid rgba(107,39,55,0.06);
+      border-radius: 4px;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .trend-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 48px rgba(42,26,18,0.06);
+    }
+    .trend-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 100%; height: 3px;
+      background: linear-gradient(90deg, var(--sage), var(--amber));
+    }
+    .trend-num {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--sage);
+      margin-bottom: 12px;
+    }
+    .trend-title {
+      font-family: var(--font-chinese);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--wine-dark);
+      margin-bottom: 10px;
+    }
+    .trend-desc {
+      font-family: var(--font-chinese);
+      font-size: 0.85rem;
+      line-height: 1.8;
+      color: var(--earth-mid);
+    }
+
+    /* ============================================
+       HORIZONTAL SCROLL
+       ============================================ */
+    .h-scroll {
+      display: flex;
+      gap: 24px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding: 20px 0 40px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--wine-light) transparent;
+    }
+    .h-scroll::-webkit-scrollbar { height: 4px; }
+    .h-scroll::-webkit-scrollbar-track { background: transparent; }
+    .h-scroll::-webkit-scrollbar-thumb { background: var(--wine-light); border-radius: 2px; }
+    .h-scroll > * {
+      scroll-snap-align: start;
+      flex-shrink: 0;
+    }
+
+    /* ============================================
+       FOOTER
+       ============================================ */
+    .site-footer {
+      background: var(--earth);
+      color: var(--cream);
+      padding: 80px 40px;
+      text-align: center;
+    }
+    .footer-brand {
+      font-family: var(--font-chinese);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--amber-light);
+      margin-bottom: 8px;
+    }
+    .footer-tagline {
+      font-family: var(--font-chinese);
+      font-size: 0.92rem;
+      color: rgba(247,242,234,0.5);
+      margin-bottom: 32px;
+    }
+    .footer-divider {
+      width: 40px;
+      height: 1px;
+      background: var(--amber);
+      margin: 0 auto 32px;
+      opacity: 0.4;
+    }
+    .footer-meta {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      color: rgba(247,242,234,0.35);
+    }
+
+    /* ============================================
+       RESPONSIVE
+       ============================================ */
+    @media (max-width: 1200px) {
+      .principles-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .techniques-grid { grid-template-columns: repeat(2, 1fr); }
+      .comparison-header, .comparison-row { grid-template-columns: repeat(4, 1fr); font-size: 0.8rem; }
+    }
+
+    @media (max-width: 900px) {
+      :root { --section-gap: 100px; }
+      .section, .section-full, .section-narrow { padding-left: 24px; padding-right: 24px; }
+      .site-nav { padding: 0 20px; }
+      .nav-brand { margin-right: 20px; font-size: 0.95rem; }
+      .principles-grid { grid-template-columns: 1fr; }
+      .styles-grid { grid-template-columns: repeat(2, 1fr); }
+      .culture-grid { grid-template-columns: repeat(2, 1fr); }
+      .debate-columns { grid-template-columns: 1fr; }
+      .pioneer-card { grid-template-columns: 80px 1fr; gap: 24px; padding: 32px; }
+      .pioneer-avatar { width: 80px; height: 80px; font-size: 1.8rem; }
+      .timeline-item { width: 100%; padding: 0 0 60px 50px; left: 0 !important; text-align: left !important; }
+      .timeline-line { left: 16px; }
+      .timeline-dot { left: 9px !important; right: auto !important; }
+      .region-list { grid-template-columns: 1fr; }
+      .spectrum-flow { flex-direction: column; }
+      .spectrum-card:hover { flex: 1; }
+      .cert-grid { grid-template-columns: repeat(2, 1fr); }
+      .trends-grid { grid-template-columns: repeat(2, 1fr); }
+      .grape-row { grid-template-columns: 1fr; gap: 12px; }
+      .comparison-header, .comparison-row { grid-template-columns: 1fr; }
+      .comparison-header div, .comparison-row div { border-right: none; border-bottom: 1px solid rgba(107,39,55,0.06); }
+    }
+
+    @media (max-width: 640px) {
+      :root { --section-gap: 80px; --nav-height: 56px; }
+      .hero-title-cn { letter-spacing: 0.08em; }
+      .hero-title-en { letter-spacing: 0.3em; }
+      .section-title { font-size: 2rem; }
+      .styles-grid { grid-template-columns: 1fr; }
+      .culture-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .techniques-grid { grid-template-columns: 1fr; }
+      .cert-grid { grid-template-columns: 1fr; }
+      .trends-grid { grid-template-columns: 1fr; }
+      .dates-list { grid-template-columns: 1fr; }
+      .pioneer-card { grid-template-columns: 1fr; text-align: center; }
+      .pioneer-avatar { margin: 0 auto; }
+      .cursor-dot { display: none; }
+      body { cursor: auto; }
+    }
+
+    /* ============================================
+       PRINT STYLES
+       ============================================ */
+    @media print {
+      .site-nav, .scroll-progress, .cursor-dot, .hero-bg, .hero-overlay, .hero-noise, .hero-scroll-hint { display: none; }
+      .hero { height: auto; min-height: auto; padding: 40px 0; background: white; }
+      .hero-content { color: black; }
+      .section, .section-full, .section-narrow { padding: 30px 0; max-width: 100%; }
+      .section-dark, .section-wine { background: white; color: black; }
+      .reveal, .reveal-left, .reveal-right, .reveal-scale { opacity: 1; transform: none; }
+      .stagger > * { opacity: 1; transform: none; }
+      .principle-card, .style-card, .region-card, .culture-card, .trend-card, .cert-card, .stat-card, .pioneer-card { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+      body { color: black; background: white; cursor: auto; font-size: 11pt; }
+      a { color: inherit; text-decoration: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+      .reveal, .reveal-left, .reveal-right, .reveal-scale { opacity: 1; transform: none; }
+      .stagger > * { opacity: 1; transform: none; }
+      html { scroll-behavior: auto; }
+    }
+  </style>
 </head>
 <body>
 
-<!-- SCROLL PROGRESS BAR -->
-<div class="scroll-progress" id="scrollProgress"></div>
+<!-- Custom Cursor -->
+<div class="cursor-dot" aria-hidden="true"></div>
 
-<!-- ============================================
-     HERO SECTION
-     ============================================ -->
-<header class="hero" id="top">
-  <div class="hero-img-placeholder"></div>
+<!-- Scroll Progress -->
+<div class="scroll-progress" aria-hidden="true"></div>
 
-  <!-- Decorative SVG grape elements -->
-  <div class="hero-deco hero-deco-1">
-    <svg width="80" height="100" viewBox="0 0 80 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="30" cy="40" r="8" fill="rgba(249,228,183,0.08)"/>
-      <circle cx="45" cy="35" r="8" fill="rgba(249,228,183,0.06)"/>
-      <circle cx="38" cy="52" r="8" fill="rgba(249,228,183,0.07)"/>
-      <circle cx="50" cy="48" r="8" fill="rgba(249,228,183,0.05)"/>
-      <circle cx="35" cy="65" r="8" fill="rgba(249,228,183,0.06)"/>
-      <circle cx="48" cy="62" r="8" fill="rgba(249,228,183,0.04)"/>
-      <path d="M40 10 Q42 25 38 30" stroke="rgba(249,228,183,0.1)" stroke-width="1.5" fill="none"/>
-      <path d="M38 12 Q30 18 25 15" stroke="rgba(249,228,183,0.08)" stroke-width="1" fill="none"/>
-    </svg>
-  </div>
-  <div class="hero-deco hero-deco-2">
-    <svg width="60" height="90" viewBox="0 0 60 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M30 5 C30 5 10 30 10 50 C10 65 20 75 30 75 C40 75 50 65 50 50 C50 30 30 5 30 5Z" stroke="rgba(249,228,183,0.06)" stroke-width="1" fill="none"/>
-      <path d="M30 75 L30 88" stroke="rgba(249,228,183,0.08)" stroke-width="1.5"/>
-    </svg>
-  </div>
-  <div class="hero-deco hero-deco-3">
-    <svg width="50" height="60" viewBox="0 0 50 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="20" cy="20" r="6" fill="rgba(249,228,183,0.06)"/>
-      <circle cx="32" cy="18" r="6" fill="rgba(249,228,183,0.05)"/>
-      <circle cx="25" cy="32" r="6" fill="rgba(249,228,183,0.07)"/>
-      <circle cx="35" cy="30" r="6" fill="rgba(249,228,183,0.04)"/>
-    </svg>
-  </div>
-
-  <div class="hero-content">
-    <span class="hero-badge">深度研究报告 · Comprehensive Guide</span>
-    <p class="hero-title-chinese chinese-text">自然酒</p>
-    <h1 class="hero-title">NATURAL WINE</h1>
-    <p class="hero-title-cn-sub chinese-text">极简干预的酿酒哲学</p>
-    <div class="hero-divider"></div>
-    <p class="hero-subtitle">从八千年前格鲁吉亚的 Qvevri 陶罐，到 Beaujolais 的现代革命——一部关于发酵、工业化与回归的完整指南。</p>
-    <div class="hero-scroll">向下探索</div>
-  </div>
-</header>
-
-<!-- ============================================
-     NAVIGATION
-     ============================================ -->
-<nav class="nav-toc" id="navToc" aria-label="目录导航">
-  <div class="nav-toc-inner">
-    <a href="index.html" class="nav-back" aria-label="返回酒类知识库" style="display:flex;align-items:center;gap:4px;text-decoration:none;color:var(--olive);font-size:0.8rem;font-weight:500;margin-right:8px;flex-shrink:0;font-family:'Noto Serif SC',serif;transition:var(--transition);padding:6px 10px;border-radius:100px;">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polyline points="15 18 9 12 15 6"></polyline></svg>
-      知识库
-    </a>
-    <span class="nav-logo chinese-text">自然酒</span>
-    <a href="#definition" class="nav-link">何为自然酒</a>
-    <a href="#history" class="nav-link">历史溯源</a>
-    <a href="#pioneers" class="nav-link">先驱人物</a>
-    <a href="#spectrum" class="nav-link">分类光谱</a>
-    <a href="#styles" class="nav-link">风格类型</a>
-    <a href="#grapes" class="nav-link">葡萄品种</a>
-    <a href="#techniques" class="nav-link">酿造工艺</a>
-    <a href="#regions" class="nav-link">全球产区</a>
-    <a href="#market" class="nav-link">市场文化</a>
-    <a href="#future" class="nav-link">争议未来</a>
+<!-- Navigation -->
+<nav class="site-nav" role="navigation" aria-label="主导航">
+  <a href="index.html" class="nav-brand" style="display:flex;align-items:center;gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>知识库</a>
+  <div class="nav-links">
+    <a href="#hero">自然酒</a>
+    <a href="#what">什么是自然酒</a>
+    <a href="#history">历史与起源</a>
+    <a href="#pioneers">先驱人物</a>
+    <a href="#spectrum">分类光谱</a>
+    <a href="#styles">风格类型</a>
+    <a href="#grapes">葡萄品种</a>
+    <a href="#techniques">酿造工艺</a>
+    <a href="#regions">全球产区</a>
+    <a href="#market">市场与文化</a>
+    <a href="#future">争议与未来</a>
   </div>
 </nav>
 
 <!-- ============================================
-     SECTION 1: WHAT IS NATURAL WINE
+     HERO
      ============================================ -->
-<section class="definition-section" id="definition">
-  <div class="container">
-    <div class="section-header reveal">
-      <span class="section-number">§ 01</span>
-      <p class="section-title-chinese chinese-text">何为自然酒</p>
-      <h2 class="section-title">What Is Natural Wine?</h2>
-      <div class="section-divider"></div>
-      <p class="section-subtitle">以最少或零化学与技术干预酿制的葡萄酒——涵盖从葡萄园到酒窖的全流程。这种"不干预哲学"可追溯至八千年前。</p>
+<section class="hero" id="hero">
+  <div class="hero-bg" data-parallax="0.2"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-noise"></div>
+  <div class="hero-content">
+    <div class="hero-label" data-parallax="0.2">完全指南 · COMPLETE GUIDE</div>
+    <h1 class="hero-title-cn" data-parallax="0.2">自然酒</h1>
+    <div class="hero-title-en" data-parallax="0.2">NATURAL WINE</div>
+    <p class="hero-subtitle" data-parallax="0.2">极简干预酿造法完全指南 — 从古老陶罐到现代革命</p>
+  </div>
+  <div class="hero-scroll-hint" aria-hidden="true">
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ============================================
+     §1 什么是自然酒
+     ============================================ -->
+<div class="divider"><div class="divider-diamond"></div></div>
+
+<section class="section" id="what">
+  <div class="reveal">
+    <div class="section-label">§1</div>
+    <h2 class="section-title-cn">什么是自然酒</h2>
+    <div class="section-intro">
+      <strong>"什么都不添加，什么都不带走"</strong> — 不添加商业酵母、不添加化学物质、不做任何调整，不过滤、不澄清、不提取酒精或水分。最终得到的，就是发酵葡萄汁 — 是葡萄、土壤、气候和年份最直接、最纯粹的表达。
     </div>
+  </div>
 
-    <!-- Image: vineyard harvest -->
-    <div class="img-placeholder reveal-scale" style="margin-bottom: 50px; min-height: 300px; background-image: url('images/harvest_001.jpg'); background-size: cover; background-position: center;">
-      <span class="sr-only">手工采摘葡萄 · 自然酒酿造的第一步</span>
+  <h3 class="reveal" style="font-family:var(--font-chinese);font-size:1.2rem;font-weight:700;color:var(--wine-dark);margin-bottom:12px;">八大核心原则</h3>
+
+  <div class="principles-grid stagger">
+    <div class="principle-card">
+      <div class="principle-number">01</div>
+      <div class="principle-title"><span class="principle-dot dot-wine"></span>有机或生物动力法种植</div>
+      <p class="principle-desc">不使用合成农药、除草剂或化肥。葡萄园被视为一个活的生态系统，鼓励覆盖作物、堆肥和生物多样性。</p>
     </div>
-
-    <div class="definition-hero reveal">
-      <p><span class="highlight">自然酒</span>（法语：vin naturel）遵循一个根本原则：<span class="highlight">"不加不减"</span>（nothing added, nothing taken away）。酿造过程中不添加任何东西——不用商业酵母、不用化学品、不做任何调整；也不去除任何东西——不过滤、不下胶、不提取酒精或水分。其本质，就是纯粹的<span class="highlight">发酵葡萄汁</span>——是葡萄、土壤、气候与年份的直接表达，不经人工修饰。</p>
+    <div class="principle-card">
+      <div class="principle-number">02</div>
+      <div class="principle-title"><span class="principle-dot dot-terracotta"></span>手工采摘</div>
+      <p class="principle-desc">手工而非机器采摘，保持葡萄完整性，允许选择性采摘，防止过早破碎和氧化。</p>
     </div>
-
-    <h3 style="font-size: 1.5rem; margin-bottom: 24px; color: var(--wine-deep); text-align: center;" class="reveal">🌿 核心原则</h3>
-
-    <div class="principles-grid stagger-children">
-      <div class="principle-card">
-        <div class="principle-icon">🍇</div>
-        <h3>有机或生物动力种植</h3>
-        <p>种植过程中不使用合成农药、除草剂或化肥。葡萄园被视为一个活的生态系统，鼓励覆盖作物、堆肥和生物多样性。</p>
-      </div>
-      <div class="principle-card">
-        <div class="principle-icon">✋</div>
-        <h3>手工采收</h3>
-        <p>葡萄全部手工采摘，不使用机械采收。这样可以保持果实完整性，进行选择性采摘，避免在入窖前过早破皮和氧化。</p>
-      </div>
-      <div class="principle-card">
-        <div class="principle-icon">🫧</div>
-        <h3>天然酵母发酵</h3>
-        <p>仅依靠附着在葡萄皮上和酒窖环境中的野生酵母驱动发酵——不添加任何商业酵母菌株。每个葡萄园独特的微生物群落塑造了酒的个性。</p>
-      </div>
-      <div class="principle-card">
-        <div class="principle-icon">🚫</div>
-        <h3>零添加</h3>
-        <p>不加糖（chaptalization）、不加商业单宁、不加酶、不调整酸度、不使用 Mega Purple 等色素添加剂、不加稳定剂、不加风味增强剂。</p>
-      </div>
-      <div class="principle-card">
-        <div class="principle-icon">⚗️</div>
-        <h3>不添加或极少量添加亚硫酸盐</h3>
-        <p>大多数自然酒酿造者完全避免添加二氧化硫，或仅在装瓶时加入极微量——总量通常低于 30 mg/L，而传统葡萄酒可达 150–200 mg/L。</p>
-      </div>
-      <div class="principle-card">
-        <div class="principle-icon">🫗</div>
-        <h3>不下胶、不过滤</h3>
-        <p>装瓶前不对酒液进行澄清或过滤处理，因此酒液可能略显浑浊，但保留了加工处理会剥夺的质地、香气和复杂性。</p>
-      </div>
-      <div class="principle-card">
-        <div class="principle-icon">🔬</div>
-        <h3>禁止技术操控</h3>
-        <p>不使用反渗透（reverse osmosis）、冷冻萃取（cryoextraction）、微氧化（micro-oxygenation）、旋转锥体柱（spinning cone）、瞬间巴氏杀菌（flash pasteurization）等改变酒液本质的工业手段。</p>
-      </div>
-      <div class="principle-card">
-        <div class="principle-icon">🌍</div>
-        <h3>风土表达</h3>
-        <p>酒应当是一扇透明的窗户，通向一个特定的时空——反映土壤、微气候、原生酵母种群，以及世代酿酒人的知识积累。这正是法语中 terroir（风土）概念的精髓。</p>
-      </div>
+    <div class="principle-card">
+      <div class="principle-number">03</div>
+      <div class="principle-title"><span class="principle-dot dot-amber"></span>原生酵母发酵</div>
+      <p class="principle-desc">仅使用葡萄皮上和酒窖中存在的天然酵母进行发酵，不添加商业酵母菌株。每个葡萄园独特的微生物群落塑造了葡萄酒的风味。</p>
     </div>
-
-    <div class="pull-quote reveal-left">
-      <p>"自然酒不仅仅是一套技术实践，更是一场文化和政治运动——它质疑食品与农业的工业化。"</p>
-      <cite>—— 自然酒哲学</cite>
+    <div class="principle-card">
+      <div class="principle-number">04</div>
+      <div class="principle-title"><span class="principle-dot dot-sage"></span>不添加任何添加剂</div>
+      <p class="principle-desc">不添加糖、商业单宁、酶、酸度调整剂、色素、稳定剂或风味增强剂。</p>
     </div>
-
-    <!-- HOW IT DIFFERS -->
-    <h3 style="font-size: 1.5rem; margin: 50px 0 24px; color: var(--wine-deep); text-align: center;" class="reveal">自然酒与其他葡萄酒类别的区别</h3>
-
-    <div class="comparison-block reveal">
-      <h3>🍷 传统葡萄酒（Conventional Wine）</h3>
-      <p>最广泛的类别，涵盖全球绝大多数葡萄酒产量。传统酿造允许在葡萄园使用合成化学品，在酒窖中使用商业酵母、添加糖、添加酸、单宁、酶、下胶剂，以及大量的二氧化硫作为防腐剂。其目标往往是一致性、稳定性和特定的风味特征——通常通过调配和技术校正来实现。对于习惯了超市葡萄酒的中国读者来说，这便是最常见的类型。</p>
+    <div class="principle-card">
+      <div class="principle-number">05</div>
+      <div class="principle-title"><span class="principle-dot dot-clay"></span>无亚硫酸盐或极少量</div>
+      <p class="principle-desc">大多数自然酒酿酒师完全避免添加二氧化硫，或仅在装瓶时添加微量 — 通常低于 30 mg/L，而传统葡萄酒可能达到 150–200 mg/L。</p>
     </div>
-
-    <div class="comparison-block reveal">
-      <h3>🌱 有机葡萄酒（Organic Wine）</h3>
-      <p>一个经过法律认证的类别，在欧盟、美国和其他地区有不同的标准。有机认证主要管控的是<strong>葡萄园</strong>环节：禁止使用合成农药、除草剂和化肥。然而，有机葡萄酒仍然可以使用商业酵母、在法规限制内添加亚硫酸盐、使用下胶剂和其他添加物。在欧盟，有机葡萄酒的红酒允许添加 SO₂ 至 100 mg/L，白酒为 150 mg/L。因此，一款有机葡萄酒在酿造方法上可能远非"自然"。</p>
+    <div class="principle-card">
+      <div class="principle-number">06</div>
+      <div class="principle-title"><span class="principle-dot dot-earth"></span>不过滤不澄清</div>
+      <p class="principle-desc">装瓶前不澄清或过滤，可能呈现浑浊外观，但保留了加工过程会剥离的质地、香气和复杂性。</p>
     </div>
-
-    <div class="comparison-block reveal">
-      <h3>🌙 生物动力葡萄酒（Biodynamic Wine）</h3>
-      <p>遵循 Rudolf Steiner 在1920年代创立的生物动力农业理念。生物动力种植将葡萄园视为一个自给自足的生态系统，使用特定的配方制剂（牛角粪、硅石、草药堆肥等），并依照与月相和行星周期相关联的种植日历进行农事。通过 <strong>Demeter</strong> 或 <strong>Biodyvin</strong> 认证，涵盖葡萄园和酒窖两个环节，标准严于有机。但生物动力葡萄酒仍然可以使用部分商业酵母和适量的 SO₂。生物动力本质上是一种<strong>农业哲学</strong>，而非严格的酿造协议。在中国，一些高端酒庄也开始尝试生物动力法种植。</p>
+    <div class="principle-card">
+      <div class="principle-number">07</div>
+      <div class="principle-title"><span class="principle-dot dot-light"></span>无技术干预</div>
+      <p class="principle-desc">不使用反渗透、低温提取、微氧化、旋转锥、闪蒸灭菌等改变葡萄酒基本特性的工业工艺。</p>
     </div>
-
-    <div class="pull-quote reveal-left">
-      <p>"自然酒与上述三者的关键区别在于，它将极简干预的哲学从葡萄园延伸到了酒窖。这场运动既是技术层面的，更是文化和哲学层面的立场宣言。"</p>
+    <div class="principle-card">
+      <div class="principle-number">08</div>
+      <div class="principle-title"><span class="principle-dot dot-cream"></span>风土表达</div>
+      <p class="principle-desc">葡萄酒应该是特定时间和地点的透明窗口 — 反映土壤、小气候、原生酵母种群以及当地人民积累的智慧。</p>
     </div>
+  </div>
+</section>
 
-    <!-- SVG Section Divider -->
-    <div class="svg-divider">
-      <svg viewBox="0 0 200 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M0 20 Q25 5 50 20 T100 20 T150 20 T200 20" stroke="#D4A574" stroke-width="1" fill="none"/>
-        <circle cx="100" cy="20" r="4" fill="#D4A574" opacity="0.5"/>
-        <circle cx="90" cy="16" r="2.5" fill="#D4A574" opacity="0.3"/>
-        <circle cx="110" cy="16" r="2.5" fill="#D4A574" opacity="0.3"/>
-      </svg>
+<!-- Pull Quote -->
+<div class="pull-quote reveal">
+  <blockquote>
+    "自然酒不只是一套技术实践，它是一场挑战食品和农业工业化的文化与政治运动。"
+  </blockquote>
+</div>
+
+<!-- Comparison Block -->
+<section class="section">
+  <div class="reveal">
+    <h3 style="font-family:var(--font-chinese);font-size:1.2rem;font-weight:700;color:var(--wine-dark);margin-bottom:24px;">四种葡萄酒的对比</h3>
+  </div>
+  <div class="comparison-block reveal">
+    <div class="comparison-header">
+      <div>传统葡萄酒</div>
+      <div>有机葡萄酒</div>
+      <div>生物动力葡萄酒</div>
+      <div>自然酒</div>
+    </div>
+    <div class="comparison-row">
+      <div>合成农药允许使用</div>
+      <div>禁止合成农药</div>
+      <div>禁止，遵循月历</div>
+      <div>禁止，有机或生物动力法</div>
+    </div>
+    <div class="comparison-row">
+      <div>商业酵母常用</div>
+      <div>商业酵母允许</div>
+      <div>商业酵母允许</div>
+      <div class="highlight-col">仅原生酵母</div>
+    </div>
+    <div class="comparison-row">
+      <div>添加剂广泛使用</div>
+      <div>限制使用</div>
+      <div>严格限制</div>
+      <div class="highlight-col">零添加或极少</div>
+    </div>
+    <div class="comparison-row">
+      <div>SO₂ 高达 150–200 mg/L</div>
+      <div>SO₂ ≤ 100–150 mg/L</div>
+      <div>SO₂ ≤ 70–90 mg/L</div>
+      <div class="highlight-col">SO₂ 0–30 mg/L</div>
+    </div>
+    <div class="comparison-row">
+      <div>过滤、澄清常见</div>
+      <div>过滤、澄清允许</div>
+      <div>限制过滤</div>
+      <div class="highlight-col">不过滤不澄清</div>
+    </div>
+    <div class="comparison-row">
+      <div>技术干预广泛</div>
+      <div>部分允许</div>
+      <div>严格限制</div>
+      <div class="highlight-col">零技术干预</div>
     </div>
   </div>
 </section>
 
 <!-- ============================================
-     SECTION 2: HISTORY & ORIGINS
+     §2 历史与起源
      ============================================ -->
-<section class="timeline-section" id="history">
-  <div class="container">
-    <div class="section-header reveal">
-      <span class="section-number">§ 02</span>
-      <p class="section-title-chinese chinese-text">历史与起源</p>
-      <h2 class="section-title">History &amp; Origins</h2>
-      <div class="section-divider"></div>
-      <p class="section-subtitle">从格鲁吉亚古老的 Qvevri 陶罐，到 Beaujolais 的现代革命——跨越八千年的发酵、工业化与回归之旅。</p>
+<div class="divider"><div class="divider-diamond"></div></div>
+
+<section class="section" id="history">
+  <div class="reveal">
+    <div class="section-label">§2</div>
+    <h2 class="section-title-cn">历史与起源</h2>
+    <div class="section-intro">
+      从八千年前的陶罐到二十一世纪的认证体系，自然酒的历史就是葡萄酒本身的历史 — 一部关于人类与自然关系的漫长叙事。
+    </div>
+  </div>
+
+  <div class="timeline" id="main-timeline">
+    <div class="timeline-line"><div class="timeline-line-fill"></div></div>
+
+    <div class="timeline-item reveal-left">
+      <div class="timeline-dot"></div>
+      <div class="timeline-year">约公元前6000年</div>
+      <div class="timeline-title">葡萄酒的诞生</div>
+      <p class="timeline-desc">考古证据显示，现代格鲁吉亚地区发现了最早的酿酒痕迹，约8000年前。陶罐（Qvevri）成为主要的发酵和陈酿容器，埋入地下以保持恒温。这些古老的方法至今仍在沿用。</p>
     </div>
 
-    <!-- Image: Georgian qvevri -->
-    <div class="img-placeholder reveal-scale" style="margin-bottom: 50px; min-height: 280px; background-image: url('images/qvevri_001.jpg'); background-size: cover; background-position: center;">
-      <span class="sr-only">格鲁吉亚 Qvevri 陶罐 · 八千年的酿酒传统</span>
+    <div class="timeline-item reveal-right">
+      <div class="timeline-dot"></div>
+      <div class="timeline-year">古地中海文明</div>
+      <div class="timeline-title">双耳瓶与自然发酵</div>
+      <p class="timeline-desc">希腊人和罗马人使用陶罐进行发酵和储存，不添加酵母、酶或化学稳定剂。葡萄酒是自然发酵的产物，酿酒被视为对自然过程的引导而非控制。</p>
     </div>
 
-    <div class="timeline">
+    <div class="timeline-item reveal-left">
+      <div class="timeline-dot"></div>
+      <div class="timeline-year">19–20世纪</div>
+      <div class="timeline-title">葡萄酒工业化</div>
+      <p class="timeline-desc">合成农药、机械化采收、温控不锈钢罐、商业酵母菌株和化学添加剂的出现，彻底改变了葡萄酒的生产方式。产量和一致性成为首要目标，风土个性逐渐被抹平。</p>
+    </div>
 
-      <div class="timeline-item reveal-left">
-        <div class="timeline-content">
-          <span class="timeline-date">约公元前 6000 年</span>
-          <h3>葡萄酒的诞生</h3>
-          <p>来自南高加索地区（即今天的<strong>格鲁吉亚</strong>）的考古证据揭示了已知最早的酿酒活动——距今约 <strong>8,000 年</strong>。Gadachrili Gora 和 Shulaveri Gorge 遗址出土了含有酒液残留的陶瓷罐。<strong>Qvevri</strong>——一种埋在地下的大型蛋形陶器——成为主要的发酵和陈酿容器，仅使用环境酵母进行整串发酵。从这个意义上说，<em>所有的酒都曾是自然酒</em>。</p>
-        </div>
-        <div class="timeline-dot"></div>
-      </div>
+    <div class="timeline-item reveal-right">
+      <div class="timeline-dot"></div>
+      <div class="timeline-year">1950–1960年代</div>
+      <div class="timeline-title">Jules Chauvet 的静默革命</div>
+      <p class="timeline-desc">这位博若莱的酿酒师兼科学家开始质疑主流酿造理念，淘汰加糖、只用原生酵母、减少硫的使用。他的思想成为后来整个自然酒运动的理论基础。</p>
+    </div>
 
-      <div class="timeline-item reveal-right">
-        <div class="timeline-content">
-          <span class="timeline-date">古代地中海</span>
-          <h3>双耳瓶与天然发酵</h3>
-          <p>类似的酿造方式在古代世界普遍存在：希腊人和罗马人使用<strong>双耳瓶</strong>（amphorae，陶瓷罐）进行发酵和储存。从格鲁吉亚、亚美尼亚、伊朗到希腊和罗马，酿酒方法都是压榨葡萄后让其自然发酵——不添加酵母、酶或化学稳定剂。</p>
-        </div>
-        <div class="timeline-dot"></div>
-      </div>
+    <div class="timeline-item reveal-left">
+      <div class="timeline-dot"></div>
+      <div class="timeline-year">1973–1981</div>
+      <div class="timeline-title">Marcel Lapierre 的反叛</div>
+      <p class="timeline-desc">接管家族酒庄后，Lapierre 于1981年彻底停止加糖，挑战 INAO 和当地葡萄酒权威。他的勇气激励了一整代酿酒师走上回归自然的道路。</p>
+    </div>
 
-      <div class="timeline-item reveal-left">
-        <div class="timeline-content">
-          <span class="timeline-date">19–20 世纪</span>
-          <h3>葡萄酒的工业化</h3>
-          <p>对自然方法的背离始于19世纪，并在二战后急剧加速。合成农药（DDT、草甘膦）、机械化采收、温控不锈钢罐、商业酵母菌株和化学添加剂从根本上改变了酿酒方式。到了1960年代和1970年代，工业化酿造已成为大多数葡萄酒产区的常态。</p>
-        </div>
-        <div class="timeline-dot"></div>
-      </div>
+    <div class="timeline-item reveal-right">
+      <div class="timeline-dot"></div>
+      <div class="timeline-year">1980年代</div>
+      <div class="timeline-title">"四人帮"</div>
+      <p class="timeline-desc">Lapierre 说服了 Jean Foillard、Guy Breton 和 Jean-Paul Thévenet 加入，共同倡导零添加、不过滤、低硫的酿造理念。他们被媒体称为"Gang of Four"，成为博若莱自然酒革命的核心力量。</p>
+    </div>
 
-      <div class="timeline-item reveal-right">
-        <div class="timeline-content">
-          <span class="timeline-date">1950–1960 年代</span>
-          <h3>Jules Chauvet 的静默革命</h3>
-          <p><strong>Jules Chauvet</strong>（1907–1989），Beaujolais 的一位酿酒师、酒商和受过科学训练的学者，开始在酒窖中进行一系列挑战当时主流观念的实验。他取消了 chaptalization（加糖），仅使用天然酵母，最大限度减少或完全不用二氧化硫，并探索了 carbonic maceration（二氧化碳浸渍法）——为现代自然酒运动奠定了科学基础。</p>
-        </div>
-        <div class="timeline-dot"></div>
-      </div>
+    <div class="timeline-item reveal-left">
+      <div class="timeline-dot"></div>
+      <div class="timeline-year">1988</div>
+      <div class="timeline-title">《葡萄酒之路上的冒险》</div>
+      <p class="timeline-desc">Kermit Lynch 出版了这本开创性著作，向美国读者介绍了自然酒哲学。这本书改变了一代美国消费者对葡萄酒的认知，推动了自然酒在北美市场的传播。</p>
+    </div>
 
-      <div class="timeline-item reveal-left">
-        <div class="timeline-content">
-          <span class="timeline-date">1973–1981</span>
-          <h3>Marcel Lapierre 的反叛</h3>
-          <p><strong>1973</strong> 年，Marcel Lapierre 接管了家族位于 Morgon 的酒庄。<strong>1981</strong> 年，在结识 Jules Chauvet 之后，他做出了彻底停止加糖的激进决定——公然对抗法国国家原产地命名管理局（INAO）和当地葡萄酒体制。他全面采纳了极简干预原则，其葡萄酒成为自然酒可以达到的品质标杆。</p>
-        </div>
-        <div class="timeline-dot"></div>
-      </div>
+    <div class="timeline-item reveal-right">
+      <div class="timeline-dot"></div>
+      <div class="timeline-year">1980年代–2004</div>
+      <div class="timeline-title">Nicolas Joly 与生物动力法</div>
+      <p class="timeline-desc">将卢瓦尔河谷传奇的 Coulée de Serrant 转为生物动力法耕作，Joly 成为生物动力葡萄酒运动最具影响力的代言人，证明了高品质与自然耕作可以并存。</p>
+    </div>
 
-      <div class="timeline-item reveal-right">
-        <div class="timeline-content">
-          <span class="timeline-date">1980 年代</span>
-          <h3>"四人帮"（Gang of Four）</h3>
-          <p>Lapierre 说服了几位邻居走上同一条路：<strong>Jean Foillard</strong>、<strong>Guy Breton</strong> 和 <strong>Jean-Paul Thévenet</strong>——被美国进口商 <strong>Kermit Lynch</strong> 称为"四人帮"。他们共同倡导 carbonic maceration、老藤、零添加、不下胶、不过滤和低硫或零硫的理念。</p>
-        </div>
-        <div class="timeline-dot"></div>
-      </div>
+    <div class="timeline-item reveal-left">
+      <div class="timeline-dot"></div>
+      <div class="timeline-year">1990年代末</div>
+      <div class="timeline-title">橙酒复兴</div>
+      <p class="timeline-desc">Josko Gravner 前往格鲁吉亚学习 Qvevri 酿造技术，将古老的浸皮白葡萄酒传统带回意大利 Friuli 产区。这一举动引发了全球橙酒运动的兴起。</p>
+    </div>
 
-      <div class="timeline-item reveal-left">
-        <div class="timeline-content">
-          <span class="timeline-date">1988</span>
-          <h3>《葡萄酒之路历险记》</h3>
-          <p><strong>Kermit Lynch</strong> 出版了他的开创性著作 <em>Adventures on the Wine Route</em>，记录了他发现"四人帮"的过程，向美国读者介绍了自然酒哲学。这本书成为运动的奠基文本。</p>
-        </div>
-        <div class="timeline-dot"></div>
-      </div>
+    <div class="timeline-item reveal-right">
+      <div class="timeline-dot"></div>
+      <div class="timeline-year">2013</div>
+      <div class="timeline-title">联合国教科文组织认可</div>
+      <p class="timeline-desc">格鲁吉亚传统 Qvevri 酿酒法被列入人类非物质文化遗产名录，标志着世界对古老自然酿酒智慧的正式承认。</p>
+    </div>
 
-      <div class="timeline-item reveal-right">
-        <div class="timeline-content">
-          <span class="timeline-date">1980 年代–2004</span>
-          <h3>Nicolas Joly 与生物动力</h3>
-          <p><strong>Nicolas Joly</strong> 将 Loire Valley 传奇性的 Coulée de Serrant 酒庄全面转为生物动力种植。他2004年的著作《从天空到大地的葡萄酒》（<em>Wine from Sky to Earth</em>）阐述了生物动力世界观。他联合创立了 <strong>Renaissance des Appellations</strong>，一个致力于推广风土表达的酒庄联盟。</p>
-        </div>
-        <div class="timeline-dot"></div>
-      </div>
+    <div class="timeline-item reveal-left">
+      <div class="timeline-dot"></div>
+      <div class="timeline-year">2015</div>
+      <div class="timeline-title">RAW WINE 启航</div>
+      <p class="timeline-desc">Isabelle Legeron MW 在伦敦创办 RAW WINE 展会，成为全球首个专注于有机、生物动力和自然酒的国际贸易展览会，随后扩展到纽约、洛杉矶和柏林。</p>
+    </div>
 
-      <div class="timeline-item reveal-left">
-        <div class="timeline-content">
-          <span class="timeline-date">1990 年代末</span>
-          <h3>橙酒的复兴</h3>
-          <p><strong>Josko Gravner</strong> 前往格鲁吉亚学习 Qvevri 酿酒法，并将这一传统带回 Friuli。他与邻居 <strong>Stanko Radikon</strong> 一起开创了延长浸皮的白葡萄酒——即"橙酒"运动，成为自然酒中一个重要分支。</p>
-        </div>
-        <div class="timeline-dot"></div>
-      </div>
-
-      <div class="timeline-item reveal-right">
-        <div class="timeline-content">
-          <span class="timeline-date">2013</span>
-          <h3>联合国教科文组织认可</h3>
-          <p>联合国教科文组织将格鲁吉亚传统 <strong>Qvevri 酿酒法</strong>列入<strong>人类非物质文化遗产</strong>名录，认可了这一延续数千年的不间断传统。</p>
-        </div>
-        <div class="timeline-dot"></div>
-      </div>
-
-      <div class="timeline-item reveal-left">
-        <div class="timeline-content">
-          <span class="timeline-date">2015</span>
-          <h3>RAW WINE 展会创立</h3>
-          <p><strong>Isabelle Legeron MW</strong>（葡萄酒大师）在伦敦创办了 RAW WINE 自然酒展，此后扩展至纽约、柏林、洛杉矶和蒙特利尔——成为全球最重要的自然酒行业盛会。</p>
-        </div>
-        <div class="timeline-dot"></div>
-      </div>
-
-      <div class="timeline-item reveal-right">
-        <div class="timeline-content">
-          <span class="timeline-date">2020</span>
-          <h3>Vin Méthode Nature 认证</h3>
-          <p>法国推出了 <strong>"Vin Méthode Nature"</strong>——首个官方政府支持的天然葡萄酒认证框架。要求包括有机种植、仅使用原生酵母、禁止加糖、红酒 SO₂ 上限 30 mg/L（白/桃红酒 40 mg/L），由 Bureau Veritas 进行第三方审计。</p>
-        </div>
-        <div class="timeline-dot"></div>
-      </div>
-
+    <div class="timeline-item reveal-right">
+      <div class="timeline-dot"></div>
+      <div class="timeline-year">2020</div>
+      <div class="timeline-title">Vin Méthode Nature</div>
+      <p class="timeline-desc">法国推出首个政府支持的自然酒认证框架 — Vin Méthode Nature，由法国农业部认可，为自然酒建立了正式的法定定义和认证标准。</p>
     </div>
   </div>
 </section>
 
 <!-- ============================================
-     SECTION 3: PIONEERS
+     §3 先驱人物
      ============================================ -->
-<section class="pioneers-section" id="pioneers">
-  <div class="container">
-    <div class="section-header reveal">
-      <span class="section-number">§ 03</span>
-      <p class="section-title-chinese chinese-text">先驱人物</p>
-      <h2 class="section-title">Key Pioneers</h2>
-      <div class="section-divider"></div>
-      <p class="section-subtitle">那些挑战工业化酿酒方式的远见卓识者——他们用行动证明，极简干预可以酿出品质非凡的葡萄酒。</p>
-    </div>
+<div class="divider"><div class="divider-diamond"></div></div>
 
-    <div class="pioneer-card reveal">
-      <div class="pioneer-visual">
-        <div class="pioneer-emoji">🔬</div>
+<section class="section" id="pioneers">
+  <div class="reveal">
+    <div class="section-label">§3</div>
+    <h2 class="section-title-cn">先驱人物</h2>
+    <div class="section-intro">
+      每一位运动都有其先行者。自然酒运动由一群充满信念的酿酒师所推动，他们用数十年的实践证明，回归自然不是倒退，而是进化。
+    </div>
+  </div>
+
+  <div class="pioneers-layout stagger">
+    <div class="pioneer-card">
+      <div class="pioneer-avatar">JC</div>
+      <div>
+        <div class="pioneer-name">Jules Chauvet</div>
         <div class="pioneer-years">1907 – 1989</div>
-        <div class="pioneer-role">The Godfather</div>
-      </div>
-      <div class="pioneer-info">
-        <h3>Jules Chauvet</h3>
-        <p class="pioneer-subtitle">智识与科学之父</p>
-        <p>Chauvet 出生于 Beaujolais 的 La Chapelle-de-Guinchay，既是酿酒师、酒商，也是受过训练的科学家——这种罕见的组合赋予了他既扎根葡萄园实践又具备严谨分析能力的双重优势。从1950年代起，在葡萄酒行业热情拥抱化学进步的时代，他悄然进行着质疑主流观念的实验。</p>
-        <p>他的核心创新包括取消加糖、仅使用原生酵母、最大限度减少或彻底不用二氧化硫、探索 carbonic maceration。他发表了科学论文，并指导了一小群酿酒师——其中最重要的，便是 Marcel Lapierre。</p>
+        <div class="pioneer-role">智慧与科学之父</div>
+        <p class="pioneer-bio">博若莱的酿酒师兼生物化学家，Chauvet 是自然酒运动的精神导师。他从科学角度论证了原生酵母发酵的优越性，主张淘汰加糖和减少二氧化硫使用。他的著作和教学影响了几代酿酒师，包括后来引领运动的 Marcel Lapierre。</p>
       </div>
     </div>
 
-    <div class="pioneer-card reveal">
-      <div class="pioneer-visual">
-        <div class="pioneer-emoji">🍷</div>
+    <div class="pioneer-card">
+      <div class="pioneer-avatar">ML</div>
+      <div>
+        <div class="pioneer-name">Marcel Lapierre</div>
         <div class="pioneer-years">1950 – 2010</div>
-        <div class="pioneer-role">The Leader</div>
-      </div>
-      <div class="pioneer-info">
-        <h3>Marcel Lapierre</h3>
-        <p class="pioneer-subtitle">运动的魅力领袖</p>
-        <p>Lapierre 于 1973 年接管了家族位于 Morgon 的酒庄，最初采用传统方式种植。在1970年代末结识 Chauvet 后，他彻底改变了方向。1981年，他完全停止加糖——这是直接对抗 INAO 的反叛之举。他面临了官方制裁、检查和来自当地葡萄酒体制的巨大压力。</p>
-        <p>他全面采纳了 Chauvet 的原则：有机种植、原生酵母发酵、整串 carbonic maceration、不加糖、不下胶、不过滤，极少或不添加硫。他的 Morgon 葡萄酒成为自然酒的品质标杆。酒庄现由其子女 Mathieu 和 Camille Lapierre 经营。</p>
+        <div class="pioneer-role">运动的魅力领袖</div>
+        <p class="pioneer-bio">Lapierre 以其非凡的人格魅力和酿造天赋，将 Chauvet 的理论付诸实践。他在 Morgon 产区酿造的葡萄酒证明了零添加、零过滤的可能性，激励了整个博若莱乃至法国葡萄酒界的变革。</p>
       </div>
     </div>
 
-    <div class="pioneer-card reveal">
-      <div class="pioneer-visual">
-        <div class="pioneer-emoji">🌙</div>
-        <div class="pioneer-years">生于 1945</div>
-        <div class="pioneer-role">The Biodynamic Standard-Bearer</div>
-      </div>
-      <div class="pioneer-info">
-        <h3>Nicolas Joly</h3>
-        <p class="pioneer-subtitle">Coulée de Serrant，Loire Valley</p>
-        <p>作为传奇酒庄 Coulée de Serrant 的庄主——一个拥有独立 AOC 的7公顷独占园（位于 Savennières 内）——Joly 曾是一位投资银行家，在1980年代初将酒庄全面转为生物动力种植。他的哲学将生物动力延伸至酒窖：原生酵母、不控温、极少或不加硫、不下胶不过滤。</p>
-        <p>他的 Chenin Blanc 强劲、复杂、极具陈年潜力——展现出温柏、蜂蜜、蜂蜡和矿物质的香气。他著有《从天空到大地的葡萄酒》（2004），并联合创立了 Renaissance des Appellations。</p>
+    <div class="pioneer-card">
+      <div class="pioneer-avatar">NJ</div>
+      <div>
+        <div class="pioneer-name">Nicolas Joly</div>
+        <div class="pioneer-years">1945年生</div>
+        <div class="pioneer-role">生物动力法的旗手</div>
+        <p class="pioneer-bio">作为卢瓦尔河谷 Coulée de Serrant 的庄主，Joly 将这座传奇酒庄完全转为生物动力法耕作。他撰写的《从葡萄到酒杯：生物动力葡萄酒》成为全球生物动力法的圣经，推动了对葡萄园作为生态系统的重新理解。</p>
       </div>
     </div>
 
-    <div class="pioneer-card reveal">
-      <div class="pioneer-visual">
-        <div class="pioneer-emoji">🏺</div>
-        <div class="pioneer-years">生于 1952</div>
-        <div class="pioneer-role">The Amphora Visionary</div>
-      </div>
-      <div class="pioneer-info">
-        <h3>Josko Gravner</h3>
-        <p class="pioneer-subtitle">Oslavia，Friuli-Venezia Giulia，意大利</p>
-        <p>在1990年代末，经过多年酿造传统白酒之后，Gravner 彻底转变了方向。他前往格鲁吉亚研习 Qvevri 传统，并将大型格鲁吉亚 Qvevri 陶罐带回自己的酒庄。他开始将白葡萄——尤其是 Ribolla Gialla——连皮放入埋在地下的 Qvevri 中发酵，不添加酵母、不控温、不加硫。</p>
-        <p>酿出的酒呈深琥珀色，富含单宁，复杂异常，与常规白酒截然不同。他坚信现代技术剥夺了葡萄酒的灵魂，而古老方法才能酿出更真实、更有生命力的酒。</p>
+    <div class="pioneer-card">
+      <div class="pioneer-avatar">JG</div>
+      <div>
+        <div class="pioneer-name">Josko Gravner</div>
+        <div class="pioneer-years">1952年生</div>
+        <div class="pioneer-role">陶罐酿造的先知</div>
+        <p class="pioneer-bio">意大利 Friuli 产区的传奇酿酒师，Gravner 在1990年代末前往格鲁吉亚学习 Qvevri 陶罐酿造法，并将这一古老技术带回欧洲。他的橙酒作品彻底改变了人们对白葡萄酒的认知边界。</p>
       </div>
     </div>
 
-    <div class="pioneer-card reveal">
-      <div class="pioneer-visual">
-        <div class="pioneer-emoji">🍂</div>
+    <div class="pioneer-card">
+      <div class="pioneer-avatar">SR</div>
+      <div>
+        <div class="pioneer-name">Stanko Radikon</div>
         <div class="pioneer-years">1954 – 2016</div>
-        <div class="pioneer-role">The Skin-Contact Pioneer</div>
-      </div>
-      <div class="pioneer-info">
-        <h3>Stanko Radikon</h3>
-        <p class="pioneer-subtitle">Oslavia，Friuli-Venezia Giulia，意大利</p>
-        <p>Gravner 的邻居与理念盟友，Radikon 同样拥抱延长浸皮的白酒酿造方式，但使用的是大型 Slavonian 橡木桶而非 Qvevri。他的旗舰酒——Ribolla Gialla 和 Oslavje——色泽深邃，结构坚实，极具陈年潜力，带有鲜咸的、近乎肉味的复杂感，挑战了红白酒之间的传统界限。</p>
-        <p>酒庄现由其子 Saša Radikon 管理，延续父亲的哲学。</p>
+        <div class="pioneer-role">浸皮工艺的先驱</div>
+        <p class="pioneer-bio">与 Gravner 并肩，Radikon 在意大利与斯洛文尼亚边境的 Collio 产区开创了长时间浸皮白葡萄酒的先河。他的 Ribolla Gialla 经过数月甚至数年的浸皮，展现了白葡萄酒前所未有的深度和复杂性。</p>
       </div>
     </div>
+  </div>
 
-    <!-- GANG OF FOUR -->
-    <div class="comparison-block reveal" style="margin-top: 50px;">
-      <h3>🍷 "四人帮"——Morgon, Beaujolais</h3>
-      <p>由美国进口商 Kermit Lynch 命名，"四人帮"在1980年代通过回归前工业化方法彻底革新了 Beaujolais。四人共同坚守 carbonic maceration、老藤（许多超过50–80年树龄）、零添加、不下胶、不过滤、低硫或零硫的承诺。</p>
+  <div class="gang-card reveal">
+    <h3>"四人帮" — The Gang of Four</h3>
+    <p>在 Marcel Lapierre 的感召下，Jean Foillard、Guy Breton 和 Jean-Paul Thévenet 三位博若莱酿酒师加入了零添加、不过滤、低硫的酿造阵营。这四位被称为"四人帮"（Gang of Four），他们在1980年代的博若莱掀起了一场静默的革命，证明了 Gamay 葡萄在自然酿造下可以展现出令人惊叹的深度和风土表达。他们的成功激励了全球无数酿酒师加入自然酒的行列。</p>
+  </div>
+</section>
+
+<!-- ============================================
+     §4 分类光谱
+     ============================================ -->
+<div class="divider"><div class="divider-diamond"></div></div>
+
+<section class="section" id="spectrum">
+  <div class="reveal">
+    <div class="section-label">§4</div>
+    <h2 class="section-title-cn">分类光谱</h2>
+    <div class="section-intro">
+      从传统工业化到极端自然主义，葡萄酒的酿造理念构成了一条连续的光谱。每一种类别代表了人类对自然干预程度的不同选择。
     </div>
+  </div>
 
-    <div class="principles-grid stagger-children" style="margin-top: 24px;">
-      <div class="principle-card">
-        <div class="principle-icon">🍷</div>
-        <h3>Marcel Lapierre</h3>
-        <p>魅力领袖和代言人。他的 Morgon 是自然派 Beaujolais 的标杆：果味深邃、花香馥郁、矿物感鲜明、充满生命力。酒庄现由子女 Mathieu 和 Camille 经营。</p>
-      </div>
-      <div class="principle-card">
-        <div class="principle-icon">🌋</div>
-        <h3>Jean Foillard</h3>
-        <p>常被认为技术最精湛的一位。他的 <strong>Morgon "Côte du Py"</strong>——来自著名的火山坡——是最受追捧的自然酒之一，陈年潜力可达10年以上。</p>
-      </div>
-      <div class="principle-card">
-        <div class="principle-icon">🌿</div>
-        <h3>Guy Breton</h3>
-        <p>极端传统派，绰号 "Petit Maxim"。以绝对零加糖、零加硫著称——四人中最为不妥协、最具乡野风格的酿造方式。</p>
-      </div>
-      <div class="principle-card">
-        <div class="principle-icon">🍇</div>
-        <h3>Jean-Paul Thévenet</h3>
-        <p>风格创新者。以挑战成熟度极限著称，包括一款稀有的 <strong>Morgon "Vendange Tardive"</strong>——一种甜型红酒，打破了常规分类。拥有 Morgon 最古老的一些葡萄藤。</p>
-      </div>
+  <div class="spectrum-flow stagger">
+    <div class="spectrum-card">
+      <div class="s-level">Level 01</div>
+      <div class="s-title">传统葡萄酒</div>
+      <div class="s-desc">使用合成农药、商业酵母、添加剂和工业化技术。追求产量和一致性。</div>
     </div>
+    <div class="spectrum-card">
+      <div class="s-level">Level 02</div>
+      <div class="s-title">可持续葡萄酒</div>
+      <div class="s-desc">减少化学投入，注重水资源和能源管理，但仍允许一定程度的工业干预。</div>
+    </div>
+    <div class="spectrum-card">
+      <div class="s-level">Level 03</div>
+      <div class="s-title">有机葡萄酒</div>
+      <div class="s-desc">禁止合成农药和化肥，遵循有机认证标准，但在酿造环节仍可使用部分添加剂。</div>
+    </div>
+    <div class="spectrum-card">
+      <div class="s-level">Level 04</div>
+      <div class="s-title">生物动力葡萄酒</div>
+      <div class="s-desc">遵循 Rudolf Steiner 的哲学，将葡萄园视为自给自足的有机体，遵循月历周期。</div>
+    </div>
+    <div class="spectrum-card">
+      <div class="s-level">Level 05</div>
+      <div class="s-title">自然酒</div>
+      <div class="s-desc">极简干预：有机种植、原生酵母、零添加、不过滤。葡萄酒是风土的纯粹表达。</div>
+    </div>
+  </div>
 
-    <!-- SVG Section Divider -->
-    <div class="svg-divider" style="margin-top: 50px;">
-      <svg viewBox="0 0 200 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M10 20 C30 10, 50 30, 70 20 C90 10, 110 30, 130 20 C150 10, 170 30, 190 20" stroke="#D4A574" stroke-width="0.8" fill="none" opacity="0.6"/>
-        <path d="M95 8 L100 2 L105 8" stroke="#D4A574" stroke-width="1" fill="none" opacity="0.5"/>
-        <path d="M97 8 L100 12 L103 8" stroke="#D4A574" stroke-width="0.8" fill="none" opacity="0.4"/>
-      </svg>
+  <!-- Certification Bodies -->
+  <div class="reveal" style="margin-top:80px;">
+    <h3 style="font-family:var(--font-chinese);font-size:1.2rem;font-weight:700;color:var(--wine-dark);margin-bottom:24px;">认证机构</h3>
+  </div>
+  <div class="cert-grid stagger">
+    <div class="cert-card">
+      <div class="cert-name">Demeter</div>
+      <p class="cert-desc">全球最大的生物动力法认证机构，源于1928年。Demeter 认证要求遵循 Steiner 的生物动力农业原则，涵盖种植和酿造全过程。</p>
+    </div>
+    <div class="cert-card">
+      <div class="cert-name">Ecocert</div>
+      <p class="cert-desc">法国领先的有机认证机构，为有机葡萄种植和酿造提供认证服务，是欧洲最广泛认可的有机认证标准之一。</p>
+    </div>
+    <div class="cert-card">
+      <div class="cert-name">AB (Agriculture Biologique)</div>
+      <p class="cert-desc">法国国家有机农业认证标志，由法国农业部管理。AB 标志确保产品符合欧盟有机法规的标准。</p>
+    </div>
+    <div class="cert-card">
+      <div class="cert-name">USDA Organic</div>
+      <p class="cert-desc">美国农业部有机认证，要求葡萄酒使用有机种植的葡萄，且不添加亚硫酸盐。是美国市场最受认可的有机标志。</p>
+    </div>
+    <div class="cert-card">
+      <div class="cert-name">Vin Méthode Nature</div>
+      <p class="cert-desc">2020年法国推出的首个政府支持的自然酒认证。分两个等级：无硫添加和低硫（≤30mg/L），要求有机认证和原生酵母发酵。</p>
+    </div>
+    <div class="cert-card">
+      <div class="cert-name">RAW Wine</div>
+      <p class="cert-desc">由 Isabelle Legeron MW 创办的自然酒展会和社群。参展酒款必须符合严格的有机/生物动力种植和低干预酿造标准。</p>
     </div>
   </div>
 </section>
 
 <!-- ============================================
-     SECTION 4: THE SPECTRUM
+     §5 风格类型
      ============================================ -->
-<section class="spectrum-section" id="spectrum">
-  <div class="container">
-    <div class="section-header reveal">
-      <span class="section-number">§ 04</span>
-      <p class="section-title-chinese chinese-text">分类光谱</p>
-      <h2 class="section-title">The Wine Spectrum</h2>
-      <div class="section-divider"></div>
-      <p class="section-subtitle">从传统到零干预——理解从葡萄园投入品到酒窖干预的限制程度的渐进式光谱。</p>
+<div class="divider"><div class="divider-diamond"></div></div>
+
+<section class="section" id="styles">
+  <div class="reveal">
+    <div class="section-label">§5</div>
+    <h2 class="section-title-cn">风格类型</h2>
+    <div class="section-intro">
+      自然酒并非单一风格 — 从起泡的 Pét-Nat 到深邃的橙酒，从轻快的 Glou-Glou 到纯粹的零添加酒，每一种风格都展现了极简干预酿造的不同面向。
     </div>
+  </div>
 
-    <div class="spectrum-flow stagger-children">
-      <div class="spectrum-card conventional">
-        <h3>传统葡萄酒</h3>
-        <ul>
-          <li>允许合成农药和除草剂</li>
-          <li>普遍使用商业酵母</li>
-          <li>全系列添加剂</li>
-          <li>SO₂ 上限 350 ppm（美国）</li>
-          <li>常规下胶和过滤</li>
-          <li>市场份额约 80–85%</li>
-        </ul>
-      </div>
-      <div class="spectrum-arrow">→</div>
-      <div class="spectrum-card sustainable">
-        <h3>可持续种植</h3>
-        <ul>
-          <li>减少化学品使用（IPM）</li>
-          <li>水资源保护</li>
-          <li>覆盖作物、生物多样性</li>
-          <li>合成化学品未被禁止</li>
-          <li>LIVE、SIP、ISO 14001</li>
-          <li>葡萄园面积约 3.5%</li>
-        </ul>
-      </div>
-      <div class="spectrum-arrow">→</div>
-      <div class="spectrum-card organic">
-        <h3>有机葡萄酒</h3>
-        <ul>
-          <li>禁止合成农药</li>
-          <li>天然虫害管理</li>
-          <li>SO₂：100–150 ppm（欧盟）</li>
-          <li>添加剂受限但允许使用</li>
-          <li>Ecocert、AB、USDA NOP</li>
-          <li>葡萄园面积约 5–6%</li>
-        </ul>
-      </div>
-      <div class="spectrum-arrow">→</div>
-      <div class="spectrum-card biodynamic">
-        <h3>生物动力</h3>
-        <ul>
-          <li>有机的超集</li>
-          <li>Steiner 配方（500–507）</li>
-          <li>月相种植日历</li>
-          <li>SO₂：约 70–120 ppm</li>
-          <li>Demeter、Biodyvin</li>
-          <li>葡萄园面积约 1%</li>
-        </ul>
-      </div>
-      <div class="spectrum-arrow">→</div>
-      <div class="spectrum-card natural">
-        <h3>自然酒</h3>
-        <ul>
-          <li>有机/生物动力种植</li>
-          <li>仅使用原生酵母</li>
-          <li>零添加（zero-zero 理想）</li>
-          <li>SO₂：0 或 &lt;30 ppm</li>
-          <li>不下胶、不过滤</li>
-          <li>全球产量 &lt;1%</li>
-        </ul>
-      </div>
+  <div class="styles-grid stagger">
+    <div class="style-card">
+      <div class="style-tag">01 · Sparkling</div>
+      <div class="style-name">Pét-Nat</div>
+      <div class="style-name-cn">自然起泡酒</div>
+      <p class="style-desc">Pétillant Naturel 的缩写，意为"天然起泡"。在发酵完成前装瓶，让残余糖分在瓶中完成二次发酵，产生自然气泡。不除渣、不加糖，通常呈现浑浊外观和活泼果味。</p>
     </div>
-
-    <!-- CERTIFICATION TABLE -->
-    <h3 style="font-size: 1.4rem; margin: 60px 0 20px; color: var(--wine-deep); text-align: center;" class="reveal">📋 葡萄酒类别对比表</h3>
-
-    <div class="cert-table-wrapper reveal-scale">
-      <table class="cert-table">
-        <thead>
-          <tr>
-            <th>维度</th>
-            <th>传统葡萄酒</th>
-            <th>有机葡萄酒</th>
-            <th>生物动力</th>
-            <th>自然酒</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>葡萄园化学品</td>
-            <td>允许使用合成农药、除草剂</td>
-            <td>禁止</td>
-            <td>禁止</td>
-            <td>禁止（有机/生物动力种植）</td>
-          </tr>
-          <tr>
-            <td>商业酵母</td>
-            <td>允许</td>
-            <td>允许</td>
-            <td>受限</td>
-            <td>禁止（仅原生酵母）</td>
-          </tr>
-          <tr>
-            <td>Chaptalization（加糖）</td>
-            <td>允许</td>
-            <td>允许（受限）</td>
-            <td>受限</td>
-            <td>禁止</td>
-          </tr>
-          <tr>
-            <td>添加亚硫酸盐（SO₂）</td>
-            <td>可达 150–200 mg/L</td>
-            <td>可达 100–150 mg/L</td>
-            <td>约 70–100 mg/L</td>
-            <td>零或 &lt;30 mg/L</td>
-          </tr>
-          <tr>
-            <td>下胶 / 过滤</td>
-            <td>允许</td>
-            <td>允许</td>
-            <td>允许</td>
-            <td>通常避免</td>
-          </tr>
-          <tr>
-            <td>技术操控</td>
-            <td>允许</td>
-            <td>允许</td>
-            <td>受限</td>
-            <td>禁止</td>
-          </tr>
-          <tr>
-            <td>法律认证</td>
-            <td>不适用</td>
-            <td>有（多个认证机构）</td>
-            <td>有（Demeter、Biodyvin）</td>
-            <td>新兴中（法国："Vin Méthode Nature" 2020）</td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="style-card">
+      <div class="style-tag">02 · Skin-Contact</div>
+      <div class="style-name">Orange Wine</div>
+      <div class="style-name-cn">橙酒 / 琥珀酒</div>
+      <p class="style-desc">白葡萄带皮发酵，浸皮时间从数天到数月不等。酒液呈现深金色至琥珀色，具有丰富的单宁结构和干果、茶叶、香料等复杂风味。源自格鲁吉亚数千年的 Qvevri 酿造传统。</p>
     </div>
-
-    <!-- CERTIFICATION BODIES -->
-    <h3 style="font-size: 1.4rem; margin: 60px 0 20px; color: var(--wine-deep); text-align: center;" class="reveal">🏛️ 认证机构</h3>
-
-    <div class="principles-grid stagger-children">
-      <div class="principle-card">
-        <div class="principle-icon">🏛️</div>
-        <h3>Demeter International</h3>
-        <p>历史最悠久、最知名的生物动力认证机构。要求使用全部生物动力配方（500–507）、遵循种植日历，亚硫酸盐限制低于 100–150 mg/L（视酒种而定）。</p>
-      </div>
-      <div class="principle-card">
-        <div class="principle-icon">🍃</div>
-        <h3>Ecocert</h3>
-        <p>全球最大的有机认证机构之一，总部设在法国。依据欧盟有机法规（EU 2018/848）进行认证。许多生产者将 Ecocert 作为基线认证，再追求其他认证。</p>
-      </div>
-      <div class="principle-card">
-        <div class="principle-icon">🇫🇷</div>
-        <h3>AB（Agriculture Biologique）</h3>
-        <p>法国国家有机认证，自2010年起与欧盟有机标准接轨。在法国消费者中广泛认可，常与欧盟有机标识一同出现在酒标上。</p>
-      </div>
-      <div class="principle-card">
-        <div class="principle-icon">🇺🇸</div>
-        <h3>USDA Organic（NOP）</h3>
-        <p>两个层级："100% Organic" 禁止添加亚硫酸盐（天然产生 &lt;10 ppm）；"Made with Organic Grapes" 允许添加 SO₂ 至 100 ppm。USDA 印章仅可用于前者。</p>
-      </div>
-      <div class="principle-card">
-        <div class="principle-icon">🏷️</div>
-        <h3>Vin Méthode Nature</h3>
-        <p>法国最重要的自然酒认证（2020年）。要求有机/生物动力葡萄、仅使用原生酵母、禁止加糖、SO₂ 上限 30–40 mg/L，由 Bureau Veritas 进行第三方审计。</p>
-      </div>
-      <div class="principle-card">
-        <div class="principle-icon">🌐</div>
-        <h3>Raw Wine</h3>
-        <p>由 Isabelle Legeron MW 创立。在伦敦、纽约、柏林和洛杉矶举办国际展会。生产者须符合其章程：有机/生物动力种植、原生酵母、极少添加硫（通常低于 70 mg/L）。</p>
-      </div>
+    <div class="style-card">
+      <div class="style-tag">03 · Light Red</div>
+      <div class="style-name">Glou-Glou</div>
+      <div class="style-name-cn">轻松畅饮酒</div>
+      <p class="style-desc">源自法语"咕噜咕噜"的拟声词，形容轻快易饮的红酒风格。通常使用二氧化碳浸渍法酿造，低单宁、低酒精度、果味充沛，适合轻微冰镇后畅饮。</p>
+    </div>
+    <div class="style-card">
+      <div class="style-tag">04 · Pure</div>
+      <div class="style-name">Zero-Zero</div>
+      <div class="style-name-cn">零添加酒</div>
+      <p class="style-desc">"零添加、零取出" — 不添加任何物质（包括亚硫酸盐），也不提取任何成分。是自然酒理念的极致表达，要求葡萄品质和酿酒技术都达到极高水平。</p>
+    </div>
+    <div class="style-card">
+      <div class="style-tag">05 · Ancient</div>
+      <div class="style-name">Amphora / Qvevri</div>
+      <div class="style-name-cn">陶罐酒</div>
+      <p class="style-desc">使用陶土容器进行发酵和陈酿。格鲁吉亚的 Qvevri 埋入地下，意大利的 Amphora 置于地面。陶罐的微透气性赋予葡萄酒独特的质感和矿物感，同时保持纯净的果味。</p>
+    </div>
+    <div class="style-card">
+      <div class="style-tag">06 · Crossover</div>
+      <div class="style-name">Cider-Adjacent</div>
+      <div class="style-name-cn">果酒跨界</div>
+      <p class="style-desc">自然酒与苹果酒（Cider）、梨酒（Perry）等发酵果酒的交叉地带。使用类似的极简酿造理念，模糊了葡萄酒与其他发酵饮品的界限，代表了低酒精度、高适饮性的新趋势。</p>
     </div>
   </div>
 </section>
 
 <!-- ============================================
-     SECTION 5: STYLES
+     §6 葡萄品种
      ============================================ -->
-<section class="styles-section" id="styles">
-  <div class="container">
-    <div class="section-header reveal">
-      <span class="section-number">§ 05</span>
-      <p class="section-title-chinese chinese-text">风格与类型</p>
-      <h2 class="section-title">Styles of Natural Wine</h2>
-      <div class="section-divider"></div>
-      <p class="section-subtitle">从气泡跳跃的 Pét-Nat，到单宁丰盈的橙酒，再到轻松易饮的 Glou-Glou——定义自然酒世界的多元风格。</p>
-    </div>
+<div class="divider"><div class="divider-diamond"></div></div>
 
-    <div class="styles-grid stagger-children">
-      <article class="style-card">
-        <div class="style-card-header">
-          <span class="style-card-icon">🫧</span>
-          <h3>Pét-Nat（自然气泡酒）</h3>
-          <span class="style-french">Pétillant Naturel</span>
-        </div>
-        <div class="style-card-body">
-          <p>采用 <strong>méthode ancestrale</strong>（古法）酿造——一次发酵在瓶中完成。酿酒师在初次发酵尚未结束时装瓶，酵母在密封的瓶内继续消耗糖分，产生天然 CO₂ 气泡。与 Champagne 不同，Pét-Nat 通常不进行除渣（disgorgement）、不接受 dosage（补液）、使用原生酵母，且常常零添加硫。</p>
-          <div class="style-tags">
-            <span class="style-tag">Méthode Ancestrale</span>
-            <span class="style-tag">不除渣</span>
-            <span class="style-tag">Loire Valley</span>
-            <span class="style-tag">零 Dosage</span>
-          </div>
-        </div>
-      </article>
-
-      <article class="style-card">
-        <div class="style-card-header">
-          <span class="style-card-icon">🟠</span>
-          <h3>橙酒 / 琥珀酒</h3>
-          <span class="style-french">Skin-Contact Whites（浸皮白酒）</span>
-        </div>
-        <div class="style-card-body">
-          <p>以延长浸皮方式酿造的白葡萄酒——将红酒的酿造技法应用于白葡萄。果汁与果皮、果籽，有时连同果梗在内，接触数天至数月，产生琥珀色泽、明显的单宁结构，以及干果、坚果、茶叶和香料的复杂香气。根植于格鲁吉亚 8,000 年 Qvevri 传统。</p>
-          <div class="style-tags">
-            <span class="style-tag">浸皮发酵</span>
-            <span class="style-tag">Qvevri</span>
-            <span class="style-tag">格鲁吉亚</span>
-            <span class="style-tag">Friuli</span>
-          </div>
-        </div>
-      </article>
-
-      <article class="style-card">
-        <div class="style-card-header">
-          <span class="style-card-icon">🍒</span>
-          <h3>Glou-Glou（畅饮酒）</h3>
-          <span class="style-french">Light, Chillable Reds（轻盈可冰镇红酒）</span>
-        </div>
-        <div class="style-card-body">
-          <p>"Glou-glou" 是法语中模拟大口饮酒声的拟声词。轻盈酒体、果味充沛、低单宁的红酒，适合冰镇后轻松饮用。通常以 Gamay、Cinsault 或 Pinot Noir 酿造，采用 carbonic maceration。酒精度偏低（10–12%），明亮多汁——自然酒吧中最典型的酒款。</p>
-          <div class="style-tags">
-            <span class="style-tag">Carbonic Maceration</span>
-            <span class="style-tag">Gamay</span>
-            <span class="style-tag">可冰镇</span>
-            <span class="style-tag">Beaujolais</span>
-          </div>
-        </div>
-      </article>
-
-      <article class="style-card">
-        <div class="style-card-header">
-          <span class="style-card-icon">⚪</span>
-          <h3>Zero-Zero（双零）</h3>
-          <span class="style-french">No Sulfites Added（不添加亚硫酸盐）</span>
-        </div>
-        <div class="style-card-body">
-          <p>自然酒哲学的最纯粹表达：在任何环节都不添加亚硫酸盐，不下胶不过滤。第一个"零"指零添加 SO₂；第二个"零"指零其他添加物。要求卓越的葡萄品质、严格的酒窖卫生和细致的操作——酿出的酒可以展现出非凡的表现力和生命力。</p>
-          <div class="style-tags">
-            <span class="style-tag">0/0</span>
-            <span class="style-tag">无 SO₂</span>
-            <span class="style-tag">最纯粹表达</span>
-            <span class="style-tag">未过滤</span>
-          </div>
-        </div>
-      </article>
-
-      <article class="style-card">
-        <div class="style-card-header">
-          <span class="style-card-icon">🏺</span>
-          <h3>陶罐酒 / Qvevri 酒</h3>
-          <span class="style-french">Clay Vessel Fermentation（陶器发酵）</span>
-        </div>
-        <div class="style-card-body">
-          <p>在陶器中发酵和陈酿的葡萄酒——amphora（地中海双耳瓶）或 qvevri（格鲁吉亚陶罐）。多孔的陶壁允许微氧化，却不赋予橡木风味；蛋形结构促进酒液自然循环。Qvevri 埋入地下以获得温度稳定性。通常涉及延长浸皮，酿出结构深厚的酒。</p>
-          <div class="style-tags">
-            <span class="style-tag">陶器容器</span>
-            <span class="style-tag">微氧化</span>
-            <span class="style-tag">8,000 年传统</span>
-            <span class="style-tag">UNESCO 遗产</span>
-          </div>
-        </div>
-      </article>
-
-      <article class="style-card">
-        <div class="style-card-header">
-          <span class="style-card-icon">🍎</span>
-          <h3>苹果酒跨界酒</h3>
-          <span class="style-french">Fruit Pét-Nats &amp; Co-Ferments（水果 Pét-Nat 与共发酵）</span>
-        </div>
-        <div class="style-card-body">
-          <p>一些自然酒酿造者模糊了葡萄酒与苹果酒的界限，将葡萄与苹果、梨或其他水果共同发酵。在葡萄种植边际地区（法国北部、美国北部、北欧）较为流行，也被一些生产者视为葡萄酒与苹果酒之间界限的人为性的一种挑战。</p>
-          <div class="style-tags">
-            <span class="style-tag">共发酵</span>
-            <span class="style-tag">多水果</span>
-            <span class="style-tag">实验性</span>
-            <span class="style-tag">北欧</span>
-          </div>
-        </div>
-      </article>
+<section class="section" id="grapes">
+  <div class="reveal">
+    <div class="section-label">§6</div>
+    <h2 class="section-title-cn">葡萄品种</h2>
+    <div class="section-intro">
+      自然酒酿酒师偏爱能够真实反映风土特征的品种。以下九种葡萄在自然酒世界中尤为突出。
     </div>
   </div>
-</section>
 
-<!-- ============================================
-     SECTION 6: GRAPE VARIETIES
-     ============================================ -->
-<section class="grapes-section" id="grapes">
-  <div class="container">
-    <div class="section-header reveal">
-      <span class="section-number">§ 06</span>
-      <p class="section-title-chinese chinese-text">葡萄品种</p>
-      <h2 class="section-title">Key Grape Varieties</h2>
-      <div class="section-divider"></div>
-      <p class="section-subtitle">与自然酒酿造关系最为密切的品种——因天然酸度、风土透明度和对极简干预的适应性而备受推崇。</p>
-    </div>
-
-    <div class="grapes-grid stagger-children">
-      <div class="grape-card">
-        <h4>🍇 Gamay（佳美）</h4>
-        <div class="grape-type">红葡萄 · Beaujolais</div>
-        <p>自然酒最具代表性的葡萄品种。皮薄、早熟、天然高酸。在花岗岩土壤中茁壮成长，对 carbonic maceration 反应极佳。酿出轻至中等酒体的酒，带有明亮的樱桃、覆盆子和紫罗兰香气。"四人帮"的遗产确立了 Gamay 作为现代自然酒模板的地位。</p>
-      </div>
-
-      <div class="grape-card">
-        <h4>🍈 Chenin Blanc（白诗南）</h4>
-        <div class="grape-type">白葡萄 · Loire Valley</div>
-        <p>多才多艺得令人惊叹——能同样出色地酿造干型、半干型、甜型和气泡酒。天然高酸即使不加硫也能提供坚实结构和陈年潜力。展现出温柏、苹果、蜂蜜、羊毛和湿石的气息，质地蜡润。Vouvray、Montlouis 和 Savennières 是核心产区。</p>
-      </div>
-
-      <div class="grape-card">
-        <h4>🍷 Pinot Noir（黑皮诺）</h4>
-        <div class="grape-type">红葡萄 · Burgundy / Oregon</div>
-        <p>薄皮、对风土敏感、趋向优雅的特质使其天然适合低干预酿造。常使用整串发酵以增添香料感、结构和复杂性。在 Burgundy 和 Oregon 的 Willamette Valley 同样如鱼得水。</p>
-      </div>
-
-      <div class="grape-card">
-        <h4>🫐 Cinsault（神索）</h4>
-        <div class="grape-type">红葡萄 · Languedoc / 南 Rhône</div>
-        <p>广泛用于轻盈、多汁、Glou-Glou 风格红酒。耐旱性好，非常适合温暖气候。酿出低单宁、果味主导的葡萄酒，在极简干预下大放异彩。</p>
-      </div>
-
-      <div class="grape-card">
-        <h4>🍇 Grenache / Garnacha（歌海娜）</h4>
-        <div class="grape-type">红葡萄 · Rhône / Priorat / 澳大利亚</div>
-        <p>在南 Rhône、Priorat 和澳大利亚地位重要。酿出慷慨、果味丰沛的酒，非常适合极简干预。老藤歌海娜能酿出深度非凡的葡萄酒。</p>
-      </div>
-
-      <div class="grape-card">
-        <h4>🌿 Cabernet Franc（品丽珠）</h4>
-        <div class="grape-type">红葡萄 · Loire Valley</div>
-        <p>Loire Valley 的主力品种——Bourgueil、Chinon、Saumur-Champigny——酿出带有草本气息的中等酒体红酒，在自然酒圈中广受欢迎。常展现青椒、紫罗兰和石墨的风味。</p>
-      </div>
-
-      <div class="grape-card">
-        <h4>🟡 Ribolla Gialla（丽波拉·贾拉）</h4>
-        <div class="grape-type">白葡萄 · Friuli / 斯洛文尼亚</div>
-        <p>橙酒运动的标志性品种。经浸皮发酵后，酿出结构坚实、富含单宁、复杂度惊人的白葡萄酒。Gravner 和 Radikon 正是以此品种奠定了声誉。</p>
-      </div>
-
-      <div class="grape-card">
-        <h4>🌋 Nerello Mascalese（内雷洛·马斯卡莱塞）</h4>
-        <div class="grape-type">红葡萄 · 西西里 / Etna 火山</div>
-        <p>西西里版的 Pinot Noir，生长在 Etna 火山的坡地上。优雅、矿物感突出的红酒，吸引了像 Frank Cornelissen 这样的自然酒酿造者来到 Etna 北坡。</p>
-      </div>
-
-      <div class="grape-card">
-        <h4>🍋 Melon de Bourgogne（勃艮第香瓜）</h4>
-        <div class="grape-type">白葡萄 · Muscadet</div>
-        <p>Loire 产区 Muscadet 的代表品种，用于酿造清脆、矿物感强的白葡萄酒，也越来越多地用于酿造 Pét-Nat。带有咸鲜感、纤细而清爽——零干预酿造的理想之选。</p>
+  <div class="grapes-container stagger">
+    <div class="grape-row">
+      <div class="grape-name">Gamay</div>
+      <div class="grape-info">
+        <div class="grape-type">红葡萄 · RED</div>
+        <p class="grape-desc">博若莱的灵魂品种，在自然酿造下展现出令人惊叹的花香、矿物感和纯净果味。二氧化碳浸渍法的最佳拍档，成就了 Glou-Glou 风格的经典之作。</p>
+        <div class="grape-region">主要产区：博若莱（Beaujolais）、卢瓦尔河谷</div>
       </div>
     </div>
-
-    <!-- SVG Section Divider -->
-    <div class="svg-divider" style="margin-top: 50px;">
-      <svg viewBox="0 0 200 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="85" cy="20" r="5" fill="none" stroke="#D4A574" stroke-width="0.8" opacity="0.5"/>
-        <circle cx="100" cy="20" r="5" fill="none" stroke="#D4A574" stroke-width="0.8" opacity="0.5"/>
-        <circle cx="115" cy="20" r="5" fill="none" stroke="#D4A574" stroke-width="0.8" opacity="0.5"/>
-        <line x1="30" y1="20" x2="75" y2="20" stroke="#D4A574" stroke-width="0.5" opacity="0.3"/>
-        <line x1="125" y1="20" x2="170" y2="20" stroke="#D4A574" stroke-width="0.5" opacity="0.3"/>
-      </svg>
+    <div class="grape-row">
+      <div class="grape-name">Chenin Blanc</div>
+      <div class="grape-info">
+        <div class="grape-type">白葡萄 · WHITE</div>
+        <p class="grape-desc">卢瓦尔河谷的百变女王，从干型到甜型、从静止到起泡皆能胜任。自然酿造下展现出蜂蜜、蜂蜡、白花和矿物质的复杂层次。</p>
+        <div class="grape-region">主要产区：卢瓦尔河谷（Vouvray, Savennières）、南非</div>
+      </div>
     </div>
-  </div>
-</section>
-
-<!-- ============================================
-     SECTION 7: TECHNIQUES
-     ============================================ -->
-<section class="techniques-section" id="techniques">
-  <div class="container">
-    <div class="section-header reveal">
-      <span class="section-number">§ 07</span>
-      <p class="section-title-chinese chinese-text">酿造工艺</p>
-      <h2 class="section-title">Winemaking Techniques</h2>
-      <div class="section-divider"></div>
-      <p class="section-subtitle">定义自然酒酿造的核心方法——从二氧化碳浸渍法到古老的陶器容器。</p>
+    <div class="grape-row">
+      <div class="grape-name">Pinot Noir</div>
+      <div class="grape-info">
+        <div class="grape-type">红葡萄 · RED</div>
+        <p class="grape-desc">最透明的风土翻译者，对土壤和气候的变化极为敏感。在自然酿造下，Pinot Noir 展现出从红色浆果到森林地表、从丝绸到矿物的无限可能。</p>
+        <div class="grape-region">主要产区：勃艮第、阿尔萨斯、俄勒冈</div>
+      </div>
     </div>
-
-    <div class="techniques-grid stagger-children">
-      <div class="technique-card">
-        <h3>🫧 Carbonic Maceration（二氧化碳浸渍法）</h3>
-        <p>将完整、未破碎的葡萄串放入充满 CO₂ 的密封容器中。发酵在每颗葡萄内部开始——萃取色泽和果味芳香，同时最大限度减少单宁。酿出果味鲜明、低单宁、适合早饮的葡萄酒。这是 Beaujolais 和 Glou-Glou 风格的标志性技法。半碳酸浸渍法（semi-carbonic maceration）是其变体，依靠葡萄自身重量压碎下层葡萄。</p>
+    <div class="grape-row">
+      <div class="grape-name">Cinsault</div>
+      <div class="grape-info">
+        <div class="grape-type">红葡萄 · RED</div>
+        <p class="grape-desc">南法的被低估之星，在自然酿造下展现出精致的花香和优雅的红色果味。低单宁、高酸度的特质使其成为 Glou-Glou 风格的理想选择。</p>
+        <div class="grape-region">主要产区：朗格多克、普罗旺斯、南非</div>
       </div>
-
-      <div class="technique-card">
-        <h3>🤲 Direct Press（直接压榨）</h3>
-        <p>采收后立即压榨葡萄，浸皮时间极短或完全没有。主要用于白葡萄酒和桃红葡萄酒，以限制色泽、单宁和酚类物质的萃取。酿出干净、精准、矿物感强的白葡萄酒，不经过浸皮带来的厚重感和结构即可表达风土。果汁通常在惰性容器中以原生酵母发酵。</p>
+    </div>
+    <div class="grape-row">
+      <div class="grape-name">Grenache</div>
+      <div class="grape-info">
+        <div class="grape-type">红葡萄 · RED</div>
+        <p class="grape-desc">地中海的温暖表达者，在自然酿造下可以展现出令人惊讶的优雅和矿物质感。从西班牙的歌海娜到法国的歌海娜，每个产区都有独特的个性。</p>
+        <div class="grape-region">主要产区：罗纳河谷、普里奥拉托、南澳</div>
       </div>
-
-      <div class="technique-card">
-        <h3>🌿 Whole-Cluster Fermentation（整串发酵）</h3>
-        <p>将完整的葡萄串——连同果梗——放入发酵容器，而非进行去梗。果梗贡献单宁、香料和草本风味，并可降低酒精的灼热感。通常以半碳酸方式进行。常见于 Pinot Noir、Gamay 和 Syrah。需要果梗完全成熟以避免青涩味。</p>
+    </div>
+    <div class="grape-row">
+      <div class="grape-name">Cabernet Franc</div>
+      <div class="grape-info">
+        <div class="grape-type">红葡萄 · RED</div>
+        <p class="grape-desc">卢瓦尔河谷的优雅代表，自然酿造下展现出紫罗兰、青椒和草本植物的迷人香气。比 Cabernet Sauvignon 更轻盈、更具花香特质。</p>
+        <div class="grape-region">主要产区：卢瓦尔河谷（Chinon, Bourgueil）、波尔多右岸</div>
       </div>
-
-      <div class="technique-card">
-        <h3>🏺 Amphora / Qvevri 陈酿（陶器陈酿）</h3>
-        <p>陶器容器通过多孔壁提供微氧化（类似橡木桶但不赋予橡木风味），凭借热质量实现天然温度稳定，蛋形结构促进酒液自然循环。Qvevri 埋入地下以获得更好的温度控制。容量从 100 到 1,000+ 升不等。尤其与橙酒/浸皮酒关联密切。</p>
+    </div>
+    <div class="grape-row">
+      <div class="grape-name">Ribolla Gialla</div>
+      <div class="grape-info">
+        <div class="grape-type">白葡萄 · WHITE</div>
+        <p class="grape-desc">橙酒运动的标志性品种。在 Gravner 和 Radikon 的手中，经过数月浸皮的 Ribolla Gialla 展现出令人震撼的深度、复杂性和陈年潜力。</p>
+        <div class="grape-region">主要产区：意大利 Friuli、斯洛文尼亚 Goriška Brda</div>
       </div>
-
-      <div class="technique-card">
-        <h3>🫗 极简干预（Minimal Intervention）</h3>
-        <p>统领一切的核心理念：仅使用原生酵母，不添加糖/酸/单宁/酶/色素，零或极少 SO₂，禁止技术操控（反渗透、旋转锥体柱），不或极少下胶和过滤，不进行瞬间巴氏杀菌。手工采收保持果实完整性。酿酒师扮演的是守护者，而非创造者。</p>
+    </div>
+    <div class="grape-row">
+      <div class="grape-name">Nerello Mascalese</div>
+      <div class="grape-info">
+        <div class="grape-type">红葡萄 · RED</div>
+        <p class="grape-desc">西西里岛埃特纳火山的灵魂品种，生长在火山岩土壤中。自然酿造下展现出红色浆果、矿物质和烟熏气息，被誉为"地中海的 Pinot Noir"。</p>
+        <div class="grape-region">主要产区：埃特纳（Etna）、西西里岛</div>
       </div>
-
-      <div class="technique-card">
-        <h3>🕰️ Extended Maceration（延长浸皮）</h3>
-        <p>浸皮持续数周乃至数月而非数天——最大限度萃取风味、单宁和复杂性。与橙酒有重叠，但也可适用于浸皮期特别长的红酒。作为添加剂的替代方案用于构建结构和稳定性。陶罐酒和 Qvevri 酒通常属于延长浸皮的酒。</p>
+    </div>
+    <div class="grape-row">
+      <div class="grape-name">Melon de Bourgogne</div>
+      <div class="grape-info">
+        <div class="grape-type">白葡萄 · WHITE</div>
+        <p class="grape-desc">Muscadet 产区的唯一主角，在自然酿造和延长酒泥接触下，展现出令人惊艳的咸鲜感、矿物质感和柑橘风味。是海鲜的完美搭档。</p>
+        <div class="grape-region">主要产区：卢瓦尔河谷（Muscadet）</div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ============================================
-     SECTION 8: GLOBAL REGIONS
+     §7 酿造工艺
      ============================================ -->
-<section class="regions-section" id="regions">
-  <div class="container">
-    <div class="section-header reveal">
-      <span class="section-number">§ 08</span>
-      <p class="section-title-chinese chinese-text">全球产区</p>
-      <h2 class="section-title">Global Regions</h2>
-      <div class="section-divider"></div>
-      <p class="section-subtitle">从精神故乡法国到全球各地的新兴场景——自然酒运动的地理版图。</p>
+<div class="divider"><div class="divider-diamond"></div></div>
+
+<section class="section-full section-dark" id="techniques">
+  <div style="max-width:var(--content-max);margin:0 auto;">
+    <div class="reveal">
+      <div class="section-label" style="color:var(--amber-light);">§7</div>
+      <h2 class="section-title-cn" style="color:var(--cream);">酿造工艺</h2>
+      <div class="section-intro" style="color:rgba(247,242,234,0.65);">
+        自然酒的酿造工艺不是发明，而是回归 — 回到化学添加剂和工业技术出现之前的酿造方式。以下是自然酒酿酒师最核心的六种技术。
+      </div>
     </div>
 
-    <!-- FRANCE -->
+    <div class="techniques-grid stagger">
+      <div class="technique-card">
+        <div class="technique-num">01</div>
+        <div class="technique-name">二氧化碳浸渍法</div>
+        <div class="technique-en">Carbonic Maceration</div>
+        <p class="technique-desc">将整串葡萄置于充满二氧化碳的密封容器中，让果实在无氧环境下进行细胞内发酵。这一技术赋予葡萄酒极低的单宁、充沛的果味和丝滑的口感，是博若莱和 Glou-Glou 风格的标志性工艺。</p>
+      </div>
+      <div class="technique-card">
+        <div class="technique-num">02</div>
+        <div class="technique-name">直接压榨</div>
+        <div class="technique-en">Direct Press</div>
+        <p class="technique-desc">葡萄采收后直接压榨取汁，不进行浸皮。这种最简约的方式最大程度保留了葡萄的纯净果味和矿物感，是自然白葡萄酒和桃红酒的常用技术。</p>
+      </div>
+      <div class="technique-card">
+        <div class="technique-num">03</div>
+        <div class="technique-name">整串发酵</div>
+        <div class="technique-en">Whole-Bunch Fermentation</div>
+        <p class="technique-desc">保留葡萄梗进行发酵，梗中的木质素和纤维素为葡萄酒增添结构感和香料气息。这一技术需要完全成熟的葡萄梗，否则会带来粗糙的青涩味道。</p>
+      </div>
+      <div class="technique-card">
+        <div class="technique-num">04</div>
+        <div class="technique-name">陶罐陈酿</div>
+        <div class="technique-en">Amphora Aging</div>
+        <p class="technique-desc">使用陶土容器进行发酵和陈酿。陶罐的微透气性允许缓慢的氧化成熟，同时不会像橡木桶那样赋予额外的风味。结果是纯净、带有矿物感和独特质地的葡萄酒。</p>
+      </div>
+      <div class="technique-card">
+        <div class="technique-num">05</div>
+        <div class="technique-name">极简干预</div>
+        <div class="technique-en">Minimal Intervention</div>
+        <p class="technique-desc">酿酒师的角色从"制造者"转变为"守护者" — 监控发酵进程，保持酒窖卫生，在必要时做出最小限度的调整。核心理念是让葡萄自身完成一切转化。</p>
+      </div>
+      <div class="technique-card">
+        <div class="technique-num">06</div>
+        <div class="technique-name">延长浸皮</div>
+        <div class="technique-en">Extended Maceration</div>
+        <p class="technique-desc">让白葡萄汁与果皮长时间接触 — 从数天到数月甚至数年。这一古老技术赋予白葡萄酒橙酒般的色泽、丰富的单宁结构和惊人的风味复杂性。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     §8 全球产区
+     ============================================ -->
+<div class="divider"><div class="divider-diamond"></div></div>
+
+<section class="section" id="regions">
+  <div class="reveal">
+    <div class="section-label">§8</div>
+    <h2 class="section-title-cn">全球产区</h2>
+    <div class="section-intro">
+      自然酒运动已经从法国的博若莱和卢瓦尔河谷扩展到全球每一个角落。以下是这场运动最重要的地理坐标。
+    </div>
+  </div>
+
+  <div class="regions-container stagger">
+    <!-- France -->
     <div class="region-group reveal">
-      <div class="region-country">
-        <span class="region-flag">🇫🇷</span>
-        <h3>法国</h3>
-      </div>
-      <div class="region-grid stagger-children">
+      <div class="region-country">法国 France</div>
+      <div class="region-list">
         <div class="region-card">
-          <h4>Loire Valley（卢瓦尔河谷）</h4>
-          <p>现代自然酒运动的摇篮。凉爽气候、多样风土和丰富的品种（Chenin Blanc、Cabernet Franc、Gamay、Melon de Bourgogne、Grolleau）提供了理想的条件。Touraine 和 Montlouis-sur-Loire 是 Pét-Nat 的首都；Anjou、Saumur 和 Muscadet 是重要据点。</p>
-          <div class="region-grapes">Chenin Blanc · Cabernet Franc · Gamay · Melon de Bourgogne</div>
+          <div class="region-name">博若莱 Beaujolais</div>
+          <p class="region-desc">自然酒运动的发源地。Lapierre 和"四人帮"在此开创了零添加的 Gamay 酿造革命，Morgon 和 Fleurie 是最具代表性的自然酒产区。</p>
         </div>
         <div class="region-card">
-          <h4>Beaujolais（博若莱）</h4>
-          <p>"四人帮"在1980年代彻底革新了这个产区。在花岗岩土壤上以 carbonic maceration 酿造 Gamay 定义了地区风格。老藤、低产量、不加糖、原生酵母、极少或零硫仍然是标准。</p>
-          <div class="region-grapes">Gamay</div>
+          <div class="region-name">卢瓦尔河谷 Loire Valley</div>
+          <p class="region-desc">Nicolas Joly 的 Coulée de Serrant 引领了生物动力法运动。Chenin Blanc 和 Cabernet Franc 在此展现出自然酿造的极致优雅。</p>
         </div>
         <div class="region-card">
-          <h4>Jura（汝拉）</h4>
-          <p>法国最小的葡萄酒产区，却有着超出其体量的影响力。传统氧化风格——vin jaune（黄酒）、vin de paille（稻草酒）、macvin——天生就是低干预的。Trousseau、Poulsard 和 Savagnin 是标志性品种。每年的 Nez dans le Vert 节使其成为朝圣之地。</p>
-          <div class="region-grapes">Savagnin · Trousseau · Poulsard · Chardonnay</div>
+          <div class="region-name">汝拉 Jura</div>
+          <p class="region-desc">法国最被低估的自然酒产区，以黄酒（Vin Jaune）和稻草酒（Vin de Paille）闻名。Savagnin 和 Poulsard 品种在自然酿造下表现卓越。</p>
         </div>
         <div class="region-card">
-          <h4>Languedoc-Roussillon（朗格多克-鲁西永）</h4>
-          <p>法国南部最大的葡萄酒产区——自然酒活动的温床，驱动力来自可负担的土地、温暖气候（降低病害压力）和独立的小规模农业。从 Glou-Glou 红酒到严肃的陈年型自然酒无所不产。</p>
-          <div class="region-grapes">Grenache · Carignan · Cinsault · Mourvèdre</div>
+          <div class="region-name">朗格多克-鲁西永 Languedoc-Roussillon</div>
+          <p class="region-desc">法国南部的自然酒热土，温暖的气候和多样的土壤为自然酿酒师提供了丰富的可能性。Cinsault 和 Carignan 在此焕发新生。</p>
         </div>
       </div>
     </div>
 
-    <!-- ITALY -->
+    <!-- Italy -->
     <div class="region-group reveal">
-      <div class="region-country">
-        <span class="region-flag">🇮🇹</span>
-        <h3>意大利</h3>
-      </div>
-      <div class="region-grid stagger-children">
+      <div class="region-country">意大利 Italy</div>
+      <div class="region-list">
         <div class="region-card">
-          <h4>Friuli Venezia Giulia（弗留利）</h4>
-          <p>世界橙酒之都之一。Josko Gravner 和 Stanko Radikon 在1990年代开创了延长浸皮的白葡萄酒，从格鲁吉亚 Qvevri 传统中汲取灵感。Ribolla Gialla 是旗舰品种。新一代以陶罐、极少硫和生物动力种植延续传统。</p>
-          <div class="region-grapes">Ribolla Gialla · Friulano · Malvasia</div>
+          <div class="region-name">弗留利 Friuli-Venezia Giulia</div>
+          <p class="region-desc">橙酒运动的欧洲中心。Gravner 和 Radikon 在此开创了浸皮白葡萄酒的复兴，Ribolla Gialla 成为橙酒的标志性品种。</p>
         </div>
         <div class="region-card">
-          <h4>西西里 / Etna 火山</h4>
-          <p>火山土壤、高海拔和原生 Nerello Mascalese 品种创造出独特的矿物感葡萄酒。Frank Cornelissen 以在 Etna 北坡完全不动手的酿造方式闻名。温暖干燥的气候非常适合有机和生物动力种植。</p>
-          <div class="region-grapes">Nerello Mascalese · Catarratto · Grillo · Nero d'Avola</div>
+          <div class="region-name">埃特纳 Etna, Sicily</div>
+          <p class="region-desc">火山土壤赋予 Nerello Mascalese 独特的矿物质感。高海拔和自然酿造的结合产生了地中海最令人兴奋的自然酒。</p>
         </div>
         <div class="region-card">
-          <h4>Piedmont（皮埃蒙特）</h4>
-          <p>虽然以结构坚实的 Barolo 和 Barbaresco 著称，Piedmont 的自然酒场景也在蓬勃发展，尤其在以极简干预酿造 Barbera、Dolcetto 和 Freisa 方面。较凉爽的北部地区（Carema、Lessona）正在出现实验性作品。</p>
-          <div class="region-grapes">Barbera · Dolcetto · Freisa · Nebbiolo</div>
+          <div class="region-name">皮埃蒙特 Piedmont</div>
+          <p class="region-desc">Barolo 和 Barbaresco 的传统酿酒本身就接近自然酒理念 — 长时间浸皮、大桶陈酿、极少干预。新一代酿酒师正在回归这些根源。</p>
         </div>
       </div>
     </div>
 
-    <!-- SPAIN -->
+    <!-- Spain -->
     <div class="region-group reveal">
-      <div class="region-country">
-        <span class="region-flag">🇪🇸</span>
-        <h3>西班牙</h3>
-      </div>
-      <div class="region-grid stagger-children">
+      <div class="region-country">西班牙 Spain</div>
+      <div class="region-list">
         <div class="region-card">
-          <h4>Penedès / 加泰罗尼亚</h4>
-          <p>西班牙自然酒的核心。在传统 Cava 生产之外，Penedès 发展出了充满活力的自然酒运动。"Espai de Cava i Vins Naturals" 倡议推广该产区的特色。原生品种 Xarel·lo、Macabeu 和 Parellada 用于静态酒和气泡酒。</p>
-          <div class="region-grapes">Xarel·lo · Macabeu · Parellada</div>
+          <div class="region-name">普里奥拉托 Priorat</div>
+          <p class="region-desc">陡峭的板岩山坡上的老藤 Garnacha 和 Cariñena，在自然酿造下展现出令人震撼的矿物深度和集中果味。</p>
         </div>
         <div class="region-card">
-          <h4>Priorat（普里奥拉托）</h4>
-          <p>以独特的 llicorella（板岩）土壤上的 Garnacha 和 Cariñena 酿出强劲、浓缩的红酒。陡峭坡地和老藤天然限制产量，产出具有强度和个性的葡萄酒，吸引极简干预生产者。</p>
-          <div class="region-grapes">Garnacha · Cariñena</div>
+          <div class="region-name"> Bierzo 与加利西亚</div>
+          <p class="region-desc">Mencía 品种在大西洋气候下展现出独特的花香和矿物质感。新一代自然酿酒师正在发掘这片被遗忘的风土宝地。</p>
         </div>
       </div>
     </div>
 
-    <!-- GEORGIA & SLOVENIA -->
+    <!-- Georgia & Slovenia -->
     <div class="region-group reveal">
-      <div class="region-country">
-        <span class="region-flag">🇬🇪</span>
-        <h3>格鲁吉亚 &amp; 斯洛文尼亚</h3>
-      </div>
-      <div class="region-grid stagger-children">
+      <div class="region-country">格鲁吉亚与斯洛文尼亚</div>
+      <div class="region-list">
         <div class="region-card">
-          <h4>格鲁吉亚</h4>
-          <p>葡萄酒的发源地，拥有 8,000 年不间断的传统。Qvevri 方法——白葡萄连皮在埋入地下的陶罐中发酵——是自然酒的基石。2013年起列入联合国教科文组织非物质文化遗产。代表酒庄包括 Pheasant's Tears、Lagvinari 和 Vinoterra。</p>
-          <div class="region-grapes">Rkatsiteli · Saperavi · Mtsvane</div>
+          <div class="region-name">格鲁吉亚 Georgia</div>
+          <p class="region-desc">葡萄酒的诞生地，8000年不间断的酿酒历史。Qvevri 陶罐酿造法是 UNESCO 非物质文化遗产，Saperavi 和 Rkatsiteli 是核心品种。</p>
         </div>
         <div class="region-card">
-          <h4>斯洛文尼亚（Brda）</h4>
-          <p>Brda（戈里齐亚丘陵）与意大利 Collio 共享风土，是橙酒的重要中心。Movia、Kabaj 和 Ščurek 等酒庄以自然、极简的方式酿造浸皮白葡萄酒。Vipava Valley 和斯洛文尼亚 Istria 的场景也在成长。</p>
-          <div class="region-grapes">Ribolla Gialla · Malvasia · Refosco</div>
+          <div class="region-name">斯洛文尼亚 Goriška Brda</div>
+          <p class="region-desc">与意大利 Friuli 共享同一片风土，Movia 和 Klinec 等酒庄延续了浸皮白葡萄酒的传统，是橙酒运动的重要力量。</p>
         </div>
       </div>
     </div>
 
-    <!-- US & AUSTRALIA -->
+    <!-- Americas, Australia, Austria -->
     <div class="region-group reveal">
-      <div class="region-country">
-        <span class="region-flag">🌎</span>
-        <h3>美洲、澳大利亚 &amp; 奥地利</h3>
-      </div>
-      <div class="region-grid stagger-children">
+      <div class="region-country">美洲 · 澳洲 · 奥地利</div>
+      <div class="region-list">
         <div class="region-card">
-          <h4>美国加州</h4>
-          <p>正从早期"怪异"的标签走向更精致、风土驱动的葡萄酒。生产者探索 Sierra Foothills、Central Coast 和 Mendocino，使用 Gamay、Trousseau 和 Chenin Blanc。在年轻酿酒师和洛杉矶及湾区的城市葡萄酒集体中尤其活跃。</p>
+          <div class="region-name">俄勒冈 Oregon, USA</div>
+          <p class="region-desc">美国自然酒的先锋产区，Pinot Noir 和 Chardonnay 在有机和生物动力法种植下展现出太平洋西北风土的独特个性。</p>
         </div>
         <div class="region-card">
-          <h4>美国俄勒冈</h4>
-          <p>凉爽气候、成熟的 Pinot Noir 文化和进步的葡萄酒社群使 Willamette Valley 成为自然酒的天然之家。对可持续和有机种植的既有承诺提供了坚实基础。</p>
+          <div class="region-name">纽约手指湖 Finger Lakes, USA</div>
+          <p class="region-desc">Riesling 的新世界表达，自然酿酒师在此探索冷凉气候下极简干预酿造的可能性。</p>
         </div>
         <div class="region-card">
-          <h4>澳大利亚</h4>
-          <p>以实验性、有时略显"狂野"的方式著称。Jauma Wines（Adelaide Hills）颇具影响力。运动覆盖 Barossa Valley、McLaren Vale 和 Victoria。温暖气候和多样风土提供了广泛的风格选择。</p>
+          <div class="region-name">南澳 Adelaide Hills, Australia</div>
+          <p class="region-desc">澳洲自然酒运动的中心，Basket Range 产区聚集了一批追求极简酿造的新锐酿酒师，Pét-Nat 和橙酒在此蓬勃发展。</p>
         </div>
         <div class="region-card">
-          <h4>奥地利</h4>
-          <p>Burgenland、Kamptal 和 Wachau 出产低硫、浸皮和 Pét-Nat 葡萄酒。Gut Oggau、Rennersistas 和 Claus Preisinger 领跑。奥地利拥有欧洲最高比例的有机葡萄园面积之一——为运动提供了天然基础。</p>
-          <div class="region-grapes">Grüner Veltliner · Riesling · Blaufränkisch</div>
+          <div class="region-name">布尔根兰 Burgenland, Austria</div>
+          <p class="region-desc">奥地利自然酒的核心产区，以生物动力法酿造的白葡萄酒和橙酒闻名。Meinklang 和 Gut Oggau 是代表性酒庄。</p>
         </div>
       </div>
     </div>
@@ -2795,280 +2091,248 @@ section {
 </section>
 
 <!-- ============================================
-     SECTION 9: MARKET & CULTURE
+     §9 市场与文化
      ============================================ -->
-<section class="market-section" id="market">
-  <div class="container">
-    <div class="section-header reveal">
-      <span class="section-number">§ 09</span>
-      <p class="section-title-chinese chinese-text">市场与文化</p>
-      <h2 class="section-title">Market &amp; Culture</h2>
-      <div class="section-divider"></div>
-      <p class="section-subtitle">一个价值 100–130 亿美元的市场，年增长率 10–14%——在全球葡萄酒文化中发挥着不成比例的影响力。</p>
+<div class="divider"><div class="divider-diamond"></div></div>
+
+<section class="section" id="market">
+  <div class="reveal">
+    <div class="section-label">§9</div>
+    <h2 class="section-title-cn">市场与文化</h2>
+    <div class="section-intro">
+      自然酒已经从一个小众爱好成长为全球葡萄酒市场最具活力的增长引擎。以下数据描绘了这场运动的商业版图。
     </div>
+  </div>
 
-    <div class="stats-grid stagger-children">
-      <div class="stat-card">
-        <div class="stat-value">$100–130亿</div>
-        <div class="stat-label">全球市场价值（2024）</div>
-        <div class="stat-detail">年复合增长率 10–14%</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value">$170–220亿</div>
-        <div class="stat-label">2030 年预计规模</div>
-        <div class="stat-detail">超越整体葡萄酒增速</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value">62%</div>
-        <div class="stat-label">40 岁以下消费者</div>
-        <div class="stat-detail">千禧一代和 Z 世代驱动</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value">74%</div>
-        <div class="stat-label">重视可持续性</div>
-        <div class="stat-detail">购酒决策考量因素</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value">+28%</div>
-        <div class="stat-label">线上销售增长</div>
-        <div class="stat-detail">电商渠道 2023–2024</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value">约$26–29</div>
-        <div class="stat-label">平均单瓶价格</div>
-        <div class="stat-detail">传统酒约 $12–13</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value">&lt;1%</div>
-        <div class="stat-label">占全球产量比例</div>
-        <div class="stat-detail">但文化影响力巨大</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value">100–122%</div>
-        <div class="stat-label">价格溢价</div>
-        <div class="stat-detail">相对传统葡萄酒</div>
-      </div>
+  <div class="stats-grid stagger">
+    <div class="stat-card">
+      <div class="stat-value" data-count="$10-13B">—</div>
+      <div class="stat-label">全球自然酒市场规模（2024年）</div>
     </div>
-
-    <!-- Image: natural wine bottles -->
-    <div class="img-placeholder reveal-scale" style="margin-bottom: 50px; min-height: 260px; background-image: url('images/bottles_001.jpg'); background-size: cover; background-position: center;">
-      <span class="sr-only">自然酒瓶与酒杯 · 自然酒文化</span>
+    <div class="stat-card">
+      <div class="stat-value" data-count="$17-22B">—</div>
+      <div class="stat-label">2030年预计市场规模</div>
     </div>
-
-    <div class="pull-quote reveal-left">
-      <p>"自然酒的消费者明显偏年轻化。41% 的消费者在购酒时会特别寻找天然/有机标签，年轻消费者愿意为认证可持续葡萄酒多付 15–20% 的价格。"</p>
-      <cite>—— NielsenIQ / Sustainable Wine Roundtable，2024</cite>
+    <div class="stat-card">
+      <div class="stat-value" data-count="62%">—</div>
+      <div class="stat-label">40岁以下买家占比</div>
     </div>
-
-    <!-- CULTURE -->
-    <h3 style="font-size: 1.5rem; margin: 60px 0 24px; color: var(--wine-deep); text-align: center;" class="reveal">🏙️ 全球自然酒吧文化</h3>
-
-    <div class="culture-grid stagger-children">
-      <div class="culture-card">
-        <h3>🇫🇷 巴黎</h3>
-        <ul>
-          <li><strong>Le Verre Volé</strong> —— 运动的精神首都</li>
-          <li><strong>Septime La Cave</strong> —— 自然酒与精致餐饮</li>
-          <li><strong>Frenchie Bar à Vins</strong> —— 侍酒师主导的选酒</li>
-          <li><strong>Racines</strong> —— 经典自然酒目的地</li>
-          <li><strong>Le Baratin</strong> —— Belleville 街区的常驻据点</li>
-          <li><strong>Vivant Cave</strong> —— 酒铺兼酒吧</li>
-        </ul>
-      </div>
-
-      <div class="culture-card">
-        <h3>🇺🇸 纽约</h3>
-        <ul>
-          <li><strong>Ruffian</strong> —— 东村酒吧</li>
-          <li><strong>Wildair</strong> —— 下东区</li>
-          <li><strong>Ten Bells</strong> —— 自然酒吧先驱</li>
-          <li><strong>Estela</strong> —— 葡萄酒与小食</li>
-          <li><strong>Le Dive</strong> —— 2024 年开业，反文化能量</li>
-        </ul>
-      </div>
-
-      <div class="culture-card">
-        <h3>🇬🇧 伦敦</h3>
-        <ul>
-          <li><strong>Brawn</strong> —— Hackney 自然酒吧</li>
-          <li><strong>P. Franco</strong> —— Clapton，酒铺兼酒吧</li>
-          <li><strong>Noble Rot</strong> —— Bloomsbury 地标</li>
-          <li><strong>Levan</strong> —— Brixton 酒吧</li>
-          <li><strong>Camille</strong> —— Borough Market</li>
-        </ul>
-      </div>
-
-      <div class="culture-card">
-        <h3>🇯🇵 东京</h3>
-        <ul>
-          <li><strong>Vin Nature 88</strong> —— 领先的自然酒目的地</li>
-          <li><strong>Les Fils</strong> —— 精选自然酒</li>
-          <li><strong>Nogizaka Natural Wine Meets Vol.2</strong> —— 当代场景</li>
-          <li>自2022年以来，东京已迅速崛起为全球自然酒之都</li>
-        </ul>
-      </div>
-
-      <div class="culture-card">
-        <h3>🇩🇰 哥本哈根</h3>
-        <ul>
-          <li><strong>Bæst</strong> —— Nørrebro 自然酒吧</li>
-          <li><strong>Ruby</strong> —— 鸡尾酒与酒吧</li>
-          <li><strong>Bar'Vin</strong> —— 与新北欧美食运动联动</li>
-          <li>Noma 的影响力酒单塑造了整个场景</li>
-        </ul>
-      </div>
-
-      <div class="culture-card">
-        <h3>🎪 重要酒展</h3>
-        <ul>
-          <li><strong>RAW Wine</strong> —— 伦敦、纽约、柏林、洛杉矶、蒙特利尔（2012年由 Isabelle Legeron MW 创立）</li>
-          <li><strong>La Dive Bouteille</strong> —— Saumur，Loire Valley（800+ 酒庄参加，运动最具标志性的活动）</li>
-          <li><strong>ViniVeri</strong> —— Cerea，Verona 附近（2000年创立，意大利最重要的自然酒展）</li>
-        </ul>
-      </div>
+    <div class="stat-card">
+      <div class="stat-value" data-count="74%">—</div>
+      <div class="stat-label">消费者重视可持续性</div>
     </div>
-
-    <div class="pull-quote reveal-left">
-      <p>"侍酒师是自然酒文化传播最重要的载体。'自然酒侍酒师'已经成为一种独特的职业身份。"</p>
+    <div class="stat-card">
+      <div class="stat-value" data-count="+28%">—</div>
+      <div class="stat-label">线上销售增长</div>
     </div>
+    <div class="stat-card">
+      <div class="stat-value" data-count="~$26-29">—</div>
+      <div class="stat-label">平均零售价格</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" data-count="<1%">—</div>
+      <div class="stat-label">占全球葡萄酒产量</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" data-count="100-122%">—</div>
+      <div class="stat-label">相对传统葡萄酒溢价</div>
+    </div>
+  </div>
 
-    <!-- KEY DATES -->
-    <div class="key-dates reveal">
-      <h3>📅 重要里程碑</h3>
-      <div class="key-dates-list">
-        <div class="key-date-item">
-          <span class="key-date-year">约前 6000 年</span>
-          <span class="key-date-desc">格鲁吉亚出现最早酿酒证据（Qvevri 发酵）</span>
-        </div>
-        <div class="key-date-item">
-          <span class="key-date-year">1950–1960 年代</span>
-          <span class="key-date-desc">Jules Chauvet 在 Beaujolais 开始极简干预实验</span>
-        </div>
-        <div class="key-date-item">
-          <span class="key-date-year">1973</span>
-          <span class="key-date-desc">Marcel Lapierre 接管 Morgon 家族酒庄</span>
-        </div>
-        <div class="key-date-item">
-          <span class="key-date-year">1981</span>
-          <span class="key-date-desc">Lapierre 停止加糖，公然对抗 INAO——现代运动诞生</span>
-        </div>
-        <div class="key-date-item">
-          <span class="key-date-year">1988</span>
-          <span class="key-date-desc">Kermit Lynch 出版《Adventures on the Wine Route》</span>
-        </div>
-        <div class="key-date-item">
-          <span class="key-date-year">2000</span>
-          <span class="key-date-desc">ViniVeri 联盟在意大利成立</span>
-        </div>
-        <div class="key-date-item">
-          <span class="key-date-year">2004</span>
-          <span class="key-date-desc">Nicolas Joly 出版《Wine from Sky to Earth》</span>
-        </div>
-        <div class="key-date-item">
-          <span class="key-date-year">2008</span>
-          <span class="key-date-desc">Alice Feiring 出版《The Battle for Wine and Love》</span>
-        </div>
-        <div class="key-date-item">
-          <span class="key-date-year">2010</span>
-          <span class="key-date-desc">Marcel Lapierre 辞世（10月11日）</span>
-        </div>
-        <div class="key-date-item">
-          <span class="key-date-year">2012–2015</span>
-          <span class="key-date-desc">RAW Wine 展会创立；La Dive Bouteille 扩展至 800+ 酒庄</span>
-        </div>
-        <div class="key-date-item">
-          <span class="key-date-year">2013</span>
-          <span class="key-date-desc">联合国教科文组织认定格鲁吉亚 Qvevri 酿酒法为非物质文化遗产</span>
-        </div>
-        <div class="key-date-item">
-          <span class="key-date-year">2016</span>
-          <span class="key-date-desc">Stanko Radikon 辞世</span>
-        </div>
-        <div class="key-date-item">
-          <span class="key-date-year">2020</span>
-          <span class="key-date-desc">法国推出 "Vin Méthode Nature"——首个官方自然酒认证</span>
-        </div>
+  <!-- Wine Bar Culture -->
+  <div class="reveal" style="margin-top:100px;">
+    <h3 style="font-family:var(--font-chinese);font-size:1.3rem;font-weight:700;color:var(--wine-dark);margin-bottom:8px;">酒文化地标</h3>
+    <p style="font-family:var(--font-chinese);font-size:0.92rem;color:var(--earth-mid);margin-bottom:32px;">自然酒文化在全球城市中找到自己的表达空间 — 从巴黎的小酒馆到东京的居酒屋。</p>
+  </div>
+
+  <div class="culture-grid stagger">
+    <div class="culture-card">
+      <div class="culture-city">Paris</div>
+      <div class="culture-sub">法国 · 巴黎</div>
+      <p class="culture-desc">自然酒的精神首都。Le Verre Volé、Septime、Aux Deux Amis 等酒馆定义了现代自然酒饮用文化，将美食、美酒和社群融为一体。</p>
+    </div>
+    <div class="culture-card">
+      <div class="culture-city">New York</div>
+      <div class="culture-sub">美国 · 纽约</div>
+      <p class="culture-desc">北美自然酒运动的中心。Terroir、The Four Horsemen、Wildair 等酒吧和餐厅推动了自然酒在美国主流餐饮界的普及。</p>
+    </div>
+    <div class="culture-card">
+      <div class="culture-city">London</div>
+      <div class="culture-sub">英国 · 伦敦</div>
+      <p class="culture-desc">RAW WINE 展会的诞生地。Sager + Wilde、Brawn、P. Franco 等场所构成了伦敦充满活力的自然酒版图。</p>
+    </div>
+    <div class="culture-card">
+      <div class="culture-city">Tokyo</div>
+      <div class="culture-sub">日本 · 东京</div>
+      <p class="culture-desc">亚洲自然酒文化的引领者。日本对食物纯粹性的追求与自然酒哲学完美契合，众多侍酒师将自然酒融入日本料理的搭配中。</p>
+    </div>
+    <div class="culture-card">
+      <div class="culture-city">Copenhagen</div>
+      <div class="culture-sub">丹麦 · 哥本哈根</div>
+      <p class="culture-desc">新北欧料理运动与自然酒的天然盟友。Noma 及其衍生餐厅将自然酒作为新北欧美食体验的核心组成部分。</p>
+    </div>
+    <div class="culture-card">
+      <div class="culture-city">Wine Fairs</div>
+      <div class="culture-sub">全球 · 酒展</div>
+      <p class="culture-desc">RAW WINE、La Dive Bouteille、Les Affranchis、Renaissance 等酒展构成了全球自然酒社群的线下聚会网络，连接酿酒师、进口商和爱好者。</p>
+    </div>
+  </div>
+
+  <!-- Key Dates -->
+  <div class="reveal" style="margin-top:100px;">
+    <h3 style="font-family:var(--font-chinese);font-size:1.3rem;font-weight:700;color:var(--wine-dark);margin-bottom:8px;">年度重要日程</h3>
+    <p style="font-family:var(--font-chinese);font-size:0.92rem;color:var(--earth-mid);">全球自然酒爱好者不可错过的关键日期。</p>
+  </div>
+
+  <div class="h-scroll" style="margin-top:32px;">
+    <div class="dates-list" style="display:flex;gap:20px;min-width:max-content;">
+      <div class="date-item" style="min-width:240px;">
+        <div class="date-when">一月</div>
+        <div class="date-what">La Dive Bouteille — 卢瓦尔河谷最大的自然酒展会</div>
+      </div>
+      <div class="date-item" style="min-width:240px;">
+        <div class="date-when">一月</div>
+        <div class="date-what">Les Affranchis — 与 La Dive 同期举办的平行酒展</div>
+      </div>
+      <div class="date-item" style="min-width:240px;">
+        <div class="date-when">二月</div>
+        <div class="date-what">Renaissance — 巴黎自然酒博览会</div>
+      </div>
+      <div class="date-item" style="min-width:240px;">
+        <div class="date-when">三月</div>
+        <div class="date-what">RAW WINE 柏林站</div>
+      </div>
+      <div class="date-item" style="min-width:240px;">
+        <div class="date-when">四月</div>
+        <div class="date-what">RAW WINE 伦敦站</div>
+      </div>
+      <div class="date-item" style="min-width:240px;">
+        <div class="date-when">五月</div>
+        <div class="date-what">RAW WINE 洛杉矶站</div>
+      </div>
+      <div class="date-item" style="min-width:240px;">
+        <div class="date-when">五月</div>
+        <div class="date-what">Les Pénitentes — 博若莱自然酒节庆</div>
+      </div>
+      <div class="date-item" style="min-width:240px;">
+        <div class="date-when">六月</div>
+        <div class="date-what">Vini di Vignaioli — 意大利自然酒展</div>
+      </div>
+      <div class="date-item" style="min-width:240px;">
+        <div class="date-when">七月</div>
+        <div class="date-what">La Soirée des Refusés — 年度自然酒派对</div>
+      </div>
+      <div class="date-item" style="min-width:240px;">
+        <div class="date-when">九月</div>
+        <div class="date-what">葡萄采收季 — 全球酒庄开放参观</div>
+      </div>
+      <div class="date-item" style="min-width:240px;">
+        <div class="date-when">十月</div>
+        <div class="date-what">RAW WINE 纽约站</div>
+      </div>
+      <div class="date-item" style="min-width:240px;">
+        <div class="date-when">十一月</div>
+        <div class="date-what">博若莱新酒节 — 自然酿造版本</div>
+      </div>
+      <div class="date-item" style="min-width:240px;">
+        <div class="date-when">十一月</div>
+        <div class="date-what">Real Wine Fair — 伦敦自然酒展</div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ============================================
-     SECTION 10: CONTROVERSIES & FUTURE
+     §10 争议与未来
      ============================================ -->
-<section class="controversies-section" id="future">
-  <div class="container">
-    <div class="section-header reveal">
-      <span class="section-number">§ 10</span>
-      <p class="section-title-chinese chinese-text">争议与未来</p>
-      <h2 class="section-title">Controversies &amp; Future</h2>
-      <div class="section-divider"></div>
-      <p class="section-subtitle">塑造运动的辩论——以及将定义其下一章的趋势。</p>
+<div class="divider"><div class="divider-diamond"></div></div>
+
+<section class="section" id="future">
+  <div class="reveal">
+    <div class="section-label">§10</div>
+    <h2 class="section-title-cn">争议与未来</h2>
+    <div class="section-intro">
+      任何革命都伴随着质疑。自然酒运动也不例外 — 从定义之争到品质之辩，从市场泡沫到绿色清洗，这场运动面临着多重挑战，同时也孕育着令人兴奋的未来方向。
     </div>
+  </div>
 
-    <div class="two-column">
-      <div class="column-card reveal-left">
-        <h3>⚖️ 争议</h3>
-
-        <h4>缺陷 vs. 风格之争</h4>
-        <p>最持久的批评涉及对传统酿酒中被视为<strong>缺陷</strong>的特征的接受。<strong>Brettanomyces</strong>（"马厩味"或"创可贴味"）、<strong>挥发酸</strong>（醋或洗甲水的气息）和<strong>鼠味</strong>（腐败回味）被争论为复杂性还是瑕疵。批评者认为这些味道令人不悦，自然酒是靠意识形态而非品质来辩护的。</p>
-
-        <h4>稳定性与保质期</h4>
-        <p>低亚硫酸盐水平意味着更高的生物活性，可能导致瓶中二次发酵、氧化、瓶间差异和更短的保质期——给零售商和餐厅带来物流挑战。对于中国市场的进口商和经销商而言，这一点尤为重要。</p>
-
-        <h4>定义问题</h4>
-        <p>"自然酒"至今没有统一的全球认证。法国2020年的"Vin Méthode Nature"建立了严格标准，但许多生产者认为它要么过于严格，要么过于宽松。该术语在大多数国家法律上仍未被定义，让一些低品质的酒也能打着"自然"的旗号。</p>
-
-        <h4>亚硫酸盐争论</h4>
-        <p>大多数自然酒酿造者避免使用 SO₂，以保持酒的真实表达，认为它会压制挥发性香气并同质化风味。代价是更高的脆弱性和变异性。值得注意的是，亚硫酸盐是发酵的天然副产物——所有酒都含有少量。亚硫酸盐导致头痛的说法在科学上基本不被支持。</p>
+  <div class="debate-columns stagger">
+    <div class="debate-col controversy">
+      <div class="debate-heading"><span class="icon-shape triangle"></span> 争议之声</div>
+      <div class="debate-item">
+        <h4>品质不稳定</h4>
+        <p>批评者指出，部分自然酒因缺乏亚硫酸盐保护和技术控制而容易出现品质波动，包括氧化、鼠臭味（mousiness）和二次发酵等问题。同一年份同一酒款在不同瓶中可能表现差异巨大。</p>
       </div>
-
-      <div class="column-card reveal-right">
-        <h3>🔮 未来</h3>
-
-        <h4>市场走势</h4>
-        <p>自然酒市场预计将以 <strong>8–14% 的年复合增长率持续增长至2030年</strong>，可能达到 <strong>170–220 亿美元</strong>。该品类正从利基炒作走向主流接受，与气候意识消费者价值观紧密关联，带来强劲的长期需求。</p>
-
-        <h4>可持续性与气候变化</h4>
-        <p>全球有机葡萄园面积在2023–2024年<strong>增长了13%</strong>，预计到2025年将超过60万公顷。有机土壤的保水能力比传统土壤<strong>高出30%</strong>，使自然葡萄种植成为可行的气候适应策略。碳中和认证和再生农业正在成为关键趋势。</p>
-
-        <h4>品类成熟</h4>
-        <p>最可能的发展轨迹：炒作减少、品质分化加剧、认证框架更强、更深入地融入更广泛的葡萄酒市场。自然酒不再是边缘运动；它已成为全球葡萄酒行业中一个永久性的、具有影响力的细分市场。</p>
-
-        <h4>前方的挑战</h4>
-        <p>气候波动影响产量、部分城市中心的市场过度饱和、酿酒师职业倦怠，以及持续的定义问题。加强消费者教育和更严格的认证标准对于长期信誉至关重要。</p>
+      <div class="debate-item">
+        <h4>定义模糊</h4>
+        <p>"自然酒"至今没有统一的法定定义（尽管 Vin Méthode Nature 迈出了第一步）。这导致市场上出现"漂绿"现象 — 一些并非真正低干预的葡萄酒以"自然"之名营销。</p>
+      </div>
+      <div class="debate-item">
+        <h4>精英主义悖论</h4>
+        <p>自然酒的均价（约$26-29）和稀缺性使其主要流通于大城市的精英餐饮场所，与其"民主化""反工业化"的初衷形成讽刺性矛盾。</p>
+      </div>
+      <div class="debate-item">
+        <h4>"坏酒"的辩护？</h4>
+        <p>传统葡萄酒界最尖锐的批评：某些酿酒师以"自然"为名，将技术缺陷（氧化、挥发性酸过高、微生物污染）包装成"特色"和"风土表达"。</p>
       </div>
     </div>
 
-    <!-- FUTURE TRENDS BOX -->
-    <div class="future-box reveal-scale">
-      <h3>🌱 2025 及以后的新兴趋势</h3>
-      <div class="future-trends">
-        <div class="trend-item">
-          <h4>🫧 Pét-Nat 增长</h4>
-          <p>Pét-Nat 和罐装自然酒持续扩大消费者基础，触达传统葡萄酒饮用者之外的群体。</p>
-        </div>
-        <div class="trend-item">
-          <h4>🌿 再生农业</h4>
-          <p>"再生"标签可能变得与"有机"同等重要——覆盖作物、最少耕作和土壤健康成为核心实践。</p>
-        </div>
-        <div class="trend-item">
-          <h4>🔗 区块链透明度</h4>
-          <p>通过区块链和二维码实现供应链透明，让消费者获得从葡萄藤到酒瓶的全程可追溯性。</p>
-        </div>
-        <div class="trend-item">
-          <h4>🚫 低酒精/无酒精</h4>
-          <p>自然酒生产者响应健康趋势，推出低酒精和脱醇选项，但这仍然具有争议性。</p>
-        </div>
-        <div class="trend-item">
-          <h4>🌍 跨文化交流</h4>
-          <p>东京-哥本哈根轴线和其他国际合作推动创新和风格的交叉融合。</p>
-        </div>
-        <div class="trend-item">
-          <h4>🌡️ 气候适应</h4>
-          <p>适应气候的葡萄品种、水资源保护和耐热种植实践成为长期存续的关键。</p>
-        </div>
+    <div class="debate-col future">
+      <div class="debate-heading"><span class="icon-shape circle"></span> 未来方向</div>
+      <div class="debate-item">
+        <h4>认证体系成熟</h4>
+        <p>Vin Méthode Nature 是开端而非终点。预计未来五年将有更多国家和国际组织建立自然酒认证框架，为消费者提供可靠的辨识标准。</p>
       </div>
+      <div class="debate-item">
+        <h4>技术进步</h4>
+        <p>新一代酿酒师正在探索如何在保持自然理念的同时，利用精密的温度监控、微生物管理等非侵入性技术提升品质稳定性。</p>
+      </div>
+      <div class="debate-item">
+        <h4>市场下沉</h4>
+        <p>随着消费者教育的深入和供应链的优化，自然酒有望突破精英圈层，进入更广泛的零售渠道和价格区间。</p>
+      </div>
+      <div class="debate-item">
+        <h4>气候适应</h4>
+        <p>气候变化正在改变全球葡萄种植的版图。自然酒的低干预理念可能成为应对极端气候的哲学基础 — 更健康的葡萄园生态系统具有更强的气候韧性。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Emerging Trends -->
+  <div class="reveal" style="margin-top:80px;">
+    <h3 style="font-family:var(--font-chinese);font-size:1.2rem;font-weight:700;color:var(--wine-dark);margin-bottom:8px;">六大新兴趋势</h3>
+  </div>
+
+  <div class="trends-grid stagger">
+    <div class="trend-card">
+      <div class="trend-num">趋势 01</div>
+      <div class="trend-title">低醇与无醇自然酒</div>
+      <p class="trend-desc">随着健康意识的提升，酿酒师正在探索通过提前采收和特殊发酵技术降低酒精度的方法，同时保持风味的完整性。</p>
+    </div>
+    <div class="trend-card">
+      <div class="trend-num">趋势 02</div>
+      <div class="trend-title">罐装与便携包装</div>
+      <p class="trend-desc">自然酒正在拥抱罐装、袋装等替代包装形式，打破玻璃瓶的传统束缚，让自然酒进入户外场景和即饮市场。</p>
+    </div>
+    <div class="trend-card">
+      <div class="trend-num">趋势 03</div>
+      <div class="trend-title">数字透明化</div>
+      <p class="trend-desc">区块链和二维码技术让消费者可以追溯每一瓶自然酒的完整酿造历史 — 从葡萄园到酒杯的每一步。</p>
+    </div>
+    <div class="trend-card">
+      <div class="trend-num">趋势 04</div>
+      <div class="trend-title">亚洲市场崛起</div>
+      <p class="trend-desc">日本、韩国、中国和大中华区的自然酒消费正在快速增长。亚洲侍酒师正在将自然酒与当地美食传统进行创新搭配。</p>
+    </div>
+    <div class="trend-card">
+      <div class="trend-num">趋势 05</div>
+      <div class="trend-title">再生农业与碳中性</div>
+      <p class="trend-desc">超越有机，走向再生 — 新一代酒庄将葡萄园视为碳汇，通过覆盖作物、生物炭和农林复合系统实现负碳酿酒。</p>
+    </div>
+    <div class="trend-card">
+      <div class="trend-num">趋势 06</div>
+      <div class="trend-title">社群驱动的品牌</div>
+      <p class="trend-desc">自然酒品牌正在从产品导向转向社群导向 — 通过酒庄体验、线上社群和文化活动构建忠实的消费者部落。</p>
     </div>
   </div>
 </section>
@@ -3077,26 +2341,11 @@ section {
      FOOTER
      ============================================ -->
 <footer class="site-footer">
-  <div class="footer-content">
-    <p class="footer-title chinese-text">自然酒</p>
-    <p class="footer-subtitle">Nothing Added, Nothing Taken Away</p>
-    <p style="font-family: 'Noto Serif SC', serif; color: rgba(249,228,183,0.5); font-size: 0.9rem; margin-bottom: 10px;">不加不减，酿造之道</p>
-    <div class="footer-divider"></div>
-    <p style="font-family: 'Noto Serif SC', serif; margin-bottom: 16px;">
-      <a href="index.html" style="color: rgba(249,228,183,0.6); text-decoration: none; font-size: 0.85rem; transition: var(--transition);">← 返回酒类知识库</a>
-    </p>
-    <p class="footer-meta">
-      自然酒（Natural Wine）综合研究报告<br>
-      基于对自然酒运动的历史、哲学、工艺、市场数据和文化影响的深度研究编写。<br><br>
-      主要参考来源包括 Kermit Lynch、Alice Feiring、Isabelle Legeron MW、Nicolas Joly 的著作，<br>
-      Grand View Research、Mordor Intelligence、Statista 和 NielsenIQ 的市场研究，<br>
-      以及 Demeter、Ecocert、Vin Méthode Nature 和 Raw Wine 的认证数据。
-    </p>
-    <div class="footer-divider"></div>
-    <p class="footer-credits">
-      报告编写于 2026 年 6 月 · 所有内容仅供教育和研究用途
-    </p>
-  </div>
+  <div class="footer-brand">自然酒 · 什么都不添加，什么都不带走</div>
+  <div class="footer-tagline">极简干预酿造法完全指南</div>
+  <div class="footer-divider"></div>
+  <a href="index.html" style="font-family:var(--font-mono);font-size:0.72rem;letter-spacing:0.15em;color:rgba(247,242,234,0.6);text-decoration:none;margin-bottom:16px;display:inline-block;transition:color 0.3s ease;">← 返回酒类知识库</a>
+  <div class="footer-meta">2026年6月 · 综合研究报告</div>
 </footer>
 
 <!-- ============================================
@@ -3106,108 +2355,238 @@ section {
 (function() {
   'use strict';
 
-  // ============================================
-  // INTERSECTION OBSERVER — Scroll-triggered reveal animations
-  // ============================================
-  const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale, .stagger-children');
+  // ---- Prefers Reduced Motion ----
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  const revealObserver = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('revealed');
-        // Once revealed, stop observing for performance
-        revealObserver.unobserve(entry.target);
-      }
+  // ---- Custom Cursor ----
+  const cursor = document.querySelector('.cursor-dot');
+  if (cursor && !prefersReduced) {
+    let cx = 0, cy = 0, tx = 0, ty = 0;
+    document.addEventListener('mousemove', function(e) {
+      tx = e.clientX;
+      ty = e.clientY;
     });
-  }, {
-    threshold: 0.12,
-    rootMargin: '0px 0px -40px 0px'
-  });
+    // Hover detection
+    const interactives = 'a, button, .principle-card, .style-card, .pioneer-card, .region-card, .culture-card, .trend-card, .cert-card, .stat-card, .technique-card, .spectrum-card, .date-item, .grape-row';
+    document.addEventListener('mouseover', function(e) {
+      if (e.target.closest(interactives)) cursor.classList.add('cursor-hover');
+    });
+    document.addEventListener('mouseout', function(e) {
+      if (e.target.closest(interactives)) cursor.classList.remove('cursor-hover');
+    });
+    function animateCursor() {
+      cx += (tx - cx) * 0.15;
+      cy += (ty - cy) * 0.15;
+      cursor.style.transform = 'translate(' + (cx - 4) + 'px, ' + (cy - 4) + 'px)';
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+  } else if (cursor) {
+    cursor.style.display = 'none';
+  }
 
-  revealElements.forEach(function(el) {
-    revealObserver.observe(el);
-  });
-
-  // ============================================
-  // SCROLL PROGRESS BAR
-  // ============================================
-  var progressBar = document.getElementById('scrollProgress');
-
+  // ---- Scroll Progress Bar ----
+  const progressBar = document.querySelector('.scroll-progress');
   function updateProgress() {
     if (!progressBar) return;
-    var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    var docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    var scrollPercent = (scrollTop / docHeight) * 100;
-    progressBar.style.width = scrollPercent + '%';
+    const scrollTop = window.pageYOffset;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    progressBar.style.width = progress + '%';
   }
 
-  // ============================================
-  // NAV SCROLL EFFECT & ACTIVE LINK HIGHLIGHTING
-  // ============================================
-  var nav = document.getElementById('navToc');
-  var navLinks = document.querySelectorAll('.nav-link');
-  var sections = document.querySelectorAll('section[id]');
+  // ---- Nav scroll spy ----
+  const nav = document.querySelector('.site-nav');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  const sections = [];
+  navLinks.forEach(function(link) {
+    const href = link.getAttribute('href');
+    if (href && href.startsWith('#')) {
+      const sec = document.querySelector(href);
+      if (sec) sections.push({ el: sec, link: link });
+    }
+  });
 
+  let lastScrollY = 0;
   function updateNav() {
-    var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-    // Add scrolled class for shadow
-    if (scrollTop > 100) {
-      nav.classList.add('scrolled');
+    const scrollY = window.pageYOffset;
+    // Show/hide nav
+    if (scrollY > 100) {
+      nav.classList.add('nav-scrolled');
+      if (scrollY > lastScrollY && scrollY > 400) {
+        nav.classList.add('nav-hidden');
+      } else {
+        nav.classList.remove('nav-hidden');
+      }
     } else {
-      nav.classList.remove('scrolled');
+      nav.classList.remove('nav-scrolled');
+      nav.classList.remove('nav-hidden');
     }
+    lastScrollY = scrollY;
 
-    // Highlight active nav link
-    var currentSection = '';
-    sections.forEach(function(section) {
-      var sectionTop = section.offsetTop - 120;
-      var sectionBottom = sectionTop + section.offsetHeight;
-      if (scrollTop >= sectionTop && scrollTop < sectionBottom) {
-        currentSection = section.getAttribute('id');
-      }
+    // Active link
+    let current = '';
+    sections.forEach(function(s) {
+      const top = s.el.offsetTop - 200;
+      if (scrollY >= top) current = s.link.getAttribute('href');
     });
-
     navLinks.forEach(function(link) {
-      link.classList.remove('active');
-      if (link.getAttribute('href') === '#' + currentSection) {
-        link.classList.add('active');
-      }
+      link.classList.toggle('active', link.getAttribute('href') === current);
     });
   }
 
-  // ============================================
-  // HERO PARALLAX EFFECT
-  // ============================================
-  var hero = document.querySelector('.hero');
-  var heroContent = document.querySelector('.hero-content');
-  var heroDecos = document.querySelectorAll('.hero-deco');
-
+  // ---- Parallax ----
   function updateParallax() {
-    if (!hero || !heroContent) return;
-    var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    var heroHeight = hero.offsetHeight;
-
-    if (scrollTop < heroHeight) {
-      var ratio = scrollTop / heroHeight;
-
-      // Hero content moves up slightly
-      heroContent.style.transform = 'translateY(' + (scrollTop * 0.3) + 'px)';
-      heroContent.style.opacity = 1 - ratio * 0.8;
-
-      // Decorative elements float naturally via CSS animation (grapeFloat)
-      // No parallax override here to avoid killing the CSS animation
-    }
+    if (prefersReduced) return;
+    const scrollY = window.pageYOffset;
+    document.querySelectorAll('[data-parallax]').forEach(function(el) {
+      const speed = parseFloat(el.getAttribute('data-parallax')) || 0.2;
+      const yPos = -(scrollY * speed);
+      el.style.transform = el.classList.contains('hero-bg')
+        ? 'scale(1.1) translateY(' + yPos + 'px)'
+        : 'translateY(' + yPos + 'px)';
+    });
   }
 
-  // ============================================
-  // UNIFIED SCROLL HANDLER (throttled via rAF)
-  // ============================================
-  var ticking = false;
+  // ---- Scroll Reveal (IntersectionObserver) ----
+  if (!prefersReduced && 'IntersectionObserver' in window) {
+    const revealObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
 
-  function onScroll() {
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale, .stagger').forEach(function(el) {
+      revealObserver.observe(el);
+    });
+  } else {
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale, .stagger').forEach(function(el) {
+      el.classList.add('revealed');
+    });
+  }
+
+  // ---- Stats Count-Up ----
+  function animateCount(el) {
+    const target = el.getAttribute('data-count');
+    if (!target) return;
+    // Parse: extract numeric parts and prefix/suffix
+    const parsed = parseCountTarget(target);
+    const duration = 1800;
+    const start = performance.now();
+
+    function step(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+      const current = parsed.start + (parsed.end - parsed.start) * eased;
+      el.textContent = formatCount(current, parsed);
+      if (progress < 1) requestAnimationFrame(step);
+      else el.textContent = target;
+    }
+    requestAnimationFrame(step);
+  }
+
+  function parseCountTarget(str) {
+    // Handle patterns like "$10-13B", "62%", "+28%", "<1%", "~$26-29", "100-122%", "$17-22B"
+    let prefix = '', suffix = '', start = 0, end = 0;
+    let cleaned = str;
+
+    if (cleaned.startsWith('~')) { prefix += '~'; cleaned = cleaned.slice(1); }
+    if (cleaned.startsWith('<')) { prefix += '<'; cleaned = cleaned.slice(1); }
+    if (cleaned.startsWith('+')) { prefix += '+'; cleaned = cleaned.slice(1); }
+    if (cleaned.startsWith('$')) { prefix += '$'; cleaned = cleaned.slice(1); }
+    if (cleaned.endsWith('%')) { suffix = '%'; cleaned = cleaned.slice(0, -1); }
+    if (cleaned.endsWith('B')) { suffix = 'B' + suffix; cleaned = cleaned.slice(0, -1); }
+
+    const parts = cleaned.split('-');
+    start = parseFloat(parts[0]) || 0;
+    end = parts.length > 1 ? parseFloat(parts[1]) || start : start;
+
+    return { start: 0, end: end, prefix: prefix, suffix: suffix, hasRange: parts.length > 1, rangeStart: start };
+  }
+
+  function formatCount(val, p) {
+    const rounded = Math.round(val * 10) / 10;
+    if (p.hasRange && val >= p.rangeStart * 0.5) {
+      const s = Math.round(val * 0.77 * 10) / 10;
+      return p.prefix + (s > 0 ? Math.round(s) : 0) + '-' + Math.round(rounded) + p.suffix;
+    }
+    return p.prefix + Math.round(rounded) + p.suffix;
+  }
+
+  if ('IntersectionObserver' in window) {
+    const statObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          animateCount(entry.target);
+          statObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('[data-count]').forEach(function(el) {
+      statObserver.observe(el);
+    });
+  }
+
+  // ---- Timeline Line Draw ----
+  if (!prefersReduced) {
+    const timeline = document.querySelector('.timeline');
+    const timelineFill = document.querySelector('.timeline-line-fill');
+    const timelineDots = document.querySelectorAll('.timeline-dot');
+
+    function updateTimeline() {
+      if (!timeline || !timelineFill) return;
+      const rect = timeline.getBoundingClientRect();
+      const timelineTop = rect.top;
+      const timelineHeight = rect.height;
+      const viewportCenter = window.innerHeight * 0.6;
+      const progress = Math.max(0, Math.min(1, (viewportCenter - timelineTop) / timelineHeight));
+      timelineFill.style.height = (progress * 100) + '%';
+
+      timelineDots.forEach(function(dot) {
+        const dotRect = dot.getBoundingClientRect();
+        if (dotRect.top < viewportCenter) {
+          dot.classList.add('active');
+        }
+      });
+    }
+
+    // Add to scroll handler
+    window.addEventListener('scroll', function() {
+      updateTimeline();
+    }, { passive: true });
+  }
+
+  // ---- Horizontal Scroll Snap ----
+  document.querySelectorAll('.h-scroll').forEach(function(el) {
+    // Enable momentum scrolling on touch
+    let isDown = false, startX, scrollLeft;
+    el.addEventListener('mousedown', function(e) {
+      isDown = true;
+      startX = e.pageX - el.offsetLeft;
+      scrollLeft = el.scrollLeft;
+      el.style.cursor = 'grabbing';
+    });
+    el.addEventListener('mouseleave', function() { isDown = false; el.style.cursor = ''; });
+    el.addEventListener('mouseup', function() { isDown = false; el.style.cursor = ''; });
+    el.addEventListener('mousemove', function(e) {
+      if (!isDown) return;
+      e.preventDefault();
+      var x = e.pageX - el.offsetLeft;
+      var walk = (x - startX) * 1.5;
+      el.scrollLeft = scrollLeft - walk;
+    });
+  });
+
+  // ---- Unified Scroll Handler ----
+  let ticking = false;
+  window.addEventListener('scroll', function() {
     if (!ticking) {
-      window.requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
         updateProgress();
         updateNav();
         updateParallax();
@@ -3215,36 +2594,27 @@ section {
       });
       ticking = true;
     }
-  }
+  }, { passive: true });
 
-  window.addEventListener('scroll', onScroll, { passive: true });
+  // Initial call
+  updateProgress();
+  updateNav();
+  updateParallax();
 
-  // ============================================
-  // SMOOTH SCROLL FOR NAV LINKS
-  // ============================================
+  // ---- Smooth scroll for nav links ----
   navLinks.forEach(function(link) {
     link.addEventListener('click', function(e) {
-      var href = this.getAttribute('href');
+      const href = this.getAttribute('href');
       if (href && href.startsWith('#')) {
         e.preventDefault();
-        var target = document.querySelector(href);
+        const target = document.querySelector(href);
         if (target) {
-          var navHeight = nav.offsetHeight;
-          var targetPos = target.getBoundingClientRect().top + window.pageYOffset - navHeight - 10;
-          window.scrollTo({
-            top: targetPos,
-            behavior: 'smooth'
-          });
+          const top = target.offsetTop - 80;
+          window.scrollTo({ top: top, behavior: prefersReduced ? 'auto' : 'smooth' });
         }
       }
     });
   });
-
-  // ============================================
-  // INITIAL STATE
-  // ============================================
-  updateProgress();
-  updateNav();
 
 })();
 </script>
