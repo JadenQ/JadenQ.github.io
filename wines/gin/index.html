@@ -1950,9 +1950,9 @@
     const rounded = Math.round(val * 10) / 10;
     if (p.hasRange && val >= p.rangeStart * 0.5) {
       const s = Math.round(val * 0.77 * 10) / 10;
-      return p.prefix + (s > 0 ? Math.round(s) : 0) + '-' + Math.round(rounded) + p.suffix;
+      return p.prefix + (s > 0 ? Math.round(s) : 0) + '-' + (p.suffix.includes('+') ? Math.round(rounded) + '+' : Math.round(rounded)) + p.suffix.replace('+','');
     }
-    return p.prefix + Math.round(rounded) + p.suffix;
+    return p.prefix + rounded + p.suffix;
   }
 
   if ('IntersectionObserver' in window) {
