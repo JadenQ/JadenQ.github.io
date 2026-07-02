@@ -180,7 +180,7 @@
     .hero-bg {
       position: absolute;
       inset: 0;
-      background: url('images/hero_001.jpg') center/cover no-repeat;
+      background: url('images/gin-hero_001.jpg') center/cover no-repeat;
       transform: scale(1.1);
     }
     .hero-overlay {
@@ -188,8 +188,9 @@
       inset: 0;
       background:
         linear-gradient(180deg,
-          rgba(42, 26, 18, 0.55) 0%,
-          rgba(61, 21, 30, 0.65) 40%,
+          rgba(18, 38, 28, 0.60) 0%,
+          rgba(42, 26, 18, 0.50) 35%,
+          rgba(61, 21, 30, 0.40) 55%,
           rgba(42, 26, 18, 0.80) 100%
         );
     }
@@ -1168,6 +1169,211 @@
       .spectrum-card { transition: none; }
       .principle-card, .style-card, .region-card, .cocktail-card, .stat-card, .trend-card { transition: none; }
     }
+
+    /* ============================================
+       INTERACTIVE WORLD MAP
+       ============================================ */
+    .gin-map-container {
+      margin-top: 60px;
+      position: relative;
+    }
+    .gin-map-svg {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      display: block;
+    }
+    .gin-map-svg .landmass {
+      fill: var(--cream-deep);
+      stroke: rgba(107,39,55,0.06);
+      stroke-width: 0.5;
+      transition: fill 0.3s ease;
+    }
+    .gin-map-svg .gin-region {
+      fill: var(--sage);
+      stroke: rgba(107,39,55,0.10);
+      stroke-width: 0.8;
+      cursor: pointer;
+      transition: fill 0.3s ease, stroke 0.3s ease, filter 0.3s ease;
+    }
+    .gin-map-svg .gin-region:hover {
+      fill: var(--terracotta);
+      stroke: var(--wine);
+      filter: drop-shadow(0 2px 8px rgba(199,91,74,0.3));
+    }
+    .gin-map-svg .gin-region.china-region {
+      fill: var(--wine-light);
+    }
+    .gin-map-svg .gin-region.china-region:hover {
+      fill: var(--terracotta);
+    }
+    .gin-marker {
+      fill: var(--amber);
+      stroke: var(--parchment);
+      stroke-width: 1;
+      r: 4;
+      transition: r 0.3s ease, fill 0.3s ease;
+      cursor: pointer;
+    }
+    .gin-marker:hover {
+      fill: var(--terracotta);
+      r: 7;
+    }
+    .gin-marker .marker-label {
+      font-family: var(--font-mono);
+      font-size: 6px;
+      fill: var(--earth-mid);
+      text-anchor: middle;
+      letter-spacing: 0.5px;
+    }
+    .map-tooltip {
+      position: absolute;
+      background: var(--parchment);
+      border: 1px solid rgba(107,39,55,0.10);
+      border-radius: 4px;
+      padding: 16px 20px;
+      box-shadow: 0 8px 32px rgba(42,26,18,0.12);
+      z-index: 100;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      max-width: 280px;
+      font-family: var(--font-chinese);
+    }
+    .map-tooltip.visible { opacity: 1; }
+    .map-tooltip .tt-region {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: var(--wine-dark);
+    }
+    .map-tooltip .tt-region-cn {
+      font-family: var(--font-chinese);
+      font-size: 0.9rem;
+      color: var(--earth-mid);
+      margin-bottom: 8px;
+    }
+    .map-tooltip .tt-botanical {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      color: var(--sage);
+      margin-bottom: 8px;
+    }
+    .map-tooltip .tt-desc {
+      font-family: var(--font-chinese);
+      font-size: 0.85rem;
+      line-height: 1.8;
+      color: var(--earth-mid);
+    }
+    .map-tooltip .tt-brands {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--clay);
+      margin-top: 8px;
+    }
+    .map-legend {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-top: 24px;
+      padding: 16px 0;
+    }
+    .map-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--earth-mid);
+      letter-spacing: 0.1em;
+    }
+    .legend-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .legend-dot.sage { background: var(--sage); }
+    .legend-dot.wine-light { background: var(--wine-light); }
+    .legend-dot.amber { background: var(--amber); }
+    .legend-dot.terracotta { background: var(--terracotta); }
+
+    /* ============================================
+       CHINA GIN SECTION (Brand Cards)
+       ============================================ */
+    .china-brands-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 28px;
+      margin-top: 60px;
+    }
+    .china-brand-card {
+      background: var(--parchment);
+      border: 1px solid rgba(107,39,55,0.06);
+      border-radius: 4px;
+      padding: 40px 36px;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .china-brand-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 64px rgba(42,26,18,0.08);
+    }
+    .china-brand-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 4px;
+      background: var(--wine-light);
+    }
+    .china-brand-card:nth-child(2)::before { background: var(--sage); }
+    .china-brand-card:nth-child(3)::before { background: var(--amber); }
+    .china-brand-card:nth-child(4)::before { background: var(--terracotta); }
+    .china-brand-card:nth-child(5)::before { background: var(--clay); }
+    .china-brand-name {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 500;
+      color: var(--wine-dark);
+      margin-bottom: 4px;
+    }
+    .china-brand-cn {
+      font-family: var(--font-chinese);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--earth-mid);
+      margin-bottom: 8px;
+    }
+    .china-brand-origin {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      margin-bottom: 16px;
+    }
+    .china-brand-botanicals {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      color: var(--sage);
+      margin-bottom: 16px;
+      line-height: 1.8;
+    }
+    .china-brand-desc {
+      font-family: var(--font-chinese);
+      font-size: 0.88rem;
+      line-height: 1.9;
+      color: var(--earth-mid);
+    }
+    .china-brand-award {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--amber);
+      margin-top: 12px;
+    }
   </style>
 </head>
 <body>
@@ -1180,13 +1386,14 @@
 
 <!-- Navigation -->
 <nav class="site-nav" id="siteNav" aria-label="Main navigation">
-  <a href="/wines/" class="nav-brand">金酒</a>
+  <a href="index.html" class="nav-brand">金酒</a>
   <div class="nav-links">
     <a href="#definition">定义</a>
     <a href="#history">历史</a>
     <a href="#classification">分类</a>
     <a href="#production">工艺</a>
     <a href="#regions">全球</a>
+    <a href="#china-gin">中国</a>
     <a href="#cocktails">鸡尾酒</a>
     <a href="#trends">趋势</a>
     <a href="#market">市场</a>
@@ -1539,9 +1746,109 @@
   <div class="section-label">§5</div>
   <h2 class="section-title-cn">世界金酒地图</h2>
   <h2 class="section-title">Gin Around the World</h2>
-  <p class="section-intro">六大洲金酒风格——每片土地都有自己的植物配方语言。</p>
+  <p class="section-intro">六大洲金酒风格——每片土地都有自己的植物配方语言。点击地图上的金色标记探索各地特色。</p>
 
-  <div class="region-grid stagger">
+  <!-- Interactive World Gin Map -->
+  <div class="gin-map-container reveal-scale">
+    <svg class="gin-map-svg" viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
+      <!-- Simplified world map outline -->
+      <!-- North America -->
+      <path class="landmass" d="M50,80 L180,60 L260,80 L280,120 L260,160 L240,180 L200,220 L160,240 L100,220 L60,180 L40,140 Z"/>
+      <!-- Greenland -->
+      <path class="landmass" d="M320,30 L380,20 L410,40 L400,70 L360,80 L320,60 Z"/>
+      <!-- South America -->
+      <path class="landmass" d="M160,260 L200,260 L240,300 L260,360 L240,420 L200,460 L160,450 L140,400 L130,340 L140,300 Z"/>
+      <!-- Europe -->
+      <path class="landmass" d="M460,60 L500,50 L540,60 L560,80 L540,100 L520,110 L480,120 L460,100 Z"/>
+      <!-- UK (Gin region) -->
+      <path class="gin-region" data-region="uk" d="M470,55 L480,48 L488,52 L486,62 L476,65 L468,60 Z"/>
+      <!-- France -->
+      <path class="landmass" d="M480,100 L520,95 L540,110 L530,130 L500,135 L480,120 Z"/>
+      <!-- Spain (Gin region) -->
+      <path class="gin-region" data-region="spain" d="M470,115 L500,110 L510,128 L490,135 L470,130 Z"/>
+      <!-- Netherlands (Gin region) -->
+      <path class="gin-region" data-region="netherlands" d="M488,72 L498,68 L502,78 L496,82 L488,78 Z"/>
+      <!-- Germany -->
+      <path class="landmass" d="M500,65 L540,60 L560,80 L550,95 L510,100 L500,85 Z"/>
+      <!-- Nordic (Gin region) -->
+      <path class="gin-region" data-region="nordic" d="M500,20 L540,15 L560,25 L545,40 L510,38 L500,30 Z"/>
+      <!-- Italy -->
+      <path class="landmass" d="M520,110 L540,108 L555,120 L545,140 L530,145 L515,130 Z"/>
+      <!-- Africa -->
+      <path class="landmass" d="M460,160 L540,150 L580,180 L600,240 L580,320 L540,380 L500,400 L460,380 L440,300 L450,220 Z"/>
+      <!-- South Africa (Gin region) -->
+      <path class="gin-region" data-region="southafrica" d="M500,380 L540,375 L560,390 L540,400 L510,398 L498,392 Z"/>
+      <!-- Middle East / India -->
+      <path class="landmass" d="M560,120 L620,100 L660,120 L680,160 L660,200 L620,220 L580,200 L560,160 Z"/>
+      <!-- India (Gin region) -->
+      <path class="gin-region" data-region="india" d="M630,140 L660,130 L680,160 L670,200 L640,210 L620,180 Z"/>
+      <!-- China (Gin region - highlighted) -->
+      <path class="gin-region china-region" data-region="china" d="M680,80 L740,70 L800,80 L820,120 L800,160 L760,170 L720,160 L700,140 L685,110 Z"/>
+      <!-- Japan (Gin region) -->
+      <path class="gin-region" data-region="japan" d="M820,90 L840,80 L850,100 L840,120 L830,110 L820,95 Z"/>
+      <!-- Southeast Asia -->
+      <path class="landmass" d="M700,170 L760,165 L780,180 L770,210 L740,220 L700,200 Z"/>
+      <!-- Australia (Gin region) -->
+      <path class="gin-region" data-region="australia" d="M770,300 L840,280 L880,300 L870,340 L840,370 L800,380 L770,360 Z"/>
+      <!-- Philippines -->
+      <path class="landmass" d="M760,190 L775,185 L785,200 L775,210 L760,205 Z"/>
+
+      <!-- Gin marker dots with labels -->
+      <!-- UK - London -->
+      <circle class="gin-marker" cx="477" cy="55" data-region="uk"/>
+      <text class="marker-label" x="477" y="68">UK</text>
+      <!-- Netherlands -->
+      <circle class="gin-marker" cx="494" cy="74" data-region="netherlands"/>
+      <text class="marker-label" x="494" y="87">NL</text>
+      <!-- Spain -->
+      <circle class="gin-marker" cx="488" cy="124" data-region="spain"/>
+      <text class="marker-label" x="488" y="137">ES</text>
+      <!-- Nordic -->
+      <circle class="gin-marker" cx="530" cy="28" data-region="nordic"/>
+      <text class="marker-label" x="530" y="41">SE</text>
+      <!-- USA -->
+      <circle class="gin-marker" cx="200" cy="130" data-region="usa"/>
+      <text class="marker-label" x="200" y="143">US</text>
+      <!-- South Africa -->
+      <circle class="gin-marker" cx="530" cy="392" data-region="southafrica"/>
+      <text class="marker-label" x="530" y="405">ZA</text>
+      <!-- India -->
+      <circle class="gin-marker" cx="650" cy="170" data-region="india"/>
+      <text class="marker-label" x="650" y="183">IN</text>
+      <!-- China -->
+      <circle class="gin-marker" cx="760" cy="120" data-region="china"/>
+      <text class="marker-label" x="760" y="133">CN</text>
+      <!-- Japan -->
+      <circle class="gin-marker" cx="835" cy="100" data-region="japan"/>
+      <text class="marker-label" x="835" y="113">JP</text>
+      <!-- Australia -->
+      <circle class="gin-marker" cx="830" cy="330" data-region="australia"/>
+      <text class="marker-label" x="830" y="343">AU</text>
+      <!-- Philippines -->
+      <circle class="gin-marker" cx="770" cy="200" data-region="philippines"/>
+      <text class="marker-label" x="770" y="213">PH</text>
+      <!-- France -->
+      <circle class="gin-marker" cx="500" cy="115" data-region="france"/>
+      <text class="marker-label" x="500" y="128">FR</text>
+    </svg>
+
+    <!-- Legend -->
+    <div class="map-legend">
+      <div class="map-legend-item"><span class="legend-dot sage"></span> 金酒产区</div>
+      <div class="map-legend-item"><span class="legend-dot wine-light"></span> 中国金酒</div>
+      <div class="map-legend-item"><span class="legend-dot amber"></span> 标记点</div>
+      <div class="map-legend-item"><span class="legend-dot terracotta"></span> 悬停高亮</div>
+    </div>
+
+    <!-- Tooltip -->
+    <div class="map-tooltip" id="mapTooltip">
+      <div class="tt-region" id="ttRegion"></div>
+      <div class="tt-region-cn" id="ttRegionCn"></div>
+      <div class="tt-botanical" id="ttBotanical"></div>
+      <div class="tt-desc" id="ttDesc"></div>
+      <div class="tt-brands" id="ttBrands"></div>
+    </div>
+  </div>
     <div class="region-card">
       <p class="region-flag">GBR</p>
       <h3 class="region-name">United Kingdom</h3>
@@ -1604,6 +1911,130 @@
       <p class="region-name-cn">北欧 · 采摘文化金酒</p>
       <p class="region-desc">继承深厚采摘文化传统，使用沙棘、越橘、云杉嫩芽、桦树叶等极地植物。北欧金酒的清冽美学——冰原植物、纯净蒸馏、极简表达。</p>
       <p class="region-brands">Agitator · Helsinki · Kyrö · Skåne</p>
+    </div>
+
+    <!-- CHINA GIN CARD (expanded) -->
+    <div class="region-card" style="border-left: 4px solid var(--wine-light);">
+      <p class="region-flag">CHN</p>
+      <h3 class="region-name">China</h3>
+      <p class="region-name-cn">中国 · 新兴精酿金酒浪潮</p>
+      <p class="region-desc">中国金酒市场以>20% CAGR增长，是亚太增速最快的细分。本土品牌将花椒、荷花、佛手柑、枸杞等传统植物融入蒸馏，创造独属东方的金酒语言。上海 Peddlers Gin 获2024/2025 World Gin Awards 最佳中国金酒。1921年上海租界曾有"Gin Lane"蒸馏厂，如今新一代中国金酒从本土植物出发重新定义这一烈酒。</p>
+      <p class="region-brands">Peddlers · Peggy · Dragon's Head · Bao Mountain · Old Pudong</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== §5b CHINESE GIN DEEP DIVE ==================== -->
+<div class="divider"><div class="divider-diamond"></div></div>
+
+<section class="section" id="china-gin">
+  <div class="section-label">§5b</div>
+  <h2 class="section-title-cn">中国金酒深度</h2>
+  <h2 class="section-title">Chinese Gin Deep Dive</h2>
+  <p class="section-intro">从上海租界到精酿浪潮——中国金酒如何将花椒、荷花与佛手柑写入蒸馏烈酒的叙事。</p>
+
+  <div class="china-brands-grid stagger">
+    <!-- Peddlers Gin -->
+    <div class="china-brand-card">
+      <h3 class="china-brand-name">Peddlers Gin</h3>
+      <p class="china-brand-cn">贩子金酒 · Shanghai</p>
+      <p class="china-brand-origin">Shanghai · 43% ABV · 11 Botanicals</p>
+      <p class="china-brand-botanicals">Botanicals: Juniper · Lotus (Gansu) · Sichuan Pepper (Qingxi) · Buddha's Hand (Yunnan) · East Asian Mint · Licorice · Goji · Jasmine Tea · Coriander · Angelica · Cassia</p>
+      <p class="china-brand-desc">上海首家精品金酒品牌，植物从四川、云南、甘肃等地采摘。旗舰款以荷花花香和花椒麻感为标志；Salted Plum Gin 加入盐渍梅、桑葚与桂花；Barrel Aged Gin 经3个月法国橡木桶陈酿，带烟熏花椒与石果风味。</p>
+      <p class="china-brand-award">Best Chinese Gin — World Gin Awards 2024 & 2025 · Multiple SFWSC medals</p>
+    </div>
+
+    <!-- Peggy Gin -->
+    <div class="china-brand-card">
+      <h3 class="china-brand-name">Peggy Gin</h3>
+      <p class="china-brand-cn">佩琪金酒 · Jiangxi</p>
+      <p class="china-brand-origin">Ganzhou, Jiangxi · 43% ABV · Farm-to-Bottle</p>
+      <p class="china-brand-botanicals">Botanicals: Juniper · Jiangxi Navel Orange · Lotus Leaf · Chrysanthemum · Ginseng · Kaoliang (Sorghum) · Coriander · Angelica · Orris · Cassia · Licorice</p>
+      <p class="china-brand-desc">创始人 Peggy 回到江西老家，将赣南脐橙、荷叶、菊花、人参与高粱融入金酒配方。水源经当地山脉自然过滤，从田间到瓶中的完整叙事。轻盈花香，柑橘明亮。</p>
+      <p class="china-brand-award">Gold — CWSA · Silver — SFWSC</p>
+    </div>
+
+    <!-- Dragon's Head Gin -->
+    <div class="china-brand-card">
+      <h3 class="china-brand-name">Dragon's Head Gin</h3>
+      <p class="china-brand-cn">龙头金酒 · Beijing</p>
+      <p class="china-brand-origin">Beijing · 43% ABV · Small Batch</p>
+      <p class="china-brand-botanicals">Botanicals: Hawthorn · Goji Berry · Jasmine · Juniper · Coriander · Angelica · Licorice · Cassia</p>
+      <p class="china-brand-desc">北京小批量金酒，以山楂的独特红色果实酸涩与茉莉花的清幽花香为双主调。山楂是中国街头零食的标志性风味，Dragon's Head 将其写入金酒语境，干爽收尾。</p>
+    </div>
+
+    <!-- Whistling Andy Gin -->
+    <div class="china-brand-card">
+      <h3 class="china-brand-name">Whistling Andy Gin</h3>
+      <p class="china-brand-cn">啸鹰金酒 · Taiwan</p>
+      <p class="china-brand-origin">Sun Moon Lake, Nantou · 46% ABV</p>
+      <p class="china-brand-botanicals">Botanicals: Sun Moon Lake Black Tea (Ruby Red #18) · Guava · Honey · Local Taiwanese Herbs · Juniper</p>
+      <p class="china-brand-desc">创始人 Andy Chang 从半导体行业转向蒸馏艺术，在日月湖畔打造台湾风味金酒。日月湖红茶（Ruby Red #18品种）赋予深邃茶韵，番石榴带来热带果香，蜂蜜甜润平衡。屡获 World Gin Awards 最佳台湾金酒。</p>
+      <p class="china-brand-award">Best Taiwanese Gin — World Gin Awards · Double Gold — SFWSC</p>
+    </div>
+  </div>
+
+  <!-- Chinese Botanicals Pull Quote -->
+  <div class="pull-quote reveal">
+    <blockquote>中国金酒的植物配方正在构建一种全新的"蒸馏东方美学"——花椒的麻感替代芫荽籽的辛香，荷花的花香补充杜松子的松脂，佛手柑以更花气的柑橘表达取代柠檬皮的标准清凉。这不是对西方金酒的模仿，而是东方植物语言对蒸馏烈酒格式的重新书写。</blockquote>
+    <cite>— Peddlers Gin Co. · Botanical Philosophy</cite>
+  </div>
+
+  <!-- Chinese Botanicals Grid -->
+  <div class="principles-grid stagger" style="margin-top:60px;">
+    <div class="principle-card">
+      <p class="principle-number">01</p>
+      <h3 class="principle-title"><span class="principle-dot dot-terracotta"></span>花椒 · Sichuan Pepper</h3>
+      <p class="principle-desc">四川花椒（青花椒更鲜、红花椒更麻）为金酒带来独特的麻感体验，一种温暖的"震颤"而非灼热。Peddlers Gin 的 Barrel Aged 表达中，花椒在橡木桶中发展出烟熏深度。</p>
+    </div>
+    <div class="principle-card">
+      <p class="principle-number">02</p>
+      <h3 class="principle-title"><span class="principle-dot dot-sage"></span>荷花 · Lotus</h3>
+      <p class="principle-desc">来自甘肃的荷花为金酒提供轻盈花香鼻息与绿色植物感的回味。荷花在中国文化中象征纯洁与优雅——它在金酒中的出现是东方美学的蒸馏表达。</p>
+    </div>
+    <div class="principle-card">
+      <p class="principle-number">03</p>
+      <h3 class="principle-title"><span class="principle-dot dot-amber"></span>佛手柑 · Buddha's Hand</h3>
+      <p class="principle-desc">云南佛手柑——一种形状奇异的柑橘果实——提供类似柠檬皮的花香变体。它比标准柠檬更有花气深度，是中国金酒最独特的柑橘表达。</p>
+    </div>
+    <div class="principle-card">
+      <p class="principle-number">04</p>
+      <h3 class="principle-title"><span class="principle-dot dot-wine"></span>桂花 · Osmanthus</h3>
+      <p class="principle-desc">桂花的甜杏般花香是中国南方最具标志性的风味之一（桂花糕、桂花茶、桂花酒）。Peddlers 的 Salted Plum Gin 将桂花与盐渍梅结合，创造出中国版的"甜咸金酒"。</p>
+    </div>
+    <div class="principle-card">
+      <p class="principle-number">05</p>
+      <h3 class="principle-title"><span class="principle-dot dot-clay"></span>枸杞 · Goji Berry</h3>
+      <p class="principle-desc">宁夏/青海枸杞为金酒带来微妙酸甜浆果风味与轻微泥土感。Dragon's Head 和 Peggy Gin 都将枸杞作为配方的一部分——它既是风味成分，也是"超级食物"的品牌叙事符号。</p>
+    </div>
+    <div class="principle-card">
+      <p class="principle-number">06</p>
+      <h3 class="principle-title"><span class="principle-dot dot-light"></span>中国茶 · Chinese Tea</h3>
+      <p class="principle-desc">龙井绿茶（U-and Gin）、日月湖红茶（Whistling Andy）、茉莉花茶（Peddlers/Bao Mountain）、福建白茶（Fujianflow）——中国茶的多样性为金酒提供了从清草到深邃发酵的完整风味光谱。</p>
+    </div>
+  </div>
+
+  <!-- China market stats -->
+  <div class="stat-grid stagger" style="margin-top:80px;">
+    <div class="stat-card">
+      <p class="stat-value" data-count="$1.5B">0</p>
+      <p class="stat-label">中国金酒市场规模 (2024)</p>
+      <p class="stat-source">Statista / Mordor Intelligence</p>
+    </div>
+    <div class="stat-card">
+      <p class="stat-value" data-count="+22%">0</p>
+      <p class="stat-label">2023 体积增长 YoY</p>
+      <p class="stat-source">IWSR China Gin Market</p>
+    </div>
+    <div class="stat-card">
+      <p class="stat-value" data-count="9%">0</p>
+      <p class="stat-label">体积 CAGR 预测 (2022-27)</p>
+      <p class="stat-source">IWSR Forecast</p>
+    </div>
+    <div class="stat-card">
+      <p class="stat-value" data-count="<0.1%">0</p>
+      <p class="stat-label">体积占比 (vs 白酒 98-99%)</p>
+      <p class="stat-source">IWSR / Statista</p>
     </div>
   </div>
 </section>
@@ -1793,8 +2224,8 @@
   <div class="footer-divider"></div>
   <p class="footer-meta">2025 · JadenQ · 从荷兰杜松子酒到全球精酿复兴</p>
   <div class="footer-links">
-    <a href="/wines/">← 返回酒类知识库</a>
-    <a href="/wines/natural-wine.html">自然酒</a>
+    <a href="index.html">← 返回酒类知识库</a>
+    <a href="natural-wine.html">自然酒</a>
   </div>
 </footer>
 
@@ -2018,6 +2449,81 @@
           window.scrollTo({ top: top, behavior: prefersReduced ? 'auto' : 'smooth' });
         }
       }
+    });
+  });
+
+  // ---- Interactive World Gin Map ----
+  const ginMapData = {
+    uk: { region: 'United Kingdom', cn: '英国 · London Dry 传统', botanical: 'Juniper · Coriander · Angelica · Citrus Peel', desc: '伦敦干金酒诞生地，400+蒸馏厂。Sipsmith 2009年点燃精酿复兴。', brands: 'Beefeater · Tanqueray · Gordon's · Sipsmith · Hendrick's' },
+    netherlands: { region: 'Netherlands', cn: '荷兰 · Genever 传统', botanical: 'Malt Wine · Juniper · Genever Botanicals', desc: '金酒祖先——Genever使用麦芽酒基底，Oude(丰满)/Jonge(轻盈)两种风格。', brands: 'Bols · Boomsma · Genever de Munnik · Filliers' },
+    spain: { region: 'Spain', cn: '西班牙 · Gin-Tonic 文化', botanical: 'Olive · Tomato · Rosemary · Thyme · Citrus', desc: '全球最热烈的Gin-Tonic文化——气球杯、冰堆、植物点缀的社交仪式。', brands: 'Gin Mare · Larios · Nordés' },
+    nordic: { region: 'Nordic/Scandinavia', cn: '北欧 · 采摘文化金酒', botanical: 'Sea Buckthorn · Lingonberry · Spruce Tips · Birch Leaf', desc: '继承深厚采摘传统，使用极地植物。清冽美学——冰原植物、纯净蒸馏。', brands: 'Agitator · Helsinki · Kyrö · Skåne' },
+    usa: { region: 'United States', cn: '美国 · 精酿金酒运动', botanical: 'Local Botanicals · Creative Expression · No Legal Definition Limit', desc: '打破London Dry范式束缚。创意自由度全球最高。New Western风格发源地。', brands: 'St. George · Aviation · Grey Whale' },
+    southafrica: { region: 'South Africa', cn: '南非 · Fynbos 金酒', botanical: 'Rooibos · Honeybush · Buchu · Fynbos Biome Plants', desc: '独有Fynbos生物群落植物——路易波士、蜜灌木。全球无平行替代。', brands: 'Inverroche · Black Snake · Hope on Hopkins' },
+    india: { region: 'India', cn: '印度 · 新兴精酿', botanical: 'Turmeric · Ginger · Lemongrass · Curry Leaf · Cardamom', desc: '全球金酒消费量最大国家之一。本土印度香料融入蒸馏。', brands: 'Greater Than · Jodhpur · Stranger & Sons' },
+    china: { region: 'China', cn: '中国 · 新兴精酿金酒浪潮', botanical: 'Sichuan Pepper · Lotus · Buddha's Hand · Osmanthus · Goji · Jasmine Tea · Hawthorn', desc: '20%+ CAGR增长。Peddlers获2024/2025世界金酒奖最佳中国金酒。本土植物重新定义金酒语言。', brands: 'Peddlers · Peggy · Dragon's Head · Bao Mountain · Old Pudong · Whistling Andy (TW)' },
+    japan: { region: 'Japan', cn: '日本 · 和式金酒', botanical: 'Yuzu · Sansho · Sakura · Gyokuro Tea · Hinoki · Juniper', desc: '"旬"季节感哲学。11种日本植物分三组蒸馏再调和(Ki No Bi)。', brands: 'Ki No Bi · Roku · Nikka Coffey Gin · Oi' },
+    australia: { region: 'Australia', cn: '澳大利亚 · 本土植物金酒', botanical: 'Lemon Myrtle · Finger Lime · Wattleseed · Quandong · Pandanus', desc: '以本土植物为灵魂。Bloody Shiraz Gin将Shiraz葡萄浸泡于金酒。', brands: 'Four Pillars · Never Never · Adelaide Hills' },
+    philippines: { region: 'Philippines', cn: '菲律宾 · 大众消费市场', botanical: 'Local Citrus · Tropical Fruits · Juniper', desc: 'Ginebra San Miguel 是全球销量最大的金酒品牌之一，大众市场定位。', brands: 'Ginebra San Miguel' },
+    france: { region: 'France', cn: '法国 · 葡萄基金酒', botanical: 'Grape-Based Neutral Spirit · Lavender · Juniper · Citrus', desc: '部分法国金酒使用葡萄蒸馏基酒而非谷物，赋予天然果韵。薰衣草是法式金酒的标志。', brands: 'Citadelle · G'Vine · Dolin' }
+  };
+
+  const tooltip = document.getElementById('mapTooltip');
+  const ttRegion = document.getElementById('ttRegion');
+  const ttRegionCn = document.getElementById('ttRegionCn');
+  const ttBotanical = document.getElementById('ttBotanical');
+  const ttDesc = document.getElementById('ttDesc');
+  const ttBrands = document.getElementById('ttBrands');
+
+  document.querySelectorAll('.gin-marker').forEach(function(marker) {
+    const regionKey = marker.getAttribute('data-region');
+    const data = ginMapData[regionKey];
+    if (!data) return;
+
+    marker.addEventListener('mouseenter', function(e) {
+      ttRegion.textContent = data.region;
+      ttRegionCn.textContent = data.cn;
+      ttBotanical.textContent = data.botanical;
+      ttDesc.textContent = data.desc;
+      ttBrands.textContent = data.brands;
+      tooltip.classList.add('visible');
+
+      // Position tooltip
+      const rect = marker.getBoundingClientRect();
+      const container = marker.closest('.gin-map-container');
+      const containerRect = container.getBoundingClientRect();
+      tooltip.style.left = (rect.left - containerRect.left + rect.width/2 - 140) + 'px';
+      tooltip.style.top = (rect.top - containerRect.top - tooltip.offsetHeight - 10) + 'px';
+    });
+
+    marker.addEventListener('mouseleave', function() {
+      tooltip.classList.remove('visible');
+    });
+  });
+
+  // Also handle gin-region paths (country highlights)
+  document.querySelectorAll('.gin-region').forEach(function(region) {
+    const regionKey = region.getAttribute('data-region');
+    const data = ginMapData[regionKey];
+    if (!data) return;
+
+    region.addEventListener('mouseenter', function(e) {
+      ttRegion.textContent = data.region;
+      ttRegionCn.textContent = data.cn;
+      ttBotanical.textContent = data.botanical;
+      ttDesc.textContent = data.desc;
+      ttBrands.textContent = data.brands;
+      tooltip.classList.add('visible');
+
+      const rect = region.getBoundingClientRect();
+      const container = region.closest('.gin-map-container');
+      const containerRect = container.getBoundingClientRect();
+      tooltip.style.left = (rect.left - containerRect.left + rect.width/2 - 140) + 'px';
+      tooltip.style.top = (rect.top - containerRect.top - tooltip.offsetHeight - 10) + 'px';
+    });
+
+    region.addEventListener('mouseleave', function() {
+      tooltip.classList.remove('visible');
     });
   });
 })();
