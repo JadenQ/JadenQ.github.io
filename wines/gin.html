@@ -2478,20 +2478,20 @@
 
   // ---- Interactive World Gin Map ----
   const ginMapData = {
-    uk: { region: 'United Kingdom', cn: '英国 · London Dry 传统', botanical: 'Juniper · Coriander · Angelica · Citrus Peel', desc: '伦敦干金酒诞生地，400+蒸馏厂。Sipsmith 2009年点燃精酿复兴。', brands: 'Beefeater · Tanqueray · Gordon's · Sipsmith · Hendrick's' },
+    uk: { region: 'United Kingdom', cn: '英国 · London Dry 传统', botanical: 'Juniper · Coriander · Angelica · Citrus Peel', desc: '伦敦干金酒诞生地，400+蒸馏厂。Sipsmith 2009年点燃精酿复兴。', brands: `Beefeater · Tanqueray · Gordon's · Sipsmith · Hendrick's` },
     netherlands: { region: 'Netherlands', cn: '荷兰 · Genever 传统', botanical: 'Malt Wine · Juniper · Genever Botanicals', desc: '金酒祖先——Genever使用麦芽酒基底，Oude(丰满)/Jonge(轻盈)两种风格。', brands: 'Bols · Boomsma · Genever de Munnik · Filliers' },
     spain: { region: 'Spain', cn: '西班牙 · Gin-Tonic 文化', botanical: 'Olive · Tomato · Rosemary · Thyme · Citrus', desc: '全球最热烈的Gin-Tonic文化——气球杯、冰堆、植物点缀的社交仪式。', brands: 'Gin Mare · Larios · Nordés' },
     nordic: { region: 'Nordic/Scandinavia', cn: '北欧 · 采摘文化金酒', botanical: 'Sea Buckthorn · Lingonberry · Spruce Tips · Birch Leaf', desc: '继承深厚采摘传统，使用极地植物。清冽美学——冰原植物、纯净蒸馏。', brands: 'Agitator · Helsinki · Kyrö · Skåne' },
     usa: { region: 'United States', cn: '美国 · 精酿金酒运动', botanical: 'Local Botanicals · Creative Expression · No Legal Definition Limit', desc: '打破London Dry范式束缚。创意自由度全球最高。New Western风格发源地。', brands: 'St. George · Aviation · Grey Whale' },
     southafrica: { region: 'South Africa', cn: '南非 · Fynbos 金酒', botanical: 'Rooibos · Honeybush · Buchu · Fynbos Biome Plants', desc: '独有Fynbos生物群落植物——路易波士、蜜灌木。全球无平行替代。', brands: 'Inverroche · Black Snake · Hope on Hopkins' },
     india: { region: 'India', cn: '印度 · 新兴精酿', botanical: 'Turmeric · Ginger · Lemongrass · Curry Leaf · Cardamom', desc: '全球金酒消费量最大国家之一。本土印度香料融入蒸馏。', brands: 'Greater Than · Jodhpur · Stranger & Sons' },
-    china: { region: 'China', cn: '中国 · 新兴精酿金酒浪潮', botanical: 'Sichuan Pepper · Lotus · Buddha's Hand · Osmanthus · Goji · Jasmine Tea · Hawthorn', desc: '20%+ CAGR增长。Peddlers获2024/2025世界金酒奖最佳中国金酒。本土植物重新定义金酒语言。', brands: 'Peddlers · Peggy · Dragon's Head · Bao Mountain · Old Pudong · Whistling Andy (TW)' },
+    china: { region: 'China', cn: '中国 · 新兴精酿金酒浪潮', botanical: `Sichuan Pepper · Lotus · Buddha's Hand · Osmanthus · Goji · Jasmine Tea · Hawthorn`, desc: '20%+ CAGR增长。Peddlers获2024/2025世界金酒奖最佳中国金酒。本土植物重新定义金酒语言。', brands: `Peddlers · Peggy · Dragon's Head · Bao Mountain · Old Pudong · Whistling Andy (TW)` },
     japan: { region: 'Japan', cn: '日本 · 和式金酒', botanical: 'Yuzu · Sansho · Sakura · Gyokuro Tea · Hinoki · Juniper', desc: '"旬"季节感哲学。11种日本植物分三组蒸馏再调和(Ki No Bi)。', brands: 'Ki No Bi · Roku · Nikka Coffey Gin · Oi' },
     australia: { region: 'Australia', cn: '澳大利亚 · 本土植物金酒', botanical: 'Lemon Myrtle · Finger Lime · Wattleseed · Quandong · Pandanus', desc: '以本土植物为灵魂。Bloody Shiraz Gin将Shiraz葡萄浸泡于金酒。', brands: 'Four Pillars · Never Never · Adelaide Hills' },
     philippines: { region: 'Philippines', cn: '菲律宾 · 全球销量之王 (>40M箱/年)', botanical: 'Local Citrus · Tropical Fruits · Juniper', desc: '全球金酒消费量最大国家——年销>4000万9升箱，约占全球40%。Ginebra San Miguel 年销3500万箱。大众价位，与精酿高端金酒属不同市场层级。', brands: 'Ginebra San Miguel · Emperador' },
     thailand: { region: 'Thailand', cn: '泰国 · 热带植物金酒', botanical: 'Pandan · Lemongrass · Kaffir Lime · Galangal · Butterfly Pea Flower', desc: '泰国金酒以热带料理植物为灵感：香兰叶、柠檬草、青柠叶、南姜、蝶豆花。Iron Balls 和 Chalong Bay 用本土香料创造独特风味。', brands: 'Iron Balls · Chalong Bay · Saneha · Mahanakhon' },
     singapore: { region: 'Singapore', cn: '新加坡 · 东南亚精酿', botanical: 'Pandan · Lemongrass · Kaffir Lime · Local Botanicals', desc: '新加坡金酒同样以东南亚植物为配方核心。Tanglin 使用香兰叶与柠檬草；Lunar 融合本地热带香料。', brands: 'Tanglin · Lunar' },
-    france: { region: 'France', cn: '法国 · 葡萄基金酒', botanical: 'Grape-Based Neutral Spirit · Lavender · Juniper · Citrus', desc: '部分法国金酒使用葡萄蒸馏基酒而非谷物，赋予天然果韵。薰衣草是法式金酒的标志。', brands: 'Citadelle · G'Vine · Dolin' }
+    france: { region: 'France', cn: '法国 · 葡萄基金酒', botanical: 'Grape-Based Neutral Spirit · Lavender · Juniper · Citrus', desc: '部分法国金酒使用葡萄蒸馏基酒而非谷物，赋予天然果韵。薰衣草是法式金酒的标志。', brands: `Citadelle · G'Vine · Dolin'` }
   };
 
   const tooltip = document.getElementById('mapTooltip');
