@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=DM+Mono:wght@400;500&family=Noto+Serif+SC:wght@400;500;600;700&family=Outfit:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
   <style>
     :root {
       --wine: #6B2737;
@@ -820,6 +821,12 @@
       transform: translateY(-6px);
       box-shadow: 0 20px 60px rgba(42,26,18,0.08);
     }
+    .region-card.region-card-active {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 60px rgba(107,39,55,0.16);
+      border-color: var(--wine);
+      background: rgba(107,39,55,0.03);
+    }
     .region-flag {
       font-family: var(--font-mono);
       font-size: 0.65rem;
@@ -1171,113 +1178,160 @@
     }
 
     /* ============================================
-       INTERACTIVE WORLD MAP
+       INTERACTIVE WORLD MAP (ECHARTS)
        ============================================ */
     .gin-map-container {
       margin-top: 60px;
       position: relative;
     }
-    .gin-map-svg {
+    .gin-map-stage {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 32px;
+      align-items: start;
+    }
+    .gin-map-canvas {
       width: 100%;
-      max-width: 1100px;
-      margin: 0 auto;
-      display: block;
+      height: 580px;
+      background: var(--parchment);
+      border: 1px solid rgba(107,39,55,0.06);
+      border-radius: 4px;
+      position: relative;
+      overflow: hidden;
     }
-    .gin-map-svg .landmass {
-      fill: var(--cream-deep);
-      stroke: rgba(107,39,55,0.06);
-      stroke-width: 0.5;
-      transition: fill 0.3s ease;
-    }
-    .gin-map-svg .gin-region {
-      fill: var(--sage);
-      stroke: rgba(107,39,55,0.10);
-      stroke-width: 0.8;
-      cursor: pointer;
-      transition: fill 0.3s ease, stroke 0.3s ease, filter 0.3s ease;
-    }
-    .gin-map-svg .gin-region:hover {
-      fill: var(--terracotta);
-      stroke: var(--wine);
-      filter: drop-shadow(0 2px 8px rgba(199,91,74,0.3));
-    }
-    .gin-map-svg .gin-region.china-region {
-      fill: var(--wine-light);
-    }
-    .gin-map-svg .gin-region.china-region:hover {
-      fill: var(--terracotta);
-    }
-    .gin-marker {
-      fill: var(--amber);
-      stroke: var(--parchment);
-      stroke-width: 1;
-      r: 4;
-      transition: r 0.3s ease, fill 0.3s ease;
-      cursor: pointer;
-    }
-    .gin-marker:hover {
-      fill: var(--terracotta);
-      r: 7;
-    }
-    .gin-marker .marker-label {
-      font-family: var(--font-mono);
-      font-size: 6px;
-      fill: var(--earth-mid);
-      text-anchor: middle;
-      letter-spacing: 0.5px;
-    }
-    .map-tooltip {
+    .gin-map-canvas .map-loading {
       position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-chinese);
+      color: var(--earth-mid);
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+      opacity: 0.6;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .gin-map-canvas .map-error {
+      position: absolute;
+      inset: 0;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      font-family: var(--font-chinese);
+      color: var(--terracotta);
+      text-align: center;
+      padding: 24px;
+    }
+    .gin-map-canvas.map-failed .map-loading { display: none; }
+    .gin-map-canvas.map-failed .map-error { display: flex; }
+    .gin-map-canvas.map-ready .map-loading { display: none; }
+
+    .gin-detail-panel {
       background: var(--parchment);
       border: 1px solid rgba(107,39,55,0.10);
       border-radius: 4px;
-      padding: 16px 20px;
-      box-shadow: 0 8px 32px rgba(42,26,18,0.12);
-      z-index: 100;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      max-width: 280px;
-      font-family: var(--font-chinese);
+      padding: 32px 28px;
+      min-height: 580px;
+      position: sticky;
+      top: 96px;
+      transition: opacity 0.3s ease, transform 0.3s ease;
     }
-    .map-tooltip.visible { opacity: 1; }
-    .map-tooltip .tt-region {
-      font-family: var(--font-display);
-      font-size: 1.3rem;
-      font-weight: 500;
-      color: var(--wine-dark);
-    }
-    .map-tooltip .tt-region-cn {
-      font-family: var(--font-chinese);
-      font-size: 0.9rem;
-      color: var(--earth-mid);
-      margin-bottom: 8px;
-    }
-    .map-tooltip .tt-botanical {
-      font-family: var(--font-mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.1em;
-      color: var(--sage);
-      margin-bottom: 8px;
-    }
-    .map-tooltip .tt-desc {
-      font-family: var(--font-chinese);
-      font-size: 0.85rem;
-      line-height: 1.8;
-      color: var(--earth-mid);
-    }
-    .map-tooltip .tt-brands {
+    .gin-detail-panel .panel-eyebrow {
       font-family: var(--font-mono);
       font-size: 0.65rem;
-      color: var(--clay);
-      margin-top: 8px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      margin-bottom: 16px;
     }
+    .gin-detail-panel .panel-prompt {
+      font-family: var(--font-chinese);
+      font-size: 0.95rem;
+      line-height: 1.9;
+      color: var(--earth-mid);
+      opacity: 0.75;
+    }
+    .gin-detail-panel .panel-prompt svg {
+      display: block;
+      margin: 24px auto 16px;
+      opacity: 0.5;
+    }
+    .gin-detail-panel .panel-region {
+      font-family: var(--font-display);
+      font-size: 1.7rem;
+      font-weight: 500;
+      color: var(--wine-dark);
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+    .gin-detail-panel .panel-region-cn {
+      font-family: var(--font-chinese);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--earth-mid);
+      margin-bottom: 18px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid rgba(107,39,55,0.10);
+    }
+    .gin-detail-panel .panel-botanical {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      color: var(--sage);
+      margin-bottom: 14px;
+      line-height: 1.8;
+    }
+    .gin-detail-panel .panel-botanical::before {
+      content: 'BOTANICALS · 植物配方';
+      display: block;
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      color: var(--clay);
+      margin-bottom: 6px;
+      opacity: 0.8;
+    }
+    .gin-detail-panel .panel-desc {
+      font-family: var(--font-chinese);
+      font-size: 0.9rem;
+      line-height: 1.9;
+      color: var(--earth-mid);
+      margin-bottom: 18px;
+    }
+    .gin-detail-panel .panel-brands {
+      font-family: var(--font-chinese);
+      font-size: 0.82rem;
+      line-height: 1.9;
+      color: var(--clay);
+    }
+    .gin-detail-panel .panel-brands::before {
+      content: '代表品牌 · REPRESENTATIVE BRANDS';
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      color: var(--clay);
+      margin-bottom: 6px;
+      opacity: 0.8;
+    }
+    .panel-state-hidden { display: none; }
+
+    @media (max-width: 900px) {
+      .gin-map-stage { grid-template-columns: 1fr; }
+      .gin-map-canvas { height: 460px; }
+      .gin-detail-panel { position: static; min-height: auto; }
+    }
+
     .map-legend {
       display: flex;
       justify-content: center;
       gap: 24px;
       margin-top: 24px;
       padding: 16px 0;
+      flex-wrap: wrap;
     }
     .map-legend-item {
       display: flex;
@@ -1297,6 +1351,7 @@
     .legend-dot.wine-light { background: var(--wine-light); }
     .legend-dot.amber { background: var(--amber); }
     .legend-dot.terracotta { background: var(--terracotta); }
+    .legend-dot.cream-deep { background: var(--cream-deep); border: 1px solid rgba(107,39,55,0.10); }
 
     /* ============================================
        CHINA GIN SECTION (Brand Cards)
@@ -1748,172 +1803,104 @@
   <h2 class="section-title">Gin Around the World</h2>
   <p class="section-intro">六大洲金酒风格——每片土地都有自己的植物配方语言。点击地图上的金色标记探索各地特色。</p>
 
-  <!-- Interactive World Gin Map -->
+  <!-- Interactive World Gin Map (ECharts) -->
   <div class="gin-map-container reveal-scale">
-    <svg class="gin-map-svg" viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
-      <!-- Simplified world map outline -->
-      <!-- North America -->
-      <path class="landmass" d="M50,80 L180,60 L260,80 L280,120 L260,160 L240,180 L200,220 L160,240 L100,220 L60,180 L40,140 Z"/>
-      <!-- Greenland -->
-      <path class="landmass" d="M320,30 L380,20 L410,40 L400,70 L360,80 L320,60 Z"/>
-      <!-- South America -->
-      <path class="landmass" d="M160,260 L200,260 L240,300 L260,360 L240,420 L200,460 L160,450 L140,400 L130,340 L140,300 Z"/>
-      <!-- Europe -->
-      <path class="landmass" d="M460,60 L500,50 L540,60 L560,80 L540,100 L520,110 L480,120 L460,100 Z"/>
-      <!-- UK (Gin region) -->
-      <path class="gin-region" data-region="uk" d="M470,55 L480,48 L488,52 L486,62 L476,65 L468,60 Z"/>
-      <!-- France -->
-      <path class="landmass" d="M480,100 L520,95 L540,110 L530,130 L500,135 L480,120 Z"/>
-      <!-- Spain (Gin region) -->
-      <path class="gin-region" data-region="spain" d="M470,115 L500,110 L510,128 L490,135 L470,130 Z"/>
-      <!-- Netherlands (Gin region) -->
-      <path class="gin-region" data-region="netherlands" d="M488,72 L498,68 L502,78 L496,82 L488,78 Z"/>
-      <!-- Germany -->
-      <path class="landmass" d="M500,65 L540,60 L560,80 L550,95 L510,100 L500,85 Z"/>
-      <!-- Nordic (Gin region) -->
-      <path class="gin-region" data-region="nordic" d="M500,20 L540,15 L560,25 L545,40 L510,38 L500,30 Z"/>
-      <!-- Italy -->
-      <path class="landmass" d="M520,110 L540,108 L555,120 L545,140 L530,145 L515,130 Z"/>
-      <!-- Africa -->
-      <path class="landmass" d="M460,160 L540,150 L580,180 L600,240 L580,320 L540,380 L500,400 L460,380 L440,300 L450,220 Z"/>
-      <!-- South Africa (Gin region) -->
-      <path class="gin-region" data-region="southafrica" d="M500,380 L540,375 L560,390 L540,400 L510,398 L498,392 Z"/>
-      <!-- Middle East / India -->
-      <path class="landmass" d="M560,120 L620,100 L660,120 L680,160 L660,200 L620,220 L580,200 L560,160 Z"/>
-      <!-- India (Gin region) -->
-      <path class="gin-region" data-region="india" d="M630,140 L660,130 L680,160 L670,200 L640,210 L620,180 Z"/>
-      <!-- China (Gin region - highlighted) -->
-      <path class="gin-region china-region" data-region="china" d="M680,80 L740,70 L800,80 L820,120 L800,160 L760,170 L720,160 L700,140 L685,110 Z"/>
-      <!-- Japan (Gin region) -->
-      <path class="gin-region" data-region="japan" d="M820,90 L840,80 L850,100 L840,120 L830,110 L820,95 Z"/>
-      <!-- Southeast Asia -->
-      <path class="landmass" d="M700,170 L760,165 L780,180 L770,210 L740,220 L700,200 Z"/>
-      <!-- Australia (Gin region) -->
-      <path class="gin-region" data-region="australia" d="M770,300 L840,280 L880,300 L870,340 L840,370 L800,380 L770,360 Z"/>
-      <!-- Philippines -->
-      <path class="landmass" d="M760,190 L775,185 L785,200 L775,210 L760,205 Z"/>
-
-      <!-- Gin marker dots with labels -->
-      <!-- UK - London -->
-      <circle class="gin-marker" cx="477" cy="55" data-region="uk"/>
-      <text class="marker-label" x="477" y="68">UK</text>
-      <!-- Netherlands -->
-      <circle class="gin-marker" cx="494" cy="74" data-region="netherlands"/>
-      <text class="marker-label" x="494" y="87">NL</text>
-      <!-- Spain -->
-      <circle class="gin-marker" cx="488" cy="124" data-region="spain"/>
-      <text class="marker-label" x="488" y="137">ES</text>
-      <!-- Nordic -->
-      <circle class="gin-marker" cx="530" cy="28" data-region="nordic"/>
-      <text class="marker-label" x="530" y="41">SE</text>
-      <!-- USA -->
-      <circle class="gin-marker" cx="200" cy="130" data-region="usa"/>
-      <text class="marker-label" x="200" y="143">US</text>
-      <!-- South Africa -->
-      <circle class="gin-marker" cx="530" cy="392" data-region="southafrica"/>
-      <text class="marker-label" x="530" y="405">ZA</text>
-      <!-- India -->
-      <circle class="gin-marker" cx="650" cy="170" data-region="india"/>
-      <text class="marker-label" x="650" y="183">IN</text>
-      <!-- China -->
-      <circle class="gin-marker" cx="760" cy="120" data-region="china"/>
-      <text class="marker-label" x="760" y="133">CN</text>
-      <!-- Japan -->
-      <circle class="gin-marker" cx="835" cy="100" data-region="japan"/>
-      <text class="marker-label" x="835" y="113">JP</text>
-      <!-- Australia -->
-      <circle class="gin-marker" cx="830" cy="330" data-region="australia"/>
-      <text class="marker-label" x="830" y="343">AU</text>
-      <!-- Philippines -->
-      <circle class="gin-marker" cx="770" cy="200" data-region="philippines"/>
-      <text class="marker-label" x="770" y="213">PH</text>
-      <!-- Thailand -->
-      <circle class="gin-marker" cx="720" cy="190" data-region="thailand"/>
-      <text class="marker-label" x="720" y="203">TH</text>
-      <!-- Singapore -->
-      <circle class="gin-marker" cx="740" cy="205" data-region="singapore"/>
-      <text class="marker-label" x="740" y="218">SG</text>
-      <!-- France -->
-      <circle class="gin-marker" cx="500" cy="115" data-region="france"/>
-      <text class="marker-label" x="500" y="128">FR</text>
-    </svg>
+    <div class="gin-map-stage">
+      <div class="gin-map-canvas" id="ginMapCanvas">
+        <div class="map-loading">正在加载世界地图数据…</div>
+        <div class="map-error">
+          <div style="font-family: var(--font-display); font-size: 1.2rem;">地图加载失败</div>
+          <div style="font-size: 0.85rem; color: var(--earth-mid);">网络受限，请稍后再试或查看下方地区卡片。</div>
+        </div>
+      </div>
+      <aside class="gin-detail-panel" id="ginDetailPanel" aria-live="polite">
+        <div class="panel-prompt" id="panelPrompt">
+          <p>悬停或点击地图上的金酒产区<br>查看当地植物配方与代表品牌</p>
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="24" cy="24" r="22" stroke="currentColor" stroke-width="0.8" stroke-dasharray="2 3"/>
+            <path d="M14 26 Q24 14 34 26" stroke="currentColor" stroke-width="1" fill="none"/>
+            <circle cx="24" cy="32" r="2" fill="currentColor"/>
+            <path d="M24 32 L24 36" stroke="currentColor" stroke-width="1"/>
+          </svg>
+        </div>
+        <div id="panelContent" class="panel-state-hidden">
+          <p class="panel-eyebrow" id="panelEyebrow">FEATURED REGION</p>
+          <h3 class="panel-region" id="panelRegion"></h3>
+          <p class="panel-region-cn" id="panelRegionCn"></p>
+          <p class="panel-botanical" id="panelBotanical"></p>
+          <p class="panel-desc" id="panelDesc"></p>
+          <p class="panel-brands" id="panelBrands"></p>
+        </div>
+      </aside>
+    </div>
 
     <!-- Legend -->
     <div class="map-legend">
       <div class="map-legend-item"><span class="legend-dot sage"></span> 金酒产区</div>
-      <div class="map-legend-item"><span class="legend-dot wine-light"></span> 中国金酒</div>
-      <div class="map-legend-item"><span class="legend-dot amber"></span> 标记点</div>
+      <div class="map-legend-item"><span class="legend-dot wine-light"></span> 中国产区</div>
       <div class="map-legend-item"><span class="legend-dot terracotta"></span> 悬停高亮</div>
-    </div>
-
-    <!-- Tooltip -->
-    <div class="map-tooltip" id="mapTooltip">
-      <div class="tt-region" id="ttRegion"></div>
-      <div class="tt-region-cn" id="ttRegionCn"></div>
-      <div class="tt-botanical" id="ttBotanical"></div>
-      <div class="tt-desc" id="ttDesc"></div>
-      <div class="tt-brands" id="ttBrands"></div>
+      <div class="map-legend-item"><span class="legend-dot cream-deep"></span> 海洋 / 其他</div>
     </div>
   </div>
 
   <div class="region-grid stagger" style="margin-top:80px;">
-    <div class="region-card">
+    <div class="region-card" data-region-card="uk">
       <p class="region-flag">GBR</p>
       <h3 class="region-name">United Kingdom</h3>
       <p class="region-name-cn">英国 · London Dry 传统</p>
       <p class="region-desc">伦敦干金酒的诞生地与法律定义发源地。2008年 Sipsmith 获伦敦200年来首张小型蒸馏许可，如今英国拥有400+蒸馏厂。</p>
       <p class="region-brands">Beefeater · Tanqueray · Gordon's · Sipsmith · Hendrick's</p>
     </div>
-    <div class="region-card">
+    <div class="region-card" data-region-card="netherlands">
       <p class="region-flag">NLD</p>
       <h3 class="region-name">Netherlands</h3>
       <p class="region-name-cn">荷兰 · Genever 传统</p>
       <p class="region-desc">金酒的祖先——Genever 使用麦芽酒为基底，杜松子风味通过壶式蒸馏提取。风格分为 Ouve（丰满谷物）和 Jonge（更轻盈中性）。</p>
       <p class="region-brands">Bols · Boomsma · Genever de Munnik · Filliers</p>
     </div>
-    <div class="region-card">
+    <div class="region-card" data-region-card="japan">
       <p class="region-flag">JPN</p>
       <h3 class="region-name">Japan</h3>
       <p class="region-name-cn">日本 · 和式金酒</p>
       <p class="region-desc">融入"旬"（季节感）哲学，使用柚子、山椒、樱花、煎茶、丝柏等本土植物。Ki No Bi 使用11种日本植物分三组蒸馏再调和。</p>
       <p class="region-brands">Ki No Bi · Roku · Nikka Coffey Gin · Oi</p>
     </div>
-    <div class="region-card">
+    <div class="region-card" data-region-card="usa">
       <p class="region-flag">USA</p>
       <h3 class="region-name">United States</h3>
       <p class="region-name-cn">美国 · 精酿金酒运动</p>
       <p class="region-desc">打破 London Dry 范式束缚。New Western 风格允许杜松子之外的风味平等表达。美国没有金酒法规定义限制，创意自由度全球最高。</p>
       <p class="region-brands">St. George · Aviation · Grey Whale · Rusty Blade</p>
     </div>
-    <div class="region-card">
+    <div class="region-card" data-region-card="australia">
       <p class="region-flag">AUS</p>
       <h3 class="region-name">Australia</h3>
       <p class="region-name-cn">澳大利亚 · 本土植物金酒</p>
       <p class="region-desc">以本土植物为灵魂：柠檬桃金娘、手指青柠、金合欢籽、quandong。Four Pillars 的 Bloody Shiraz Gin 将红葡萄浸泡于金酒中。</p>
       <p class="region-brands">Four Pillars · Never Never · Adelaide Hills · Bass & Flinders</p>
     </div>
-    <div class="region-card">
+    <div class="region-card" data-region-card="spain">
       <p class="region-flag">ESP</p>
       <h3 class="region-name">Spain</h3>
       <p class="region-name-cn">西班牙 · Gin-Tonic 文化</p>
       <p class="region-desc">全球最热烈的 Gin-Tonic 文化——超大杯气球杯、冰块堆砌、精美植物点缀。西班牙将 Gin-Tonic 升华为社交仪式。</p>
       <p class="region-brands">Gin Mare · Larios · Nordés · 100% Premium</p>
     </div>
-    <div class="region-card">
+    <div class="region-card" data-region-card="india">
       <p class="region-flag">IND</p>
       <h3 class="region-name">India</h3>
       <p class="region-name-cn">印度 · 新兴精酿</p>
       <p class="region-desc">全球金酒消费量最大国家之一。本土植物配方融入姜黄、生姜、柠檬草、咖喱叶等印度香料。</p>
       <p class="region-brands">Greater Than · Jodhpur · Stranger & Sons · Samsara</p>
     </div>
-    <div class="region-card">
+    <div class="region-card" data-region-card="southafrica">
       <p class="region-flag">ZAF</p>
       <h3 class="region-name">South Africa</h3>
       <p class="region-name-cn">南非 · Fynbos 金酒</p>
       <p class="region-desc">以独有的 Fynbos 生物群落植物为特色——路易波士、蜜灌木、buchu。这些植物在全球金酒世界中无任何平行替代。</p>
       <p class="region-brands">Inverroche · Black Snake · Hope on Hopkins · Stillwolf</p>
     </div>
-    <div class="region-card">
+    <div class="region-card" data-region-card="nordic">
       <p class="region-flag">SWE</p>
       <h3 class="region-name">Nordic</h3>
       <p class="region-name-cn">北欧 · 采摘文化金酒</p>
@@ -1922,7 +1909,7 @@
     </div>
 
     <!-- Southeast Asia -->
-    <div class="region-card">
+    <div class="region-card" data-region-card="thailand">
       <p class="region-flag">THA</p>
       <h3 class="region-name">Southeast Asia</h3>
       <p class="region-name-cn">东南亚 · 热带植物金酒</p>
@@ -1931,7 +1918,7 @@
     </div>
 
     <!-- Philippines -->
-    <div class="region-card">
+    <div class="region-card" data-region-card="philippines">
       <p class="region-flag">PHL</p>
       <h3 class="region-name">Philippines</h3>
       <p class="region-name-cn">菲律宾 · 全球销量之王</p>
@@ -1940,7 +1927,7 @@
     </div>
 
     <!-- CHINA GIN CARD (expanded) -->
-    <div class="region-card" style="border-left: 4px solid var(--wine-light);">
+    <div class="region-card" data-region-card="china" style="border-left: 4px solid var(--wine-light);">
       <p class="region-flag">CHN</p>
       <h3 class="region-name">China</h3>
       <p class="region-name-cn">中国 · 新兴精酿金酒浪潮</p>
@@ -2478,80 +2465,272 @@
     });
   });
 
-  // ---- Interactive World Gin Map ----
+  // ---- Interactive World Gin Map (ECharts) ----
   const ginMapData = {
-    uk: { region: 'United Kingdom', cn: '英国 · London Dry 传统', botanical: 'Juniper · Coriander · Angelica · Citrus Peel', desc: '伦敦干金酒诞生地，400+蒸馏厂。Sipsmith 2009年点燃精酿复兴。', brands: `Beefeater · Tanqueray · Gordon's · Sipsmith · Hendrick's` },
-    netherlands: { region: 'Netherlands', cn: '荷兰 · Genever 传统', botanical: 'Malt Wine · Juniper · Genever Botanicals', desc: '金酒祖先——Genever使用麦芽酒基底，Oude(丰满)/Jonge(轻盈)两种风格。', brands: 'Bols · Boomsma · Genever de Munnik · Filliers' },
-    spain: { region: 'Spain', cn: '西班牙 · Gin-Tonic 文化', botanical: 'Olive · Tomato · Rosemary · Thyme · Citrus', desc: '全球最热烈的Gin-Tonic文化——气球杯、冰堆、植物点缀的社交仪式。', brands: 'Gin Mare · Larios · Nordés' },
-    nordic: { region: 'Nordic/Scandinavia', cn: '北欧 · 采摘文化金酒', botanical: 'Sea Buckthorn · Lingonberry · Spruce Tips · Birch Leaf', desc: '继承深厚采摘传统，使用极地植物。清冽美学——冰原植物、纯净蒸馏。', brands: 'Agitator · Helsinki · Kyrö · Skåne' },
-    usa: { region: 'United States', cn: '美国 · 精酿金酒运动', botanical: 'Local Botanicals · Creative Expression · No Legal Definition Limit', desc: '打破London Dry范式束缚。创意自由度全球最高。New Western风格发源地。', brands: 'St. George · Aviation · Grey Whale' },
-    southafrica: { region: 'South Africa', cn: '南非 · Fynbos 金酒', botanical: 'Rooibos · Honeybush · Buchu · Fynbos Biome Plants', desc: '独有Fynbos生物群落植物——路易波士、蜜灌木。全球无平行替代。', brands: 'Inverroche · Black Snake · Hope on Hopkins' },
-    india: { region: 'India', cn: '印度 · 新兴精酿', botanical: 'Turmeric · Ginger · Lemongrass · Curry Leaf · Cardamom', desc: '全球金酒消费量最大国家之一。本土印度香料融入蒸馏。', brands: 'Greater Than · Jodhpur · Stranger & Sons' },
-    china: { region: 'China', cn: '中国 · 新兴精酿金酒浪潮', botanical: `Sichuan Pepper · Lotus · Buddha's Hand · Osmanthus · Goji · Jasmine Tea · Hawthorn`, desc: '20%+ CAGR增长。Peddlers获2024/2025世界金酒奖最佳中国金酒。本土植物重新定义金酒语言。', brands: `Peddlers · Peggy · Dragon's Head · Bao Mountain · Old Pudong · Whistling Andy (TW)` },
-    japan: { region: 'Japan', cn: '日本 · 和式金酒', botanical: 'Yuzu · Sansho · Sakura · Gyokuro Tea · Hinoki · Juniper', desc: '"旬"季节感哲学。11种日本植物分三组蒸馏再调和(Ki No Bi)。', brands: 'Ki No Bi · Roku · Nikka Coffey Gin · Oi' },
-    australia: { region: 'Australia', cn: '澳大利亚 · 本土植物金酒', botanical: 'Lemon Myrtle · Finger Lime · Wattleseed · Quandong · Pandanus', desc: '以本土植物为灵魂。Bloody Shiraz Gin将Shiraz葡萄浸泡于金酒。', brands: 'Four Pillars · Never Never · Adelaide Hills' },
-    philippines: { region: 'Philippines', cn: '菲律宾 · 全球销量之王 (>40M箱/年)', botanical: 'Local Citrus · Tropical Fruits · Juniper', desc: '全球金酒消费量最大国家——年销>4000万9升箱，约占全球40%。Ginebra San Miguel 年销3500万箱。大众价位，与精酿高端金酒属不同市场层级。', brands: 'Ginebra San Miguel · Emperador' },
-    thailand: { region: 'Thailand', cn: '泰国 · 热带植物金酒', botanical: 'Pandan · Lemongrass · Kaffir Lime · Galangal · Butterfly Pea Flower', desc: '泰国金酒以热带料理植物为灵感：香兰叶、柠檬草、青柠叶、南姜、蝶豆花。Iron Balls 和 Chalong Bay 用本土香料创造独特风味。', brands: 'Iron Balls · Chalong Bay · Saneha · Mahanakhon' },
-    singapore: { region: 'Singapore', cn: '新加坡 · 东南亚精酿', botanical: 'Pandan · Lemongrass · Kaffir Lime · Local Botanicals', desc: '新加坡金酒同样以东南亚植物为配方核心。Tanglin 使用香兰叶与柠檬草；Lunar 融合本地热带香料。', brands: 'Tanglin · Lunar' },
-    france: { region: 'France', cn: '法国 · 葡萄基金酒', botanical: 'Grape-Based Neutral Spirit · Lavender · Juniper · Citrus', desc: '部分法国金酒使用葡萄蒸馏基酒而非谷物，赋予天然果韵。薰衣草是法式金酒的标志。', brands: `Citadelle · G'Vine · Dolin'` }
+    uk: { region: 'United Kingdom', cn: '英国 · London Dry 传统', botanical: 'Juniper · Coriander · Angelica · Citrus Peel', desc: '伦敦干金酒诞生地，400+蒸馏厂。Sipsmith 2009年点燃精酿复兴。', brands: `Beefeater · Tanqueray · Gordon's · Sipsmith · Hendrick's`, countries: ['United Kingdom'] },
+    netherlands: { region: 'Netherlands', cn: '荷兰 · Genever 传统', botanical: 'Malt Wine · Juniper · Genever Botanicals', desc: '金酒祖先——Genever使用麦芽酒基底，Oude(丰满)/Jonge(轻盈)两种风格。', brands: 'Bols · Boomsma · Genever de Munnik · Filliers', countries: ['Netherlands'] },
+    spain: { region: 'Spain', cn: '西班牙 · Gin-Tonic 文化', botanical: 'Olive · Tomato · Rosemary · Thyme · Citrus', desc: '全球最热烈的Gin-Tonic文化——气球杯、冰堆、植物点缀的社交仪式。', brands: 'Gin Mare · Larios · Nordés', countries: ['Spain'] },
+    nordic: { region: 'Nordic/Scandinavia', cn: '北欧 · 采摘文化金酒', botanical: 'Sea Buckthorn · Lingonberry · Spruce Tips · Birch Leaf', desc: '继承深厚采摘传统，使用极地植物。清冽美学——冰原植物、纯净蒸馏。', brands: 'Agitator · Helsinki · Kyrö · Skåne', countries: ['Sweden', 'Norway', 'Finland', 'Denmark', 'Iceland'] },
+    usa: { region: 'United States', cn: '美国 · 精酿金酒运动', botanical: 'Local Botanicals · Creative Expression · No Legal Definition Limit', desc: '打破London Dry范式束缚。创意自由度全球最高。New Western风格发源地。', brands: 'St. George · Aviation · Grey Whale', countries: ['United States of America'] },
+    southafrica: { region: 'South Africa', cn: '南非 · Fynbos 金酒', botanical: 'Rooibos · Honeybush · Buchu · Fynbos Biome Plants', desc: '独有Fynbos生物群落植物——路易波士、蜜灌木。全球无平行替代。', brands: 'Inverroche · Black Snake · Hope on Hopkins', countries: ['South Africa'] },
+    india: { region: 'India', cn: '印度 · 新兴精酿', botanical: 'Turmeric · Ginger · Lemongrass · Curry Leaf · Cardamom', desc: '全球金酒消费量最大国家之一。本土印度香料融入蒸馏。', brands: 'Greater Than · Jodhpur · Stranger & Sons', countries: ['India'] },
+    china: { region: 'China', cn: '中国 · 新兴精酿金酒浪潮', botanical: `Sichuan Pepper · Lotus · Buddha's Hand · Osmanthus · Goji · Jasmine Tea · Hawthorn`, desc: '20%+ CAGR增长。Peddlers获2024/2025世界金酒奖最佳中国金酒。本土植物重新定义金酒语言。', brands: `Peddlers · Peggy · Dragon's Head · Bao Mountain · Old Pudong · Whistling Andy (TW)`, countries: ['China'] },
+    japan: { region: 'Japan', cn: '日本 · 和式金酒', botanical: 'Yuzu · Sansho · Sakura · Gyokuro Tea · Hinoki · Juniper', desc: '"旬"季节感哲学。11种日本植物分三组蒸馏再调和(Ki No Bi)。', brands: 'Ki No Bi · Roku · Nikka Coffey Gin · Oi', countries: ['Japan'] },
+    australia: { region: 'Australia', cn: '澳大利亚 · 本土植物金酒', botanical: 'Lemon Myrtle · Finger Lime · Wattleseed · Quandong · Pandanus', desc: '以本土植物为灵魂。Bloody Shiraz Gin将Shiraz葡萄浸泡于金酒。', brands: 'Four Pillars · Never Never · Adelaide Hills', countries: ['Australia'] },
+    philippines: { region: 'Philippines', cn: '菲律宾 · 全球销量之王 (>40M箱/年)', botanical: 'Local Citrus · Tropical Fruits · Juniper', desc: '全球金酒消费量最大国家——年销>4000万9升箱，约占全球40%。Ginebra San Miguel 年销3500万箱。大众价位，与精酿高端金酒属不同市场层级。', brands: 'Ginebra San Miguel · Emperador', countries: ['Philippines'] },
+    thailand: { region: 'Thailand', cn: '泰国 · 热带植物金酒', botanical: 'Pandan · Lemongrass · Kaffir Lime · Galangal · Butterfly Pea Flower', desc: '泰国金酒以热带料理植物为灵感：香兰叶、柠檬草、青柠叶、南姜、蝶豆花。Iron Balls 和 Chalong Bay 用本土香料创造独特风味。', brands: 'Iron Balls · Chalong Bay · Saneha · Mahanakhon', countries: ['Thailand'] },
+    singapore: { region: 'Singapore', cn: '新加坡 · 东南亚精酿', botanical: 'Pandan · Lemongrass · Kaffir Lime · Local Botanicals', desc: '新加坡金酒同样以东南亚植物为配方核心。Tanglin 使用香兰叶与柠檬草；Lunar 融合本地热带香料。', brands: 'Tanglin · Lunar', countries: ['Singapore'] },
+    france: { region: 'France', cn: '法国 · 葡萄基金酒', botanical: 'Grape-Based Neutral Spirit · Lavender · Juniper · Citrus', desc: '部分法国金酒使用葡萄蒸馏基酒而非谷物，赋予天然果韵。薰衣草是法式金酒的标志。', brands: `Citadelle · G'Vine · Dolin'`, countries: ['France'] }
   };
 
-  const tooltip = document.getElementById('mapTooltip');
-  const ttRegion = document.getElementById('ttRegion');
-  const ttRegionCn = document.getElementById('ttRegionCn');
-  const ttBotanical = document.getElementById('ttBotanical');
-  const ttDesc = document.getElementById('ttDesc');
-  const ttBrands = document.getElementById('ttBrands');
-
-  document.querySelectorAll('.gin-marker').forEach(function(marker) {
-    const regionKey = marker.getAttribute('data-region');
-    const data = ginMapData[regionKey];
-    if (!data) return;
-
-    marker.addEventListener('mouseenter', function(e) {
-      ttRegion.textContent = data.region;
-      ttRegionCn.textContent = data.cn;
-      ttBotanical.textContent = data.botanical;
-      ttDesc.textContent = data.desc;
-      ttBrands.textContent = data.brands;
-      tooltip.classList.add('visible');
-
-      // Position tooltip
-      const rect = marker.getBoundingClientRect();
-      const container = marker.closest('.gin-map-container');
-      const containerRect = container.getBoundingClientRect();
-      tooltip.style.left = (rect.left - containerRect.left + rect.width/2 - 140) + 'px';
-      tooltip.style.top = (rect.top - containerRect.top - tooltip.offsetHeight - 10) + 'px';
-    });
-
-    marker.addEventListener('mouseleave', function() {
-      tooltip.classList.remove('visible');
+  // Build country -> ginMapData key map (for reverse lookup by GeoJSON country name)
+  const countryToRegion = {};
+  Object.keys(ginMapData).forEach(function(key) {
+    ginMapData[key].countries.forEach(function(countryName) {
+      countryToRegion[countryName] = key;
     });
   });
 
-  // Also handle gin-region paths (country highlights)
-  document.querySelectorAll('.gin-region').forEach(function(region) {
-    const regionKey = region.getAttribute('data-region');
-    const data = ginMapData[regionKey];
-    if (!data) return;
+  // Detail panel elements
+  const panelPrompt = document.getElementById('panelPrompt');
+  const panelContent = document.getElementById('panelContent');
+  const panelRegion = document.getElementById('panelRegion');
+  const panelRegionCn = document.getElementById('panelRegionCn');
+  const panelBotanical = document.getElementById('panelBotanical');
+  const panelDesc = document.getElementById('panelDesc');
+  const panelBrands = document.getElementById('panelBrands');
 
-    region.addEventListener('mouseenter', function(e) {
-      ttRegion.textContent = data.region;
-      ttRegionCn.textContent = data.cn;
-      ttBotanical.textContent = data.botanical;
-      ttDesc.textContent = data.desc;
-      ttBrands.textContent = data.brands;
-      tooltip.classList.add('visible');
+  function showRegion(key) {
+    const d = ginMapData[key];
+    if (!d) return;
+    panelPrompt.style.display = 'none';
+    panelContent.classList.remove('panel-state-hidden');
+    panelRegion.textContent = d.region;
+    panelRegionCn.textContent = d.cn;
+    panelBotanical.textContent = d.botanical;
+    panelDesc.textContent = d.desc;
+    panelBrands.textContent = d.brands;
 
-      const rect = region.getBoundingClientRect();
-      const container = region.closest('.gin-map-container');
-      const containerRect = container.getBoundingClientRect();
-      tooltip.style.left = (rect.left - containerRect.left + rect.width/2 - 140) + 'px';
-      tooltip.style.top = (rect.top - containerRect.top - tooltip.offsetHeight - 10) + 'px';
+    // Sync highlight on region cards
+    document.querySelectorAll('.region-card').forEach(function(card) {
+      const cardRegion = card.getAttribute('data-region-card');
+      card.classList.toggle('region-card-active', cardRegion === key);
+    });
+  }
+
+  // Initialize ECharts world map
+  const mapCanvas = document.getElementById('ginMapCanvas');
+  let mapChart = null;
+  let currentHighlight = null;
+
+  // CSS variable values resolved at runtime
+  const cssVar = function(name) {
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  };
+  const COLORS = {
+    creamDeep: cssVar('--cream-deep') || '#EDE5D8',
+    sage: cssVar('--sage') || '#7A8C6E',
+    wineLight: cssVar('--wine-light') || '#8C3A4A',
+    wine: cssVar('--wine') || '#6B2737',
+    wineDark: cssVar('--wine-dark') || '#3D151E',
+    terracotta: cssVar('--terracotta') || '#C75B4A',
+    amber: cssVar('--amber') || '#D4956A',
+    amberLight: cssVar('--amber-light') || '#F0D4A8',
+    parchment: cssVar('--parchment') || '#FDF9F3',
+    earthMid: cssVar('--earth-mid') || '#5C4A3A'
+  };
+
+  // GeoJSON sources to try in order (CORS-friendly)
+  const GEO_SOURCES = [
+    'https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson',
+    'https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json',
+    'https://cdn.jsdelivr.net/gh/datasets/geo-countries@master/data/countries.geojson'
+  ];
+
+  async function fetchGeoJSON() {
+    for (let i = 0; i < GEO_SOURCES.length; i++) {
+      const url = GEO_SOURCES[i];
+      try {
+        const resp = await fetch(url, { mode: 'cors' });
+        if (!resp.ok) continue;
+        const data = await resp.json();
+        return data;
+      } catch (err) {
+        // try next source
+      }
+    }
+    throw new Error('All GeoJSON sources failed');
+  }
+
+  function buildMapOption(geoJson) {
+    // Echarts uses 'properties.name' from GeoJSON features
+    const regionCountryMap = countryToRegion;
+
+    const data = geoJson.features.map(function(f) {
+      const countryName = f.properties && f.properties.name;
+      const regionKey = countryName ? regionCountryMap[countryName] : null;
+      return {
+        name: countryName,
+        value: regionKey || 0,
+        regionKey: regionKey
+      };
     });
 
-    region.addEventListener('mouseleave', function() {
-      tooltip.classList.remove('visible');
+    return {
+      backgroundColor: 'transparent',
+      tooltip: {
+        trigger: 'item',
+        backgroundColor: COLORS.parchment,
+        borderColor: 'rgba(107,39,55,0.10)',
+        borderWidth: 1,
+        padding: [12, 16],
+        textStyle: { color: COLORS.wineDark, fontFamily: 'Outfit, sans-serif', fontSize: 13 },
+        extraCssText: 'box-shadow: 0 8px 32px rgba(42,26,18,0.12); border-radius: 4px; max-width: 280px;',
+        formatter: function(params) {
+          if (!params.data || !params.data.regionKey) {
+            return '<div style="font-family: Cormorant Garamond, serif; font-size: 1.1rem; font-weight: 500; color: ' + COLORS.wineDark + ';">' + params.name + '</div>' +
+                   '<div style="font-family: Noto Serif SC, serif; font-size: 0.8rem; color: ' + COLORS.earthMid + '; opacity: 0.7; margin-top: 4px;">非金酒产区</div>';
+          }
+          const d = ginMapData[params.data.regionKey];
+          return '<div style="font-family: Cormorant Garamond, serif; font-size: 1.2rem; font-weight: 500; color: ' + COLORS.wineDark + ';">' + d.region + '</div>' +
+                 '<div style="font-family: Noto Serif SC, serif; font-size: 0.85rem; color: ' + COLORS.earthMid + '; margin-bottom: 8px;">' + d.cn + '</div>' +
+                 '<div style="font-family: DM Mono, monospace; font-size: 0.7rem; color: ' + COLORS.sage + '; letter-spacing: 0.05em; line-height: 1.7;">' + d.botanical + '</div>';
+        }
+      },
+      visualMap: {
+        show: false,
+        min: 0,
+        max: 1,
+        inRange: { color: [COLORS.creamDeep, COLORS.creamDeep] }
+      },
+      series: [{
+        type: 'map',
+        map: 'world',
+        roam: true,
+        zoom: 1.15,
+        scaleLimit: { min: 1, max: 6 },
+        nameProperty: 'name',
+        emphasis: {
+          focus: 'self',
+          itemStyle: { areaColor: COLORS.terracotta, borderColor: COLORS.wine, borderWidth: 1.2 },
+          label: { color: COLORS.creamDeep, fontWeight: 600, fontFamily: 'Outfit, sans-serif' }
+        },
+        select: {
+          itemStyle: { areaColor: COLORS.wine, borderColor: COLORS.wineDark, borderWidth: 1.5 },
+          label: { color: '#fff', fontWeight: 600 }
+        },
+        itemStyle: {
+          areaColor: COLORS.creamDeep,
+          borderColor: 'rgba(107,39,55,0.18)',
+          borderWidth: 0.5
+        },
+        label: {
+          show: false,
+          color: COLORS.earthMid,
+          fontFamily: 'Outfit, sans-serif',
+          fontSize: 9
+        },
+        data: data,
+        // Customize each country's appearance
+        // ECharts will pick color based on the data value; we use a callback via 'itemStyle' for specific countries
+      }]
+    };
+  }
+
+  function applyRegionColors() {
+    if (!mapChart) return;
+    // Override individual country colors based on region membership
+    const option = mapChart.getOption();
+    const series = option.series[0];
+    if (!series || !series.data) return;
+    const updated = series.data.map(function(d) {
+      let color = COLORS.creamDeep;
+      if (d.regionKey === 'china') {
+        color = COLORS.wineLight;
+      } else if (d.regionKey) {
+        color = COLORS.sage;
+      }
+      return Object.assign({}, d, { itemStyle: { areaColor: color } });
+    });
+    mapChart.setOption({ series: [{ data: updated }] });
+  }
+
+  async function initMap() {
+    try {
+      const geoJson = await fetchGeoJSON();
+      echarts.registerMap('world', geoJson);
+      mapChart = echarts.init(mapCanvas, null, { renderer: 'canvas' });
+      mapChart.setOption(buildMapOption(geoJson));
+      applyRegionColors();
+      mapCanvas.classList.add('map-ready');
+
+      // Click event -> show region in side panel
+      mapChart.on('click', function(params) {
+        if (params.data && params.data.regionKey) {
+          showRegion(params.data.regionKey);
+          currentHighlight = params.data.regionKey;
+        }
+      });
+
+      // Mouseover event -> preview region in side panel
+      mapChart.on('mouseover', function(params) {
+        if (params.data && params.data.regionKey) {
+          showRegion(params.data.regionKey);
+        }
+      });
+
+      // Mouseout -> restore panel if not pinned
+      mapChart.on('mouseout', function() {
+        if (currentHighlight) {
+          showRegion(currentHighlight);
+        } else {
+          panelPrompt.style.display = '';
+          panelContent.classList.add('panel-state-hidden');
+          document.querySelectorAll('.region-card').forEach(function(c) { c.classList.remove('region-card-active'); });
+        }
+      });
+
+      // Resize handler
+      window.addEventListener('resize', function() {
+        if (mapChart) mapChart.resize();
+      });
+    } catch (err) {
+      console.error('Map init failed:', err);
+      mapCanvas.classList.add('map-failed');
+    }
+  }
+
+  if (window.echarts) {
+    initMap();
+  } else {
+    window.addEventListener('load', initMap);
+  }
+
+  // Make region cards clickable to highlight on map
+  document.querySelectorAll('.region-card').forEach(function(card) {
+    const key = card.getAttribute('data-region-card');
+    if (!key) return;
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', function() {
+      if (!mapChart) return;
+      // Find country names for this region
+      const countries = (ginMapData[key] && ginMapData[key].countries) || [];
+      if (!countries.length) return;
+      // Dispatch action via ECharts API
+      try {
+        mapChart.dispatchAction({
+          type: 'showTip',
+          seriesIndex: 0,
+          name: countries[0]
+        });
+      } catch (e) { /* ignore */ }
+      showRegion(key);
+      currentHighlight = key;
+      // Scroll map into view
+      const mapEl = document.getElementById('ginMapCanvas');
+      if (mapEl && mapEl.scrollIntoView) {
+        mapEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
     });
   });
 })();
